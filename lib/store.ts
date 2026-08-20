@@ -317,13 +317,13 @@ export const useAppStore = create<AppState>()(
           followUps: INITIAL_FOLLOWUPS,
           notifications: INITIAL_NOTIFICATIONS,
           settings: INITIAL_SETTINGS,
-          currentDate: '2026-08-17',
+          currentDate: getTodayDateString(),
           searchQuery: ''
         });
       }
     }),
     {
-      name: 'cs-ops-hub-storage-v1',
+      name: 'cs-ops-hub-storage-v3',
       storage: createJSONStorage(() => localStorage)
     }
   )
