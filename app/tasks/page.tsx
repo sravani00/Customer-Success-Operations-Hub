@@ -5,12 +5,8 @@ import Link from 'next/link';
 import { 
   CheckSquare, 
   Plus, 
-  Clock, 
-  UserCheck, 
-  Mail, 
-  Video, 
-  FileText, 
-  CheckCircle2,
+  Calendar as CalendarIcon,
+  Filter,
   ArrowLeft
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
@@ -18,6 +14,10 @@ import { useAppStore } from '../../lib/store';
 export default function TasksPage() {
   const { currentDate, tasks, updateTaskStatus, openQuickAdd } = useAppStore();
   const [filterMode, setFilterMode] = useState<'date' | 'all'>('date');
+
+  const filteredTasks = filterMode === 'date'
+    ? tasks.filter((t) => t.dueDate === currentDate)
+    : tasks;
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
@@ -33,8 +33,11 @@ export default function TasksPage() {
                 <ArrowLeft className="w-3 h-3" /> Back to Operations Dashboard
               </Link>
             </div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
+            <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
               Operational Task Management
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">
+                Active Date: {currentDate}
+              </span>
             </h1>
             <p className="text-xs text-slate-400">Ensures zero missed commitments by linking updates, emails, and meetings to explicit tasks</p>
           </div>
@@ -49,43 +52,80 @@ export default function TasksPage() {
         </button>
       </div>
 
+      {/* Scope Filter Bar */}
+      <div className="flex items-center justify-between bg-slate-900 p-4 rounded-xl border border-slate-800">
+        <div className="flex items-center space-x-2 text-xs font-semibold text-slate-300">
+          <Filter className="w-4 h-4 text-indigo-400" />
+          <span>Task Scope:</span>
+        </div>
+
+        <div className="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+          <button
+            onClick={() => setFilterMode('date')}
+            className={`px-3 py-1.5 rounded-lg font-semibold transition-all flex items-center space-x-1.5 ${
+              filterMode === 'date' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <CalendarIcon className="w-3.5 h-3.5" />
+            <span>Active Date: {currentDate} ({tasks.filter(t => t.dueDate === currentDate).length})</span>
+          </button>
+
+          <button
+            onClick={() => setFilterMode('all')}
+            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+              filterMode === 'all' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            All Tasks ({tasks.length})
+          </button>
+        </div>
+      </div>
+
       {/* Task List */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
         <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
-          <h2 className="font-bold text-sm text-white">Active Operational Tasks</h2>
-          <span className="text-xs text-slate-400 font-mono">Count: {tasks.length}</span>
+          <h2 className="font-bold text-sm text-white">
+            {filterMode === 'date' ? `Tasks Due on ${currentDate}` : 'Active Operational Tasks (All Dates)'}
+          </h2>
+          <span className="text-xs text-slate-400 font-mono">Count: {filteredTasks.length}</span>
         </div>
 
         <div className="divide-y divide-slate-800/60">
-          {tasks.map((task) => (
-            <div key={task.id} className="p-4 hover:bg-slate-950/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-white text-sm">{task.title}</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300 font-mono">
-                    Source: {task.sourceType}
-                  </span>
-                </div>
-                <div className="text-xs text-slate-400 font-mono">
-                  Client: <span className="text-blue-400">{task.clientName}</span> • Assigned to: <span className="text-slate-200">{task.assignedTo}</span> • Due: <span className="text-amber-400">{task.dueDate}</span>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <select
-                  value={task.status}
-                  onChange={(e) => updateTaskStatus(task.id, e.target.value as any)}
-                  className="bg-slate-950 border border-slate-800 rounded-lg text-xs p-2 text-slate-200 font-semibold focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="Not Started">Not Started</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Waiting">Waiting</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
-              </div>
+          {filteredTasks.length === 0 ? (
+            <div className="p-8 text-center text-xs text-slate-400">
+              No tasks due on {currentDate}. Click "Create New Task" or select "All Tasks".
             </div>
-          ))}
+          ) : (
+            filteredTasks.map((task) => (
+              <div key={task.id} className="p-4 hover:bg-slate-950/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-bold text-white text-sm">{task.title}</span>
+                    <span className="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300 font-mono">
+                      Source: {task.sourceType}
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-400 font-mono">
+                    Client: <span className="text-blue-400 font-semibold">{task.clientName}</span> • Assigned to: <span className="text-slate-200">{task.assignedTo}</span> • Due: <span className="text-amber-400 font-bold">{task.dueDate}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <select
+                    value={task.status}
+                    onChange={(e) => updateTaskStatus(task.id, e.target.value as any)}
+                    className="bg-slate-950 border border-slate-800 rounded-lg text-xs p-2 text-slate-200 font-semibold focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Waiting">Waiting</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
