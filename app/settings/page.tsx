@@ -9,7 +9,10 @@ import {
   Mail, 
   Database, 
   RotateCcw,
-  Check
+  Check,
+  Lock,
+  KeyRound,
+  LogOut
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
@@ -46,6 +49,41 @@ export default function SettingsPage() {
           {resetDone ? <Check className="w-4 h-4 text-emerald-400" /> : <RotateCcw className="w-4 h-4 text-slate-400" />}
           <span>{resetDone ? 'Demo Reset Complete!' : 'Reset Demo Data'}</span>
         </button>
+      </div>
+
+      {/* Website Password Security & Access Protection Card */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+        <h2 className="font-bold text-sm text-white flex items-center gap-2">
+          <KeyRound className="w-4 h-4 text-blue-400" /> Website Password Security & Access Control
+        </h2>
+
+        <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+          <div className="space-y-1">
+            <div className="font-bold text-white flex items-center gap-2">
+              <Lock className="w-4 h-4 text-emerald-400" />
+              Site Password Gate: Active
+            </div>
+            <p className="text-slate-400">
+              All routes are protected by HTTP-only encrypted session cookies (`site_auth`). Configure password via <code className="bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 text-blue-300 font-mono">SITE_PASSWORD</code> in <code className="bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 text-blue-300 font-mono">.env.local</code>.
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono font-bold text-xs">
+              7-Day Session Active
+            </span>
+            <button
+              onClick={async () => {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                window.location.href = '/login';
+              }}
+              className="px-3.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 font-medium flex items-center space-x-1.5 transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Lock Site Now</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* OAuth & Connection Card */}

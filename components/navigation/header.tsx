@@ -15,7 +15,8 @@ import {
   Package,
   Video,
   CheckSquare,
-  Clock
+  Clock,
+  LogOut
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
@@ -35,6 +36,15 @@ export const Header: React.FC = () => {
   const [showQuickMenu, setShowQuickMenu] = useState(false);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/login';
+    } catch (e) {
+      window.location.href = '/login';
+    }
+  };
 
   return (
     <header className="h-16 bg-slate-900 border-b border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30 shadow-sm text-slate-200">
@@ -192,7 +202,7 @@ export const Header: React.FC = () => {
           )}
         </div>
 
-        {/* User Profile Badge */}
+        {/* User Profile Badge & Lock Action */}
         <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-indigo-500/30">
             PR
@@ -201,6 +211,13 @@ export const Header: React.FC = () => {
             <div className="text-xs font-semibold text-slate-200">Pradeep</div>
             <div className="text-[10px] text-slate-400">CS Ops Lead</div>
           </div>
+          <button
+            onClick={handleLogout}
+            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-rose-400 hover:border-rose-500/30 transition-colors ml-1"
+            title="Lock Session / Log Out"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </header>

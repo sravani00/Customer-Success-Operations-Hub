@@ -208,7 +208,7 @@ export default function DashboardPage() {
                 <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">{up.message}</p>
                 <div className="text-[10px] text-slate-500 flex items-center justify-between pt-1">
                   <span>Subject: {up.primarySubject}</span>
-                  <span className="font-mono">{new Date(up.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  <span className="font-mono" suppressHydrationWarning>{new Date(up.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
               </div>
             ))}
