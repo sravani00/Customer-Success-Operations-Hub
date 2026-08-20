@@ -41,7 +41,7 @@ export const INITIAL_CLIENTS: Client[] = [
       role: 'Head of Strategic Partnerships'
     },
     createdAt: '2026-03-01',
-    metricsSummary: '12 Active Offers'
+    metricsSummary: '12 Active Campaigns'
   },
   {
     id: 'client-c',
@@ -249,6 +249,7 @@ export const INITIAL_OFFERS: Offer[] = [
 ];
 
 export const INITIAL_UPDATES: ClientUpdate[] = [
+  // August 17, 2026 (Today)
   {
     id: 'up-1',
     clientId: 'client-a',
@@ -291,31 +292,55 @@ export const INITIAL_UPDATES: ClientUpdate[] = [
     timestamp: '2026-08-17T13:45:00',
     primarySubject: 'Michael Chang (Client C)'
   },
+  // August 16, 2026 (Previous Date)
   {
-    id: 'up-4',
+    id: 'up-16-1',
     clientId: 'client-a',
     clientName: 'Client A',
-    offerId: 'offer-a',
-    offerName: 'Offer A',
-    type: 'Volume Request',
-    source: 'Internal',
-    message: 'Internal campaign team approved testing and 25,000 cap expansion.',
+    type: 'Testing Request',
+    source: 'Client',
+    message: 'Client A submitted cap expansion request for 25,000 daily traffic.',
     priority: 'High',
     status: 'Resolved',
-    timestamp: '2026-08-17T14:30:00',
-    primarySubject: 'Compliance & Operations Team'
+    timestamp: '2026-08-16T09:40:00',
+    primarySubject: 'John Miller (Client A)'
   },
   {
-    id: 'up-5',
-    clientId: 'client-b',
-    clientName: 'Client B',
-    type: 'Creative',
+    id: 'up-16-2',
+    clientId: 'client-d',
+    clientName: 'Client D',
+    type: 'General',
     source: 'Client',
-    message: 'Uploaded updated banner sets and refreshed email headers for August promo.',
-    priority: 'Low',
+    message: 'Elena Rostova provided completed Q3 onboarding compliance documentation.',
+    priority: 'Medium',
     status: 'Resolved',
-    timestamp: '2026-08-17T15:10:00',
-    primarySubject: 'Design Team Sync'
+    timestamp: '2026-08-16T14:15:00',
+    primarySubject: 'Elena Rostova (Apex Partners)'
+  },
+  // August 15, 2026 (Previous Date)
+  {
+    id: 'up-15-1',
+    clientId: 'client-e',
+    clientName: 'Client E',
+    type: 'Technical Issue',
+    source: 'Client',
+    message: 'DataStream completed API authentication key exchange and endpoint testing.',
+    priority: 'High',
+    status: 'Resolved',
+    timestamp: '2026-08-15T11:20:00',
+    primarySubject: 'David Vance (DataStream)'
+  },
+  {
+    id: 'up-15-2',
+    clientId: 'client-h',
+    clientName: 'Client H',
+    type: 'Performance',
+    source: 'Internal',
+    message: 'OmniReach Ad Network lead qualified during discovery call ($42k deal value).',
+    priority: 'Medium',
+    status: 'New',
+    timestamp: '2026-08-15T16:00:00',
+    primarySubject: 'Amanda Cross (OmniReach)'
   }
 ];
 
@@ -351,24 +376,11 @@ export const INITIAL_EMAILS: EmailMessage[] = [
     receivedAt: '2026-08-17T11:10:00',
     actionRequired: true,
     processed: true
-  },
-  {
-    id: 'em-3',
-    gmailMessageId: 'msg-103',
-    gmailThreadId: 'th-503',
-    clientId: 'client-c',
-    clientName: 'Client C',
-    sender: 'm.chang@vortexglobal.com',
-    category: 'Payment',
-    subject: 'Invoice Confirmation & August Payment Sync',
-    body: 'Hi CS Ops Team,\n\nPayment for invoice #VG-8902 has been released today via wire transfer. Please confirm receipt once processed.\n\nRegards,\nMichael',
-    receivedAt: '2026-08-17T16:00:00',
-    actionRequired: false,
-    processed: true
   }
 ];
 
 export const INITIAL_MEETINGS: Meeting[] = [
+  // August 17, 2026 (Today)
   {
     id: 'meet-1',
     googleEventId: 'evt-901',
@@ -405,26 +417,46 @@ export const INITIAL_MEETINGS: Meeting[] = [
     keyDecisions: ['Prioritize Client A performance review task', 'Re-assign Client D audit'],
     actionItems: ['Send EOD summary report to leadership']
   },
+  // August 16, 2026 (Previous Date)
   {
-    id: 'meet-3',
-    googleEventId: 'evt-903',
-    clientId: 'client-b',
-    clientName: 'Client B',
-    title: 'Offer B Capping & Revenue Review',
-    startTime: '2026-08-17T09:00:00',
-    endTime: '2026-08-17T09:30:00',
-    meetLink: 'https://meet.google.com/mno-pqrs-tuv',
+    id: 'meet-16-1',
+    googleEventId: 'evt-816',
+    clientId: 'client-d',
+    clientName: 'Client D',
+    title: 'Apex Partners Onboarding Briefing',
+    startTime: '2026-08-16T14:00:00',
+    endTime: '2026-08-16T15:00:00',
+    meetLink: 'https://meet.google.com/apx-onb-2026',
     status: 'Completed',
-    organizer: 'Sarah Jenkins',
-    participants: ['sarah@nexusaffiliate.com', 'team@csops.com'],
-    description: 'Morning sync on Offer B daily volume caps.',
-    meetingNotes: 'Cap held at 40k. EPC steady at $0.22.',
-    keyDecisions: ['Maintain current traffic sources'],
-    actionItems: ['Confirm testing cap for next variant']
+    organizer: 'Elena Rostova',
+    participants: ['elena@apexpartners.com', 'pradeep@csops.com'],
+    description: 'Kickoff meeting for Q3 consulting strategy & operations audit.',
+    meetingNotes: 'Onboarding milestones established. Document submission completed.',
+    keyDecisions: ['Sprint 1 deliverable date set for Aug 28'],
+    actionItems: ['File compliance audit checklist']
+  },
+  // August 15, 2026 (Previous Date)
+  {
+    id: 'meet-15-1',
+    googleEventId: 'evt-815',
+    clientId: 'client-e',
+    clientName: 'Client E',
+    title: 'DataStream API Integration Review',
+    startTime: '2026-08-15T10:00:00',
+    endTime: '2026-08-15T11:00:00',
+    meetLink: 'https://meet.google.com/dts-api-2026',
+    status: 'Completed',
+    organizer: 'David Vance',
+    participants: ['d.vance@datastream.com', 'tech@csops.com'],
+    description: 'Validation of rate limits and webhook notification handlers.',
+    meetingNotes: 'API endpoints operating at 99.98% uptime.',
+    keyDecisions: ['Enable production webhook key'],
+    actionItems: ['Log API latency metrics in hub']
   }
 ];
 
 export const INITIAL_TASKS: TaskItem[] = [
+  // August 17, 2026 (Today)
   {
     id: 'task-1',
     clientId: 'client-a',
@@ -451,42 +483,32 @@ export const INITIAL_TASKS: TaskItem[] = [
     dueDate: '2026-08-18',
     status: 'Not Started'
   },
+  // August 16, 2026 (Previous Date)
   {
-    id: 'task-3',
-    clientId: 'client-c',
-    clientName: 'Client C',
-    offerId: 'offer-c',
-    offerName: 'Offer C',
-    sourceType: 'Update',
-    sourceId: 'up-3',
-    title: 'Send Performance Report to Michael',
-    assignedTo: 'Pradeep',
-    dueDate: '2026-08-20',
-    status: 'Not Started'
-  },
-  {
-    id: 'task-4',
+    id: 'task-16-1',
     clientId: 'client-d',
     clientName: 'Client D',
     sourceType: 'Manual',
-    title: 'Complete Onboarding Compliance Audit',
-    assignedTo: 'Team',
+    title: 'Audit Apex Partners Q3 Onboarding Documents',
+    assignedTo: 'Elena Rostova',
+    dueDate: '2026-08-16',
+    status: 'Completed'
+  },
+  // August 15, 2026 (Previous Date)
+  {
+    id: 'task-15-1',
+    clientId: 'client-e',
+    clientName: 'Client E',
+    sourceType: 'Manual',
+    title: 'Verify DataStream API Key Authorization',
+    assignedTo: 'Tech Lead',
     dueDate: '2026-08-15',
-    status: 'In Progress'
-  },
-  {
-    id: 'task-5',
-    clientId: 'client-d',
-    clientName: 'Client D',
-    sourceType: 'Manual',
-    title: 'Verify Bank Wire Account Details',
-    assignedTo: 'Finance',
-    dueDate: '2026-08-14',
-    status: 'Not Started'
+    status: 'Completed'
   }
 ];
 
 export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
+  // August 17, 2026 (Today)
   {
     id: 'fl-1',
     clientId: 'client-a',
@@ -500,79 +522,47 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     status: 'Due Today',
     dueDate: '2026-08-17'
   },
+  // August 16, 2026 (Previous Date)
   {
-    id: 'fl-2',
-    clientId: 'client-b',
-    clientName: 'Client B',
-    offerId: 'offer-b',
-    offerName: 'Offer B',
-    taskId: 'task-2',
-    title: 'Offer B Testing Confirmation',
-    reminderAt: '2026-08-19T10:00:00',
-    assignedTo: 'Team',
-    status: 'Pending',
-    dueDate: '2026-08-19'
-  },
-  {
-    id: 'fl-3',
-    clientId: 'client-c',
-    clientName: 'Client C',
-    offerId: 'offer-c',
-    offerName: 'Offer C',
-    taskId: 'task-3',
-    title: 'Offer C Weekly Reporting & EPC Check',
-    reminderAt: '2026-08-20T10:00:00',
-    assignedTo: 'Pradeep',
+    id: 'fl-16-1',
+    clientId: 'client-d',
+    clientName: 'Client D',
+    taskId: 'task-16-1',
+    title: 'Follow-up on Onboarding Document Verification',
+    reminderAt: '2026-08-16T15:00:00',
+    assignedTo: 'Elena Rostova',
     status: 'Completed',
-    dueDate: '2026-08-20'
+    dueDate: '2026-08-16'
   },
+  // August 15, 2026 (Previous Date)
   {
-    id: 'fl-4',
-    clientId: 'client-d',
-    clientName: 'Client D',
-    taskId: 'task-4',
-    title: 'Overdue: Onboarding Compliance Review',
-    reminderAt: '2026-08-15T09:00:00',
-    assignedTo: 'Team',
-    status: 'Overdue',
+    id: 'fl-15-1',
+    clientId: 'client-e',
+    clientName: 'Client E',
+    taskId: 'task-15-1',
+    title: 'DataStream API Key Activation Check',
+    reminderAt: '2026-08-15T11:30:00',
+    assignedTo: 'Tech Lead',
+    status: 'Completed',
     dueDate: '2026-08-15'
-  },
-  {
-    id: 'fl-5',
-    clientId: 'client-d',
-    clientName: 'Client D',
-    taskId: 'task-5',
-    title: 'Overdue: Initial Offer Capping Schedule',
-    reminderAt: '2026-08-14T09:00:00',
-    assignedTo: 'Pradeep',
-    status: 'Overdue',
-    dueDate: '2026-08-14'
   }
 ];
 
 export const INITIAL_NOTIFICATIONS: AppNotification[] = [
   {
     id: 'notif-1',
-    title: 'New Client Email Received',
-    message: 'John Miller (Client A): "Please check the performance of Offer A."',
-    type: 'email',
-    timestamp: '10:28 AM',
+    title: 'New High Priority Client Update',
+    message: 'Client A requested Offer A performance review (25,000 test cap).',
+    type: 'task',
+    timestamp: '2026-08-17T10:32:00',
     read: false
   },
   {
     id: 'notif-2',
-    title: 'Upcoming Meeting in 30 mins',
-    message: 'Client A Weekly Sync at 11:00 AM (Google Meet ready)',
+    title: 'Meeting in 30 minutes',
+    message: 'Client A Weekly Sync scheduled for 11:00 AM today.',
     type: 'meeting',
-    timestamp: '10:30 AM',
-    read: false
-  },
-  {
-    id: 'notif-3',
-    title: 'Urgent Overdue Item',
-    message: 'Client D Onboarding Compliance Audit is 2 days overdue',
-    type: 'followup',
-    timestamp: '09:00 AM',
+    timestamp: '2026-08-17T10:30:00',
     read: false
   }
 ];
@@ -583,7 +573,7 @@ export const INITIAL_SETTINGS: SyncSettings = {
   syncCancellations: true,
   syncAttendees: true,
   importMeetLinks: true,
-  frequency: 'Real-time Webhooks',
+  frequency: '15-minute Polling',
   oauthConnected: true,
-  userEmail: 'pradeep@csops-hub.com'
+  userEmail: 'ops@cs-operations-hub.internal'
 };
