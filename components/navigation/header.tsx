@@ -72,16 +72,50 @@ export const Header: React.FC = () => {
 
       {/* Date Switcher & Actions */}
       <div className="flex items-center space-x-4">
-        {/* Date Context Display / Switcher */}
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
-          <CalendarIcon className="w-3.5 h-3.5 text-blue-400" />
-          <span className="text-slate-400 font-sans">Active Date:</span>
+        {/* Date Context Display & Stepper Switcher */}
+        <div className="flex items-center space-x-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-mono">
+          <CalendarIcon className="w-4 h-4 text-blue-400 shrink-0" />
+          <span className="text-slate-400 font-sans font-medium hidden sm:inline">Active Date:</span>
+          
+          {/* Previous Day Button */}
+          <button
+            title="Previous Day"
+            onClick={() => {
+              const dateObj = new Date(`${currentDate}T00:00:00`);
+              dateObj.setDate(dateObj.getDate() - 1);
+              const year = dateObj.getFullYear();
+              const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+              const day = String(dateObj.getDate()).padStart(2, '0');
+              setCurrentDate(`${year}-${month}-${day}`);
+            }}
+            className="px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold border border-slate-800 transition-colors"
+          >
+            ‹
+          </button>
+
+          {/* Interactive Date Input */}
           <input
             type="date"
             value={currentDate}
-            onChange={(e) => setCurrentDate(e.target.value)}
-            className="bg-transparent text-blue-300 font-mono font-semibold focus:outline-none cursor-pointer"
+            onChange={(e) => e.target.value && setCurrentDate(e.target.value)}
+            className="bg-slate-900 border border-slate-700/80 text-blue-300 font-mono font-bold px-2 py-0.5 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer text-xs [color-scheme:dark]"
           />
+
+          {/* Next Day Button */}
+          <button
+            title="Next Day"
+            onClick={() => {
+              const dateObj = new Date(`${currentDate}T00:00:00`);
+              dateObj.setDate(dateObj.getDate() + 1);
+              const year = dateObj.getFullYear();
+              const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+              const day = String(dateObj.getDate()).padStart(2, '0');
+              setCurrentDate(`${year}-${month}-${day}`);
+            }}
+            className="px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold border border-slate-800 transition-colors"
+          >
+            ›
+          </button>
         </div>
 
         {/* Persistent Quick Add Menu (Spec Section 24) */}
