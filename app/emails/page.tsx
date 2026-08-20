@@ -41,7 +41,7 @@ export default function EmailsPage() {
     if (preset === 'perf') {
       setTestSender('john@clienta.com');
       setTestSubject('Please check the performance of Offer A.');
-      setTestBody('Hi Pradeep,\nPlease check the performance of Offer A and prepare an EPC breakdown.\nThanks,\nJohn');
+      setTestBody('Hi Vamshi,\nPlease check the performance of Offer A and prepare an EPC breakdown.\nThanks,\nJohn');
       setActionRequired(true);
     } else if (preset === 'offer') {
       setTestSender('sarah@nexusaffiliate.com');

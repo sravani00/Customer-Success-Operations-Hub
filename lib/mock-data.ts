@@ -176,7 +176,7 @@ export const INITIAL_OFFERS: Offer[] = [
     winnerVariant: 'Variant A2',
     nextTestPlan: 'Scale cap to 50k once capping approval is received.',
     followUpDate: '2026-08-19',
-    owner: 'Pradeep'
+    owner: 'Vamshi'
   },
   {
     id: 'offer-b',
@@ -244,7 +244,7 @@ export const INITIAL_OFFERS: Offer[] = [
     winnerVariant: 'Dark Theme Landing Page',
     nextTestPlan: 'Maintain active cap and review weekly ROI.',
     followUpDate: '2026-08-20',
-    owner: 'Pradeep'
+    owner: 'Vamshi'
   }
 ];
 
@@ -356,7 +356,7 @@ export const INITIAL_EMAILS: EmailMessage[] = [
     sender: 'john@clienta.com',
     category: 'Performance',
     subject: 'Please check the performance of Offer A.',
-    body: 'Hi Pradeep,\n\nCould you please send over the detailed performance breakdown for Offer A? We noticed a spike in volume today and want to check EPC and conversion accuracy.\n\nThanks,\nJohn Miller',
+    body: 'Hi Vamshi,\n\nCould you please send over the detailed performance breakdown for Offer A? We noticed a spike in volume today and want to check EPC and conversion accuracy.\n\nThanks,\nJohn Miller',
     receivedAt: '2026-08-17T10:28:00',
     actionRequired: true,
     processed: true
@@ -410,8 +410,8 @@ export const INITIAL_MEETINGS: Meeting[] = [
     endTime: '2026-08-17T11:45:00',
     meetLink: 'https://meet.google.com/abc-defg-hij',
     status: 'Scheduled',
-    organizer: 'Pradeep (CS Ops)',
-    participants: ['john@clienta.com', 'pradeep@csops.com', 'ops@csops.com'],
+    organizer: 'Vamshi (CS Ops)',
+    participants: ['john@clienta.com', 'vamshi@csops.com', 'ops@csops.com'],
     description: 'Weekly alignment on Offer A performance, capping targets, and creative refresh.',
     meetingNotes: 'Client expressed satisfaction with early test results. Agreed to review cap expansion.',
     keyDecisions: ['Increase test cap on Offer A to 25k', 'Review creative variant A2 on Wednesday'],
@@ -428,7 +428,7 @@ export const INITIAL_MEETINGS: Meeting[] = [
     meetLink: 'https://meet.google.com/vrt-mbl-2026',
     status: 'Scheduled',
     organizer: 'Michael Chang',
-    participants: ['m.chang@vortexglobal.com', 'pradeep@csops.com'],
+    participants: ['m.chang@vortexglobal.com', 'vamshi@csops.com'],
     description: 'Reviewing conversion rates on new dark mode mobile landing page.',
     meetingNotes: 'Early conversion rate +18% higher than desktop control.',
     keyDecisions: ['Allocate 70% mobile traffic to variant B'],
@@ -445,7 +445,7 @@ export const INITIAL_MEETINGS: Meeting[] = [
     meetLink: 'https://meet.google.com/xyz-uvwx-rst',
     status: 'Scheduled',
     organizer: 'Team Lead',
-    participants: ['pradeep@csops.com', 'team@csops.com'],
+    participants: ['vamshi@csops.com', 'team@csops.com'],
     description: 'Reviewing active campaigns, pending test caps, and urgent overdue follow-ups.',
     meetingNotes: 'Focus on resolving overdue items for Client D and preparing executive recap.',
     keyDecisions: ['Prioritize Client A performance review task', 'Re-assign Client D audit'],
@@ -463,7 +463,7 @@ export const INITIAL_MEETINGS: Meeting[] = [
     meetLink: 'https://meet.google.com/apx-onb-2026',
     status: 'Completed',
     organizer: 'Elena Rostova',
-    participants: ['elena@apexpartners.com', 'pradeep@csops.com'],
+    participants: ['elena@apexpartners.com', 'vamshi@csops.com'],
     description: 'Kickoff meeting for Q3 consulting strategy & operations audit.',
     meetingNotes: 'Onboarding milestones established. Document submission completed.',
     keyDecisions: ['Sprint 1 deliverable date set for Aug 28'],
@@ -500,7 +500,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceType: 'Email',
     sourceId: 'em-1',
     title: 'Check Offer A performance & send breakdown report',
-    assignedTo: 'Pradeep',
+    assignedTo: 'Vamshi',
     dueDate: '2026-08-17',
     status: 'In Progress'
   },
@@ -526,7 +526,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceType: 'Update',
     sourceId: 'up-3',
     title: 'Send Mobile Landing Page EPC Report to Michael',
-    assignedTo: 'Pradeep',
+    assignedTo: 'Vamshi',
     dueDate: '2026-08-17',
     status: 'Not Started'
   },
@@ -595,7 +595,7 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     taskId: 'task-1',
     title: 'Offer A Performance Review Sync',
     reminderAt: '2026-08-17T10:00:00',
-    assignedTo: 'Pradeep',
+    assignedTo: 'Vamshi',
     status: 'Due Today',
     dueDate: '2026-08-17'
   },
@@ -621,7 +621,7 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     taskId: 'task-3',
     title: 'Offer C Weekly Reporting & EPC Check',
     reminderAt: '2026-08-17T10:00:00',
-    assignedTo: 'Pradeep',
+    assignedTo: 'Vamshi',
     status: 'Due Today',
     dueDate: '2026-08-17'
   },

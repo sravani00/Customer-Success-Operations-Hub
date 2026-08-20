@@ -156,35 +156,6 @@ export const Sidebar: React.FC = () => {
           );
         })}
       </nav>
-
-      {/* Visual Taxonomy System Legend */}
-      <div className="p-4 mx-3 mb-4 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs">
-        <div className="flex items-center justify-between font-semibold text-slate-300 mb-2.5">
-          <span className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-slate-400">
-            <Sparkles className="w-3 h-3 text-amber-400" /> Visual Taxonomy
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-1.5 font-medium text-[11px]">
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-blue-500/15 text-blue-300 border border-blue-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Client Update
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-purple-500/15 text-purple-300 border border-purple-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span> Internal Update
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Meeting
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/15 text-amber-300 border border-amber-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Offer
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Task
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-rose-500/15 text-rose-300 border border-rose-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span> Follow-up
-          </span>
-        </div>
-      </div>
     </aside>
   );
 };

@@ -242,7 +242,7 @@ export const useAppStore = create<AppState>()(
             sourceType: 'Email',
             sourceId: newEmail.id,
             title: `Review Email: ${subject}`,
-            assignedTo: 'Pradeep',
+            assignedTo: 'Vamshi',
             dueDate: state.currentDate,
             status: 'Not Started'
           };
@@ -257,7 +257,7 @@ export const useAppStore = create<AppState>()(
             taskId: newTask.id,
             title: `Follow up on: ${subject}`,
             reminderAt: `${state.currentDate}T10:00:00`,
-            assignedTo: 'Pradeep',
+            assignedTo: 'Vamshi',
             status: 'Due Today',
             dueDate: state.currentDate
           };

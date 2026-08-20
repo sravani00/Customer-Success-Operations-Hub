@@ -239,10 +239,10 @@ export const Header: React.FC = () => {
         {/* User Profile Badge & Lock Action */}
         <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-indigo-500/30">
-            PR
+            VA
           </div>
           <div className="hidden md:block text-left">
-            <div className="text-xs font-semibold text-slate-200">Pradeep</div>
+            <div className="text-xs font-semibold text-slate-200">Vamshi</div>
             <div className="text-[10px] text-slate-400">CS Ops Lead</div>
           </div>
           <button

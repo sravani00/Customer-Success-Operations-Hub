@@ -22,7 +22,7 @@ export default function CalendarPage() {
   const { currentDate, setCurrentDate, meetings, offers, tasks, followUps, updates } = useAppStore();
 
   const [viewMode, setViewMode] = useState<'month' | 'week' | 'day' | 'agenda'>('month');
-  const [selectedTaxonomy, setSelectedTaxonomy] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   // Parse active date to determine year and month
   const activeDateObj = new Date(`${currentDate}T00:00:00`);
@@ -179,9 +179,9 @@ export default function CalendarPage() {
           ].map((cat) => (
             <button
               key={cat.key}
-              onClick={() => setSelectedTaxonomy(cat.key)}
+              onClick={() => setSelectedCategory(cat.key)}
               className={`px-3 py-1.5 rounded-xl border font-semibold transition-all ${
-                selectedTaxonomy === cat.key
+                selectedCategory === cat.key
                   ? 'bg-blue-600 text-white border-blue-500 shadow-md shadow-blue-600/20'
                   : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
@@ -225,11 +225,11 @@ export default function CalendarPage() {
               const dateFollowUps = followUps.filter((f) => f.dueDate === day.dateStr || f.reminderAt?.startsWith(day.dateStr));
 
               // Determine whether to display categories based on category filter
-              const showUpdates = (selectedTaxonomy === 'all' || selectedTaxonomy === 'updates') && dateUpdates.length > 0;
-              const showMeetings = (selectedTaxonomy === 'all' || selectedTaxonomy === 'meetings') && dateMeetings.length > 0;
-              const showOffers = (selectedTaxonomy === 'all' || selectedTaxonomy === 'offers') && dateOffers.length > 0;
-              const showTasks = (selectedTaxonomy === 'all' || selectedTaxonomy === 'tasks') && dateTasks.length > 0;
-              const showFollowUps = (selectedTaxonomy === 'all' || selectedTaxonomy === 'followups') && dateFollowUps.length > 0;
+              const showUpdates = (selectedCategory === 'all' || selectedCategory === 'updates') && dateUpdates.length > 0;
+              const showMeetings = (selectedCategory === 'all' || selectedCategory === 'meetings') && dateMeetings.length > 0;
+              const showOffers = (selectedCategory === 'all' || selectedCategory === 'offers') && dateOffers.length > 0;
+              const showTasks = (selectedCategory === 'all' || selectedCategory === 'tasks') && dateTasks.length > 0;
+              const showFollowUps = (selectedCategory === 'all' || selectedCategory === 'followups') && dateFollowUps.length > 0;
 
               return (
                 <div

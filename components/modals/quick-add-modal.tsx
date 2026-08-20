@@ -37,7 +37,7 @@ export const QuickAddModal: React.FC = () => {
   const [offerNetwork, setOfferNetwork] = useState('Network X');
   const [offerVolume, setOfferVolume] = useState(25000);
   const [offerRevenue, setOfferRevenue] = useState(5000);
-  const [offerOwner, setOfferOwner] = useState('Pradeep');
+  const [offerOwner, setOfferOwner] = useState('Vamshi');
 
   // Meeting state
   const [meetingTitle, setMeetingTitle] = useState('');
@@ -47,13 +47,13 @@ export const QuickAddModal: React.FC = () => {
   // Task state
   const [taskTitle, setTaskTitle] = useState('');
   const [taskClientId, setTaskClientId] = useState(clients[0]?.id || '');
-  const [taskAssignedTo, setTaskAssignedTo] = useState('Pradeep');
+  const [taskAssignedTo, setTaskAssignedTo] = useState('Vamshi');
   const [taskDueDate, setTaskDueDate] = useState(currentDate);
 
   // Follow-up state
   const [followUpTitle, setFollowUpTitle] = useState('');
   const [followUpClientId, setFollowUpClientId] = useState(clients[0]?.id || '');
-  const [followUpAssignedTo, setFollowUpAssignedTo] = useState('Pradeep');
+  const [followUpAssignedTo, setFollowUpAssignedTo] = useState('Vamshi');
   const [followUpDueDate, setFollowUpDueDate] = useState(currentDate);
 
   if (!isQuickAddOpen) return null;
