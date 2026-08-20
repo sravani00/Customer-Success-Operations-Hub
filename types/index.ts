@@ -1,4 +1,5 @@
 export type ClientStatus = 'Active' | 'Onboarding' | 'Inactive';
+export type ClientSubModule = 'Affiliate Client' | 'Data Partner' | 'Consulting' | 'Lead';
 
 export interface PrimaryContact {
   name: string;
@@ -12,9 +13,12 @@ export interface Client {
   name: string;
   company: string;
   status: ClientStatus;
+  subModule: ClientSubModule;
   industry: string;
   primaryContact: PrimaryContact;
   createdAt: string;
+  metricsSummary?: string;
+  leadStage?: 'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won';
 }
 
 export type OfferStatus = 'Active' | 'Testing' | 'Pending' | 'Paused';

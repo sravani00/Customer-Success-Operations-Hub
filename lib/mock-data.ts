@@ -16,6 +16,7 @@ export const INITIAL_CLIENTS: Client[] = [
     name: 'Client A',
     company: 'Acme Growth Media',
     status: 'Active',
+    subModule: 'Affiliate Client',
     industry: 'Digital Marketing & Affiliate',
     primaryContact: {
       name: 'John Miller',
@@ -23,13 +24,15 @@ export const INITIAL_CLIENTS: Client[] = [
       phone: '+1 (555) 234-5678',
       role: 'VP of Performance Marketing'
     },
-    createdAt: '2026-01-15'
+    createdAt: '2026-01-15',
+    metricsSummary: '$45,000 / mo traffic volume'
   },
   {
     id: 'client-b',
     name: 'Client B',
     company: 'Nexus Affiliate Network',
     status: 'Active',
+    subModule: 'Affiliate Client',
     industry: 'E-Commerce & Lead Gen',
     primaryContact: {
       name: 'Sarah Jenkins',
@@ -37,35 +40,106 @@ export const INITIAL_CLIENTS: Client[] = [
       phone: '+1 (555) 876-5432',
       role: 'Head of Strategic Partnerships'
     },
-    createdAt: '2026-03-01'
+    createdAt: '2026-03-01',
+    metricsSummary: '12 Active Offers'
   },
   {
     id: 'client-c',
     name: 'Client C',
     company: 'Vortex Global Tech',
     status: 'Active',
-    industry: 'SaaS & Mobile Apps',
+    subModule: 'Data Partner',
+    industry: 'SaaS & Data Feeds',
     primaryContact: {
       name: 'Michael Chang',
       email: 'm.chang@vortexglobal.com',
       phone: '+1 (555) 345-6789',
       role: 'Operations Director'
     },
-    createdAt: '2026-05-10'
+    createdAt: '2026-05-10',
+    metricsSummary: '1.2M API Records / day'
   },
   {
     id: 'client-d',
     name: 'Client D',
-    company: 'Apex Partners',
+    company: 'Apex Partners Consulting',
     status: 'Onboarding',
-    industry: 'Financial Services',
+    subModule: 'Consulting',
+    industry: 'Financial Advisory & CS Ops',
     primaryContact: {
       name: 'Elena Rostova',
       email: 'elena@apexpartners.com',
       phone: '+1 (555) 901-2345',
       role: 'Account Lead'
     },
-    createdAt: '2026-08-01'
+    createdAt: '2026-08-01',
+    metricsSummary: 'Q3 Strategy Project'
+  },
+  {
+    id: 'client-e',
+    name: 'Client E',
+    company: 'DataStream Insights Inc',
+    status: 'Active',
+    subModule: 'Data Partner',
+    industry: 'Consumer Data & Validation',
+    primaryContact: {
+      name: 'David Vance',
+      email: 'd.vance@datastream.com',
+      phone: '+1 (555) 432-1098',
+      role: 'VP Data Operations'
+    },
+    createdAt: '2026-06-18',
+    metricsSummary: 'Email & Phone Enrichment API'
+  },
+  {
+    id: 'client-f',
+    name: 'Client F',
+    company: 'StratSphere Advisory Services',
+    status: 'Active',
+    subModule: 'Consulting',
+    industry: 'Enterprise Operations Consulting',
+    primaryContact: {
+      name: 'Rachel Sterling',
+      email: 'rachel@stratsphere.io',
+      phone: '+1 (555) 765-4321',
+      role: 'Senior Partner'
+    },
+    createdAt: '2026-07-04',
+    metricsSummary: 'Workflow Optimization Sprint'
+  },
+  {
+    id: 'client-g',
+    name: 'Client G',
+    company: 'NovaTech Media Solutions',
+    status: 'Onboarding',
+    subModule: 'Lead',
+    industry: 'Performance Marketing',
+    primaryContact: {
+      name: 'Marcus Brody',
+      email: 'marcus@novatech.com',
+      phone: '+1 (555) 890-1234',
+      role: 'Chief Revenue Officer'
+    },
+    createdAt: '2026-08-12',
+    leadStage: 'Proposal',
+    metricsSummary: 'Est. $28,000 Deal Value'
+  },
+  {
+    id: 'client-h',
+    name: 'Client H',
+    company: 'OmniReach Ad Network',
+    status: 'Onboarding',
+    subModule: 'Lead',
+    industry: 'Lead Generation',
+    primaryContact: {
+      name: 'Amanda Cross',
+      email: 'a.cross@omnireach.com',
+      phone: '+1 (555) 678-9012',
+      role: 'VP Sales'
+    },
+    createdAt: '2026-08-15',
+    leadStage: 'Discovery',
+    metricsSummary: 'Est. $42,000 Deal Value'
   }
 ];
 

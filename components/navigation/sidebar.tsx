@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -15,14 +15,31 @@ import {
   FileSpreadsheet, 
   Settings,
   Sparkles,
-  Layers
+  Layers,
+  ChevronDown,
+  ChevronRight,
+  Share2,
+  Database,
+  Briefcase,
+  UserPlus
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 const NAVIGATION_ITEMS = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Calendar', href: '/calendar', icon: CalendarIcon },
-  { name: 'Clients', href: '/clients', icon: Users },
+  { 
+    name: 'Clients', 
+    href: '/clients', 
+    icon: Users,
+    subItems: [
+      { name: 'All Directory', href: '/clients', icon: Users },
+      { name: 'Affiliate Clients', href: '/clients/affiliates', icon: Share2 },
+      { name: 'Data Partners', href: '/clients/data-partners', icon: Database },
+      { name: 'Consulting', href: '/clients/consulting', icon: Briefcase },
+      { name: 'Leads Pipeline', href: '/clients/leads', icon: UserPlus },
+    ]
+  },
   { name: 'Offers', href: '/offers', icon: Package },
   { name: 'Emails', href: '/emails', icon: Mail, badge: 'Auto-sync' },
   { name: 'Meetings', href: '/meetings', icon: Video },
@@ -35,6 +52,7 @@ const NAVIGATION_ITEMS = [
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { followUps } = useAppStore();
+  const [clientsExpanded, setClientsExpanded] = useState(pathname.startsWith('/clients'));
 
   const overdueCount = followUps.filter((f) => f.status === 'Overdue').length;
 
@@ -61,8 +79,59 @@ export const Sidebar: React.FC = () => {
         </div>
         
         {NAVIGATION_ITEMS.map((item) => {
-          const isActive = pathname === item.href || (pathname === '/' && item.href === '/dashboard');
+          const isClientsGroup = item.name === 'Clients';
+          const isActive = isClientsGroup
+            ? pathname.startsWith('/clients')
+            : pathname === item.href || (pathname === '/' && item.href === '/dashboard');
           const Icon = item.icon;
+
+          if (isClientsGroup) {
+            return (
+              <div key={item.name} className="space-y-1">
+                <div
+                  onClick={() => setClientsExpanded(!clientsExpanded)}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30 font-semibold'
+                      : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-blue-400' : 'text-slate-400'}`} />
+                    <span>{item.name}</span>
+                  </div>
+                  {clientsExpanded ? (
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                  )}
+                </div>
+
+                {clientsExpanded && item.subItems && (
+                  <div className="pl-6 space-y-1 animate-in fade-in duration-150">
+                    {item.subItems.map((sub) => {
+                      const isSubActive = pathname === sub.href;
+                      const SubIcon = sub.icon;
+                      return (
+                        <Link
+                          key={sub.name}
+                          href={sub.href}
+                          className={`flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                            isSubActive
+                              ? 'bg-blue-600 text-white font-semibold shadow-sm'
+                              : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                          }`}
+                        >
+                          <SubIcon className="w-3.5 h-3.5 shrink-0" />
+                          <span>{sub.name}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          }
 
           return (
             <Link
@@ -95,7 +164,7 @@ export const Sidebar: React.FC = () => {
         })}
       </nav>
 
-      {/* Visual Taxonomy System Legend (Spec Section 3) */}
+      {/* Visual Taxonomy System Legend */}
       <div className="p-4 mx-3 mb-4 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs">
         <div className="flex items-center justify-between font-semibold text-slate-300 mb-2.5">
           <span className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-slate-400">
