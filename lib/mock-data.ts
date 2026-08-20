@@ -380,7 +380,24 @@ export const INITIAL_EMAILS: EmailMessage[] = [
 ];
 
 export const INITIAL_MEETINGS: Meeting[] = [
-  // August 17, 2026 (Today)
+  // August 17, 2026 (Active Date / Today)
+  {
+    id: 'meet-3',
+    googleEventId: 'evt-903',
+    clientId: 'client-b',
+    clientName: 'Client B',
+    title: 'Offer B Capping & Revenue Review',
+    startTime: '2026-08-17T09:00:00',
+    endTime: '2026-08-17T09:30:00',
+    meetLink: 'https://meet.google.com/mno-pqrs-tuv',
+    status: 'Completed',
+    organizer: 'Sarah Jenkins',
+    participants: ['sarah@nexusaffiliate.com', 'team@csops.com'],
+    description: 'Morning sync on Offer B daily volume caps.',
+    meetingNotes: 'Cap held at 40k. EPC steady at $0.22.',
+    keyDecisions: ['Maintain current traffic sources'],
+    actionItems: ['Confirm testing cap for next variant']
+  },
   {
     id: 'meet-1',
     googleEventId: 'evt-901',
@@ -399,6 +416,23 @@ export const INITIAL_MEETINGS: Meeting[] = [
     meetingNotes: 'Client expressed satisfaction with early test results. Agreed to review cap expansion.',
     keyDecisions: ['Increase test cap on Offer A to 25k', 'Review creative variant A2 on Wednesday'],
     actionItems: ['Prepare EPC metrics table', 'Schedule follow-up sync for Aug 19']
+  },
+  {
+    id: 'meet-4',
+    googleEventId: 'evt-904',
+    clientId: 'client-c',
+    clientName: 'Client C',
+    title: 'Client C Mobile Landing Page Test Review',
+    startTime: '2026-08-17T14:30:00',
+    endTime: '2026-08-17T15:15:00',
+    meetLink: 'https://meet.google.com/vrt-mbl-2026',
+    status: 'Scheduled',
+    organizer: 'Michael Chang',
+    participants: ['m.chang@vortexglobal.com', 'pradeep@csops.com'],
+    description: 'Reviewing conversion rates on new dark mode mobile landing page.',
+    meetingNotes: 'Early conversion rate +18% higher than desktop control.',
+    keyDecisions: ['Allocate 70% mobile traffic to variant B'],
+    actionItems: ['Prepare performance report for Michael']
   },
   {
     id: 'meet-2',
@@ -456,7 +490,7 @@ export const INITIAL_MEETINGS: Meeting[] = [
 ];
 
 export const INITIAL_TASKS: TaskItem[] = [
-  // August 17, 2026 (Today)
+  // August 17, 2026 (Active Date / Today)
   {
     id: 'task-1',
     clientId: 'client-a',
@@ -478,10 +512,43 @@ export const INITIAL_TASKS: TaskItem[] = [
     offerName: 'Offer B',
     sourceType: 'Meeting',
     sourceId: 'meet-3',
-    title: 'Confirm Testing Cap on Offer B variant',
-    assignedTo: 'Team',
-    dueDate: '2026-08-18',
+    title: 'Confirm Testing Cap & Payout on Offer B variant',
+    assignedTo: 'Sarah Jenkins',
+    dueDate: '2026-08-17',
+    status: 'In Progress'
+  },
+  {
+    id: 'task-3',
+    clientId: 'client-c',
+    clientName: 'Client C',
+    offerId: 'offer-c',
+    offerName: 'Offer C',
+    sourceType: 'Update',
+    sourceId: 'up-3',
+    title: 'Send Mobile Landing Page EPC Report to Michael',
+    assignedTo: 'Pradeep',
+    dueDate: '2026-08-17',
     status: 'Not Started'
+  },
+  {
+    id: 'task-4',
+    clientId: 'client-d',
+    clientName: 'Client D',
+    sourceType: 'Manual',
+    title: 'Verify Q3 Onboarding Compliance Audit Checklist',
+    assignedTo: 'Elena Rostova',
+    dueDate: '2026-08-17',
+    status: 'Completed'
+  },
+  {
+    id: 'task-5',
+    clientId: 'client-e',
+    clientName: 'Client E',
+    sourceType: 'Manual',
+    title: 'Audit DataStream API Traffic Metrics & Webhook Uptime',
+    assignedTo: 'Tech Lead',
+    dueDate: '2026-08-17',
+    status: 'Waiting'
   },
   // August 16, 2026 (Previous Date)
   {
@@ -491,6 +558,16 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceType: 'Manual',
     title: 'Audit Apex Partners Q3 Onboarding Documents',
     assignedTo: 'Elena Rostova',
+    dueDate: '2026-08-16',
+    status: 'Completed'
+  },
+  {
+    id: 'task-16-2',
+    clientId: 'client-a',
+    clientName: 'Client A',
+    sourceType: 'Manual',
+    title: 'Review 25,000 traffic cap request for Offer A',
+    assignedTo: 'John Miller',
     dueDate: '2026-08-16',
     status: 'Completed'
   },
@@ -508,7 +585,7 @@ export const INITIAL_TASKS: TaskItem[] = [
 ];
 
 export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
-  // August 17, 2026 (Today)
+  // August 17, 2026 (Active Date / Today)
   {
     id: 'fl-1',
     clientId: 'client-a',
@@ -517,6 +594,32 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     offerName: 'Offer A',
     taskId: 'task-1',
     title: 'Offer A Performance Review Sync',
+    reminderAt: '2026-08-17T10:00:00',
+    assignedTo: 'Pradeep',
+    status: 'Due Today',
+    dueDate: '2026-08-17'
+  },
+  {
+    id: 'fl-2',
+    clientId: 'client-b',
+    clientName: 'Client B',
+    offerId: 'offer-b',
+    offerName: 'Offer B',
+    taskId: 'task-2',
+    title: 'Offer B Testing Confirmation',
+    reminderAt: '2026-08-17T10:00:00',
+    assignedTo: 'Team',
+    status: 'Due Today',
+    dueDate: '2026-08-17'
+  },
+  {
+    id: 'fl-3',
+    clientId: 'client-c',
+    clientName: 'Client C',
+    offerId: 'offer-c',
+    offerName: 'Offer C',
+    taskId: 'task-3',
+    title: 'Offer C Weekly Reporting & EPC Check',
     reminderAt: '2026-08-17T10:00:00',
     assignedTo: 'Pradeep',
     status: 'Due Today',
