@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Video, 
   Plus, 
@@ -15,7 +15,8 @@ import {
 import { useAppStore } from '../../lib/store';
 
 export default function MeetingsPage() {
-  const { meetings, openQuickAdd } = useAppStore();
+  const { currentDate, meetings, openQuickAdd } = useAppStore();
+  const [filterMode, setFilterMode] = useState<'date' | 'all'>('date');
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
