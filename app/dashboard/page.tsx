@@ -48,7 +48,7 @@ export default function DashboardPage() {
             Customer Success Operations Center
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-xl">
-            Unified command center for client communications, internal updates, scheduled meetings, active offer tracking, task execution, and automated follow-ups.
+            Unified command center for client communications, internal updates, scheduled meetings, task execution, and automated follow-ups.
           </p>
         </div>
         <div className="flex items-center space-x-3 relative z-10 shrink-0">
@@ -63,7 +63,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Section 2: Top Overview Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {/* Card 1: Client Updates */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm hover:border-slate-700 transition-all">
           <div className="flex items-center justify-between text-slate-400 mb-2">
@@ -82,16 +82,6 @@ export default function DashboardPage() {
           </div>
           <div className="text-2xl font-bold text-white">{meetings.length}</div>
           <div className="text-[11px] text-slate-500 mt-1">Syncs scheduled</div>
-        </div>
-
-        {/* Card 3: Active Offers */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm hover:border-slate-700 transition-all">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-[11px] font-semibold uppercase tracking-wider">Active Offers</span>
-            <Package className="w-4 h-4 text-amber-400" />
-          </div>
-          <div className="text-2xl font-bold text-white">{activeOffersCount + 15}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Live campaigns</div>
         </div>
 
         {/* Card 4: Follow-ups Today */}

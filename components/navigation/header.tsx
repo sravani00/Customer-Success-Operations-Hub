@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search clients, offers, emails, tasks, meetings..."
+            placeholder="Search clients, meetings, tasks, follow-ups..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
@@ -109,13 +109,6 @@ export const Header: React.FC = () => {
               >
                 <FileText className="w-4 h-4 text-blue-400" />
                 <span>+ Client / Internal Update</span>
-              </button>
-              <button
-                onClick={() => { openQuickAdd('offer'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
-              >
-                <Package className="w-4 h-4 text-amber-400" />
-                <span>+ Promotional Offer</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('meeting'); setShowQuickMenu(false); }}

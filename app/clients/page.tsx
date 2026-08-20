@@ -338,8 +338,8 @@ export default function ClientsPage() {
                   {/* Metrics & Sub-Module Info */}
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div className="p-2.5 bg-slate-950/40 rounded-xl border border-slate-800 flex items-center justify-between">
-                      <span className="text-slate-400">Offers / Assets:</span>
-                      <span className="font-bold text-amber-400 font-mono">{clientOffers.length}</span>
+                      <span className="text-slate-400">Account Type:</span>
+                      <span className="font-bold text-blue-400 font-mono">{client.subModule}</span>
                     </div>
                     <div className="p-2.5 bg-slate-950/40 rounded-xl border border-slate-800 flex items-center justify-between">
                       <span className="text-slate-400">Sub-Module Focus:</span>

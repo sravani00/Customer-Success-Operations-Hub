@@ -40,8 +40,6 @@ const NAVIGATION_ITEMS = [
       { name: 'Leads Pipeline', href: '/clients/leads', icon: UserPlus },
     ]
   },
-  { name: 'Offers', href: '/offers', icon: Package },
-  { name: 'Emails', href: '/emails', icon: Mail, badge: 'Auto-sync' },
   { name: 'Meetings', href: '/meetings', icon: Video },
   { name: 'Tasks', href: '/tasks', icon: CheckSquare },
   { name: 'Follow-ups', href: '/follow-ups', icon: Clock },
@@ -151,12 +149,6 @@ export const Sidebar: React.FC = () => {
               {item.name === 'Follow-ups' && overdueCount > 0 && (
                 <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
                   {overdueCount}
-                </span>
-              )}
-
-              {item.badge && item.name !== 'Follow-ups' && (
-                <span className="px-1.5 py-0.5 text-[10px] font-mono rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  {item.badge}
                 </span>
               )}
             </Link>
