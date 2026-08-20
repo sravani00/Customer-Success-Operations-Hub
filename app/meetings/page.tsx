@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   Video, 
   Plus, 
@@ -10,7 +11,8 @@ import {
   Clock, 
   FileText, 
   Sparkles,
-  Users
+  Users,
+  ArrowLeft
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
@@ -27,6 +29,11 @@ export default function MeetingsPage() {
             <Video className="w-5 h-5" />
           </div>
           <div>
+            <div className="flex items-center space-x-2 mb-1">
+              <Link href="/dashboard" className="text-xs text-blue-400 hover:underline flex items-center gap-1">
+                <ArrowLeft className="w-3 h-3" /> Back to Operations Dashboard
+              </Link>
+            </div>
             <h1 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
               Google Calendar & Meet Integration Hub
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono">Bi-directional Sync</span>

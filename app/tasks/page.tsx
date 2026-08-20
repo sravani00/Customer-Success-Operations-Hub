@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   CheckSquare, 
   Plus, 
@@ -9,7 +10,8 @@ import {
   Mail, 
   Video, 
   FileText, 
-  CheckCircle2
+  CheckCircle2,
+  ArrowLeft
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
@@ -26,6 +28,11 @@ export default function TasksPage() {
             <CheckSquare className="w-5 h-5" />
           </div>
           <div>
+            <div className="flex items-center space-x-2 mb-1">
+              <Link href="/dashboard" className="text-xs text-blue-400 hover:underline flex items-center gap-1">
+                <ArrowLeft className="w-3 h-3" /> Back to Operations Dashboard
+              </Link>
+            </div>
             <h1 className="text-xl font-bold text-white tracking-tight">
               Operational Task Management
             </h1>
