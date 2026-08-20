@@ -261,7 +261,7 @@ export const INITIAL_UPDATES: ClientUpdate[] = [
     message: 'Client A requested Offer A performance review and conversion report.',
     priority: 'High',
     status: 'In Review',
-    timestamp: '2026-08-17T10:32:00',
+    timestamp: '2026-08-20T10:32:00',
     primarySubject: 'John Miller (Client A)'
   },
   {
@@ -275,7 +275,7 @@ export const INITIAL_UPDATES: ClientUpdate[] = [
     message: 'Client B shared new campaign offer list with updated payout rates.',
     priority: 'Medium',
     status: 'New',
-    timestamp: '2026-08-17T11:15:00',
+    timestamp: '2026-08-20T11:15:00',
     primarySubject: 'Sarah Jenkins (Client B)'
   },
   {
@@ -289,7 +289,7 @@ export const INITIAL_UPDATES: ClientUpdate[] = [
     message: 'Client C requested campaign testing for new mobile landing page variant.',
     priority: 'Medium',
     status: 'New',
-    timestamp: '2026-08-17T13:45:00',
+    timestamp: '2026-08-20T13:45:00',
     primarySubject: 'Michael Chang (Client C)'
   },
   // August 16, 2026 (Previous Date)
@@ -357,7 +357,7 @@ export const INITIAL_EMAILS: EmailMessage[] = [
     category: 'Performance',
     subject: 'Please check the performance of Offer A.',
     body: 'Hi Vamshi,\n\nCould you please send over the detailed performance breakdown for Offer A? We noticed a spike in volume today and want to check EPC and conversion accuracy.\n\nThanks,\nJohn Miller',
-    receivedAt: '2026-08-17T10:28:00',
+    receivedAt: '2026-08-20T10:28:00',
     actionRequired: true,
     processed: true
   },
@@ -373,7 +373,7 @@ export const INITIAL_EMAILS: EmailMessage[] = [
     category: 'New Offer',
     subject: 'New Offer list for Q3 - Nexus Affiliate',
     body: 'Hello Team,\n\nWe have just pushed 5 new wellness offers live for testing. Please review the attached creative guidelines and let us know your cap requirements.\n\nBest,\nSarah',
-    receivedAt: '2026-08-17T11:10:00',
+    receivedAt: '2026-08-20T11:10:00',
     actionRequired: true,
     processed: true
   }
@@ -387,8 +387,8 @@ export const INITIAL_MEETINGS: Meeting[] = [
     clientId: 'client-b',
     clientName: 'Client B',
     title: 'Offer B Capping & Revenue Review',
-    startTime: '2026-08-17T09:00:00',
-    endTime: '2026-08-17T09:30:00',
+    startTime: '2026-08-20T09:00:00',
+    endTime: '2026-08-20T09:30:00',
     meetLink: 'https://meet.google.com/mno-pqrs-tuv',
     status: 'Completed',
     organizer: 'Sarah Jenkins',
@@ -406,8 +406,8 @@ export const INITIAL_MEETINGS: Meeting[] = [
     offerId: 'offer-a',
     offerName: 'Offer A',
     title: 'Client A Weekly Sync',
-    startTime: '2026-08-17T11:00:00',
-    endTime: '2026-08-17T11:45:00',
+    startTime: '2026-08-20T11:00:00',
+    endTime: '2026-08-20T11:45:00',
     meetLink: 'https://meet.google.com/abc-defg-hij',
     status: 'Scheduled',
     organizer: 'Vamshi (CS Ops)',
@@ -423,8 +423,8 @@ export const INITIAL_MEETINGS: Meeting[] = [
     clientId: 'client-c',
     clientName: 'Client C',
     title: 'Client C Mobile Landing Page Test Review',
-    startTime: '2026-08-17T14:30:00',
-    endTime: '2026-08-17T15:15:00',
+    startTime: '2026-08-20T14:30:00',
+    endTime: '2026-08-20T15:15:00',
     meetLink: 'https://meet.google.com/vrt-mbl-2026',
     status: 'Scheduled',
     organizer: 'Michael Chang',
@@ -440,8 +440,8 @@ export const INITIAL_MEETINGS: Meeting[] = [
     clientId: 'internal',
     clientName: 'Internal CS Team',
     title: 'Internal Campaign Strategy Review',
-    startTime: '2026-08-17T16:00:00',
-    endTime: '2026-08-17T17:00:00',
+    startTime: '2026-08-20T16:00:00',
+    endTime: '2026-08-20T17:00:00',
     meetLink: 'https://meet.google.com/xyz-uvwx-rst',
     status: 'Scheduled',
     organizer: 'Team Lead',
@@ -501,7 +501,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceId: 'em-1',
     title: 'Check Offer A performance & send breakdown report',
     assignedTo: 'Vamshi',
-    dueDate: '2026-08-17',
+    dueDate: '2026-08-20',
     status: 'In Progress'
   },
   {
@@ -514,7 +514,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceId: 'meet-3',
     title: 'Confirm Testing Cap & Payout on Offer B variant',
     assignedTo: 'Sarah Jenkins',
-    dueDate: '2026-08-17',
+    dueDate: '2026-08-20',
     status: 'In Progress'
   },
   {
@@ -527,7 +527,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceId: 'up-3',
     title: 'Send Mobile Landing Page EPC Report to Michael',
     assignedTo: 'Vamshi',
-    dueDate: '2026-08-17',
+    dueDate: '2026-08-20',
     status: 'Not Started'
   },
   {
@@ -537,7 +537,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceType: 'Manual',
     title: 'Verify Q3 Onboarding Compliance Audit Checklist',
     assignedTo: 'Elena Rostova',
-    dueDate: '2026-08-17',
+    dueDate: '2026-08-20',
     status: 'Completed'
   },
   {
@@ -547,7 +547,7 @@ export const INITIAL_TASKS: TaskItem[] = [
     sourceType: 'Manual',
     title: 'Audit DataStream API Traffic Metrics & Webhook Uptime',
     assignedTo: 'Tech Lead',
-    dueDate: '2026-08-17',
+    dueDate: '2026-08-20',
     status: 'Waiting'
   },
   // August 16, 2026 (Previous Date)
@@ -594,10 +594,10 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     offerName: 'Offer A',
     taskId: 'task-1',
     title: 'Offer A Performance Review Sync',
-    reminderAt: '2026-08-17T10:00:00',
+    reminderAt: '2026-08-20T10:00:00',
     assignedTo: 'Vamshi',
     status: 'Due Today',
-    dueDate: '2026-08-17'
+    dueDate: '2026-08-20'
   },
   {
     id: 'fl-2',
@@ -620,10 +620,10 @@ export const INITIAL_FOLLOWUPS: FollowUpItem[] = [
     offerName: 'Offer C',
     taskId: 'task-3',
     title: 'Offer C Weekly Reporting & EPC Check',
-    reminderAt: '2026-08-17T10:00:00',
+    reminderAt: '2026-08-20T10:00:00',
     assignedTo: 'Vamshi',
     status: 'Due Today',
-    dueDate: '2026-08-17'
+    dueDate: '2026-08-20'
   },
   // August 16, 2026 (Previous Date)
   {
@@ -657,7 +657,7 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
     title: 'New High Priority Client Update',
     message: 'Client A requested Offer A performance review (25,000 test cap).',
     type: 'task',
-    timestamp: '2026-08-17T10:32:00',
+    timestamp: '2026-08-20T10:32:00',
     read: false
   },
   {
@@ -665,7 +665,7 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
     title: 'Meeting in 30 minutes',
     message: 'Client A Weekly Sync scheduled for 11:00 AM today.',
     type: 'meeting',
-    timestamp: '2026-08-17T10:30:00',
+    timestamp: '2026-08-20T10:30:00',
     read: false
   }
 ];

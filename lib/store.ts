@@ -76,6 +76,14 @@ interface AppState {
   resetToDefaults: () => void;
 }
 
+const getTodayDateString = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
@@ -89,7 +97,7 @@ export const useAppStore = create<AppState>()(
       notifications: INITIAL_NOTIFICATIONS,
       settings: INITIAL_SETTINGS,
 
-      currentDate: '2026-08-17',
+      currentDate: getTodayDateString(),
       searchQuery: '',
       isQuickAddOpen: false,
       quickAddType: null,

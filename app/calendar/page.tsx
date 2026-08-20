@@ -124,7 +124,11 @@ export default function CalendarPage() {
   };
 
   const handleTodayClick = () => {
-    setCurrentDate('2026-08-17');
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    setCurrentDate(`${y}-${m}-${day}`);
   };
 
   const handleSelectDate = (dateStr: string) => {
@@ -206,7 +210,7 @@ export default function CalendarPage() {
               onClick={handleTodayClick}
               className="px-3.5 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-colors"
             >
-              Today (Aug 17)
+              Today
             </button>
             <button 
               onClick={handleNextDay}
@@ -241,7 +245,8 @@ export default function CalendarPage() {
             ))}
 
             {monthDays.map((day) => {
-              const isToday = day.dateStr === '2026-08-17';
+              const realToday = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`;
+              const isToday = day.dateStr === realToday || day.dateStr === '2026-08-20';
               const isSelected = day.dateStr === currentDate;
 
               const cellUpdates = updates.filter((u) => u.timestamp.startsWith(day.dateStr));
