@@ -40,6 +40,7 @@ const NAVIGATION_ITEMS = [
       { name: 'Leads Pipeline', href: '/clients/leads', icon: UserPlus },
     ]
   },
+  { name: 'Offers', href: '/offers', icon: Package },
   { name: 'Meetings', href: '/meetings', icon: Video },
   { name: 'Tasks', href: '/tasks', icon: CheckSquare },
   { name: 'Follow-ups', href: '/follow-ups', icon: Clock },

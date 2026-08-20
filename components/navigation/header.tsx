@@ -111,6 +111,13 @@ export const Header: React.FC = () => {
                 <span>+ Client / Internal Update</span>
               </button>
               <button
+                onClick={() => { openQuickAdd('offer'); setShowQuickMenu(false); }}
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+              >
+                <Package className="w-4 h-4 text-amber-400" />
+                <span>+ Promotional Offer</span>
+              </button>
+              <button
                 onClick={() => { openQuickAdd('meeting'); setShowQuickMenu(false); }}
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
               >
