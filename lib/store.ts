@@ -340,6 +340,7 @@ export const useAppStore = create<AppState>()(
               subModule: 'Affiliate Networks',
               subModuleCategory: 'Resolute',
               communicationMode: 'Email',
+              description: 'Primary performance affiliate channel running financial & credit score offers.',
               primaryContact: { name: 'John Miller', email: 'john@clienta.com', phone: '+1 555-2345', role: 'VP Marketing' },
               createdAt: todayStr,
               metricsSummary: '$45,000 / mo traffic volume'
@@ -351,7 +352,8 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Affiliate Networks',
               subModuleCategory: 'Partners',
-              communicationMode: 'Slack',
+              communicationMode: 'Telegram',
+              description: 'Strategic publisher network partnership running co-registered affiliate campaigns.',
               primaryContact: { name: 'Sarah Jenkins', email: 'sarah@nexusaffiliate.com', phone: '+1 555-8765', role: 'Head Partnerships' },
               createdAt: todayStr,
               metricsSummary: '12 Active Campaigns'
@@ -364,6 +366,7 @@ export const useAppStore = create<AppState>()(
               subModule: 'Data Partner',
               subModuleCategory: 'Agreement',
               communicationMode: 'Teams',
+              description: 'Fixed SLA contract data enrichment partner streaming 1.2M API records daily.',
               primaryContact: { name: 'Michael Chang', email: 'm.chang@vortexglobal.com', phone: '+1 555-3456', role: 'Ops Director' },
               createdAt: todayStr,
               metricsSummary: '1.2M API Records / day (Agreement)'
@@ -376,6 +379,7 @@ export const useAppStore = create<AppState>()(
               subModule: 'Data Partner',
               subModuleCategory: 'Rev-Share',
               communicationMode: 'WhatsApp',
+              description: 'Revenue share data monetization partner splitting API monetization 50/50.',
               primaryContact: { name: 'Rachel Vance', email: 'rachel@omnidata.io', phone: '+1 555-4321', role: 'VP Partnerships' },
               createdAt: todayStr,
               metricsSummary: '50/50 Data Rev-Share Split'
@@ -388,6 +392,7 @@ export const useAppStore = create<AppState>()(
               subModule: 'Consulting',
               subModuleCategory: 'Resolute',
               communicationMode: 'Skype',
+              description: 'Strategic customer success consulting & Resolute architecture advisory account.',
               primaryContact: { name: 'Elena Rostova', email: 'elena@apexpartners.com', phone: '+1 555-9012', role: 'Account Lead' },
               createdAt: todayStr,
               metricsSummary: 'Q3 Resolute Strategy Project'
@@ -400,6 +405,7 @@ export const useAppStore = create<AppState>()(
               subModule: 'Consulting',
               subModuleCategory: 'Ongage',
               communicationMode: 'Email',
+              description: 'Ongage ESP email platform setup, deliverability monitoring, and API integration sprint.',
               primaryContact: { name: 'David Vance', email: 'david@ongage.com', phone: '+1 555-6543', role: 'Solutions Director' },
               createdAt: todayStr,
               metricsSummary: 'Ongage ESP Migration & Delivery'

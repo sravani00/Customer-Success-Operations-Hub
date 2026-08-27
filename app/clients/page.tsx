@@ -23,7 +23,7 @@ import {
   X
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
-import { ClientSubModule, ClientStatus } from '../../types';
+import { ClientSubModule, ClientSubCategory, ClientStatus } from '../../types';
 
 export default function ClientsPage() {
   const { clients, offers, updates, addClient } = useAppStore();
@@ -35,7 +35,9 @@ export default function ClientsPage() {
   const [newName, setNewName] = useState('');
   const [newCompany, setNewCompany] = useState('');
   const [newSubModule, setNewSubModule] = useState<ClientSubModule>('Affiliate Networks');
+  const [newSubCategory, setNewSubCategory] = useState<ClientSubCategory>('Resolute');
   const [newCommMode, setNewCommMode] = useState('Email');
+  const [newDescription, setNewDescription] = useState('');
   const [newContactName, setNewContactName] = useState('');
   const [newContactEmail, setNewContactEmail] = useState('');
   const [newContactPhone, setNewContactPhone] = useState('');
@@ -55,6 +57,7 @@ export default function ClientsPage() {
       client.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       client.company.toLowerCase().includes(searchFilter.toLowerCase()) ||
       (client.communicationMode && client.communicationMode.toLowerCase().includes(searchFilter.toLowerCase())) ||
+      (client.description && client.description.toLowerCase().includes(searchFilter.toLowerCase())) ||
       client.primaryContact.name.toLowerCase().includes(searchFilter.toLowerCase());
     return matchesSubModule && matchesSearch;
   });
@@ -68,7 +71,9 @@ export default function ClientsPage() {
       company: newCompany,
       status: 'Active',
       subModule: newSubModule,
+      subModuleCategory: newSubCategory,
       communicationMode: newCommMode,
+      description: newDescription,
       primaryContact: {
         name: newContactName || 'Primary Contact',
         email: newContactEmail || 'contact@client.com',
@@ -81,7 +86,9 @@ export default function ClientsPage() {
     // Reset form
     setNewName('');
     setNewCompany('');
+    setNewSubCategory('Resolute');
     setNewCommMode('Email');
+    setNewDescription('');
     setNewContactName('');
     setNewContactEmail('');
     setNewContactPhone('');
@@ -405,8 +412,15 @@ export default function ClientsPage() {
                   <label className="block font-semibold mb-1 text-slate-700">Account Category</label>
                   <select
                     value={newSubModule}
-                    onChange={(e) => setNewSubModule(e.target.value as ClientSubModule)}
-                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                    onChange={(e) => {
+                      const cat = e.target.value as ClientSubModule;
+                      setNewSubModule(cat);
+                      if (cat === 'Affiliate Networks') setNewSubCategory('Resolute');
+                      else if (cat === 'Data Partner') setNewSubCategory('Agreement');
+                      else if (cat === 'Consulting') setNewSubCategory('Resolute');
+                      else setNewSubCategory('General');
+                    }}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
                   >
                     <option value="Affiliate Networks">Affiliate Networks</option>
                     <option value="Data Partner">Data Partner</option>
@@ -415,6 +429,24 @@ export default function ClientsPage() {
                   </select>
                 </div>
                 <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Sub Category</label>
+                  <select
+                    value={newSubCategory}
+                    onChange={(e) => setNewSubCategory(e.target.value as ClientSubCategory)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Resolute">Resolute</option>
+                    <option value="Partners">Partners</option>
+                    <option value="Agreement">Agreement</option>
+                    <option value="Rev-Share">Rev-Share</option>
+                    <option value="Ongage">Ongage</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
                   <label className="block font-semibold mb-1 text-slate-700">Mode of Communication</label>
                   <select
                     value={newCommMode}
@@ -422,6 +454,7 @@ export default function ClientsPage() {
                     className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
                   >
                     <option value="Email">Email</option>
+                    <option value="Telegram">Telegram</option>
                     <option value="Slack">Slack</option>
                     <option value="Teams">Teams</option>
                     <option value="WhatsApp">WhatsApp</option>
@@ -429,6 +462,16 @@ export default function ClientsPage() {
                     <option value="Skype">Skype</option>
                     <option value="Other">Other</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Metrics Summary / Target</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Est. $35k Deal Value"
+                    value={newMetricsSummary}
+                    onChange={(e) => setNewMetricsSummary(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
+                  />
                 </div>
               </div>
 
@@ -472,15 +515,26 @@ export default function ClientsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-700">Metrics Summary / Target</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Contact Role</label>
                   <input
                     type="text"
-                    placeholder="e.g. Est. $35k Deal Value"
-                    value={newMetricsSummary}
-                    onChange={(e) => setNewMetricsSummary(e.target.value)}
+                    placeholder="e.g. VP Marketing"
+                    value={newContactRole}
+                    onChange={(e) => setNewContactRole(e.target.value)}
                     className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-700">Client Description</label>
+                <textarea
+                  rows={2}
+                  placeholder="Key account details, traffic expectations, and partnership goals..."
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none resize-none"
+                />
               </div>
 
               <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-200">

@@ -183,6 +183,13 @@ export default function ClientProfileHub() {
                   <p className="text-[11px] text-slate-500">CS Operations Lead</p>
                 </div>
               </div>
+
+              {client.description && (
+                <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200/80 text-xs space-y-1">
+                  <span className="font-bold text-blue-900 block uppercase font-mono text-[10px] tracking-wider">Client Description:</span>
+                  <p className="text-slate-800 leading-relaxed">{client.description}</p>
+                </div>
+              )}
             </div>
           )}
 

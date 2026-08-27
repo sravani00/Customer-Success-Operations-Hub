@@ -20,6 +20,7 @@ export interface Client {
   primaryContact: PrimaryContact;
   createdAt: string;
   metricsSummary?: string;
+  description?: string;
   leadStage?: 'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won';
 }
 
