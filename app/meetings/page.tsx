@@ -16,7 +16,7 @@ import {
 import { useAppStore } from '../../lib/store';
 
 export default function MeetingsPage() {
-  const { currentDate, meetings, openQuickAdd, addMomPoint, removeMomPoint } = useAppStore();
+  const { currentDate, meetings, openQuickAdd, addMomPoint, removeMomPoint, deleteMeeting } = useAppStore();
   const [filterMode, setFilterMode] = useState<'date' | 'all'>('date');
   const [newMomInputs, setNewMomInputs] = useState<{ [meetingId: string]: string }>({});
 
@@ -137,6 +137,18 @@ export default function MeetingsPage() {
                         <span>Open Google Meet</span>
                       </a>
                     )}
+                    <button
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete meeting "${m.title}"?`)) {
+                          deleteMeeting(m.id);
+                        }
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold flex items-center space-x-1 transition-colors"
+                      title="Delete Meeting"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
                   </div>
                 </div>
 

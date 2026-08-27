@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { 
   ArrowLeft, 
   Building, 
@@ -20,14 +20,35 @@ import {
   Layers,
   ChevronRight,
   ShieldCheck,
-  Activity
+  Activity,
+  Edit,
+  Trash2,
+  X
 } from 'lucide-react';
 import { useAppStore } from '../../../lib/store';
+import { ClientSubModule, ClientSubCategory, ClientStatus, Client } from '../../../types';
 
 export default function ClientProfileHub() {
   const params = useParams();
+  const router = useRouter();
   const clientId = params.id as string;
-  const { clients, offers, emails, meetings, updates, tasks, followUps } = useAppStore();
+  const { 
+    clients, 
+    offers, 
+    emails, 
+    meetings, 
+    updates, 
+    tasks, 
+    followUps,
+    updateClient,
+    deleteClient,
+    deleteOffer,
+    deleteMeeting,
+    deleteTask,
+    deleteFollowUp,
+    deleteClientUpdate
+  } = useAppStore();
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   const client = clients.find((c) => c.id === clientId) || clients[0];
   const clientOffers = offers.filter((o) => o.clientId === client.id);
@@ -90,6 +111,27 @@ export default function ClientProfileHub() {
               <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200">
                 {client.subModule}
               </span>
+              <button
+                onClick={() => setEditingClient(client)}
+                className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-blue-100 text-slate-700 hover:text-blue-700 text-xs font-semibold flex items-center space-x-1 transition-colors"
+                title="Edit Account"
+              >
+                <Edit className="w-3.5 h-3.5" />
+                <span>Edit</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm(`Are you sure you want to delete ${client.name}? All associated data will be removed.`)) {
+                    deleteClient(client.id);
+                    router.push('/clients');
+                  }
+                }}
+                className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold flex items-center space-x-1 transition-colors"
+                title="Delete Account"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
+              </button>
             </div>
             <p className="text-xs text-slate-500 mt-1 flex items-center gap-2">
               <Building className="w-3.5 h-3.5 text-slate-400" /> {client.company} • Comm Mode: <strong className="text-slate-800">{client.communicationMode || 'Email'}</strong>

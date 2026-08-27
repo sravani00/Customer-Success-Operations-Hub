@@ -11,12 +11,13 @@ import {
   Clock, 
   ChevronRight,
   Sparkles,
-  BarChart3
+  BarChart3,
+  Trash2
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export default function OffersPage() {
-  const { offers, openQuickAdd } = useAppStore();
+  const { offers, openQuickAdd, deleteOffer } = useAppStore();
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
@@ -90,13 +91,26 @@ export default function OffersPage() {
                   <td className="py-3.5 px-4 font-mono font-bold text-emerald-700">${offer.revenue.toLocaleString()}</td>
                   <td className="py-3.5 px-4 font-mono text-slate-500">{offer.followUpDate}</td>
                   <td className="py-3.5 px-4 text-right">
-                    <Link
-                      href={`/offers/${offer.id}`}
-                      className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold inline-flex items-center space-x-1"
-                    >
-                      <span>Workspace</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
+                    <div className="flex items-center justify-end space-x-1.5">
+                      <Link
+                        href={`/offers/${offer.id}`}
+                        className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold inline-flex items-center space-x-1"
+                      >
+                        <span>Workspace</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </Link>
+                      <button
+                        onClick={() => {
+                          if (confirm(`Are you sure you want to delete offer "${offer.offerName}"?`)) {
+                            deleteOffer(offer.id);
+                          }
+                        }}
+                        className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs transition-colors"
+                        title="Delete Offer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

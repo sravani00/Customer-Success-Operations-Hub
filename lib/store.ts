@@ -49,19 +49,31 @@ interface AppState {
 
   // Entity CRUD
   addClient: (client: Omit<Client, 'id' | 'createdAt'>) => void;
+  updateClient: (id: string, clientData: Partial<Client>) => void;
+  deleteClient: (id: string) => void;
+
   addOffer: (offer: Omit<Offer, 'id'>) => void;
   updateOffer: (id: string, offer: Partial<Offer>) => void;
+  deleteOffer: (id: string) => void;
   
   addClientUpdate: (update: Omit<ClientUpdate, 'id' | 'timestamp'>) => void;
+  deleteClientUpdate: (id: string) => void;
+
   addMeeting: (meeting: Omit<Meeting, 'id'>) => void;
+  updateMeeting: (id: string, meetingData: Partial<Meeting>) => void;
+  deleteMeeting: (id: string) => void;
   addMomPoint: (meetingId: string, point: string) => void;
   removeMomPoint: (meetingId: string, index: number) => void;
   
   addTask: (task: Omit<TaskItem, 'id'>) => void;
   updateTaskStatus: (id: string, status: TaskItem['status']) => void;
+  updateTask: (id: string, taskData: Partial<TaskItem>) => void;
+  deleteTask: (id: string) => void;
   
   addFollowUp: (followUp: Omit<FollowUpItem, 'id'>) => void;
   updateFollowUpStatus: (id: string, status: FollowUpItem['status']) => void;
+  updateFollowUp: (id: string, followUpData: Partial<FollowUpItem>) => void;
+  deleteFollowUp: (id: string) => void;
 
   // Email Parser Workflow Engine
   ingestEmail: (emailInput: { sender: string; subject: string; body: string; actionRequired?: boolean }) => void;
@@ -120,6 +132,23 @@ export const useAppStore = create<AppState>()(
         set((state) => ({ clients: [newClient, ...state.clients] }));
       },
 
+      updateClient: (id, clientPartial) => {
+        set((state) => ({
+          clients: state.clients.map((c) => (c.id === id ? { ...c, ...clientPartial } : c))
+        }));
+      },
+
+      deleteClient: (id) => {
+        set((state) => ({
+          clients: state.clients.filter((c) => c.id !== id),
+          offers: state.offers.filter((o) => o.clientId !== id),
+          meetings: state.meetings.filter((m) => m.clientId !== id),
+          updates: state.updates.filter((u) => u.clientId !== id),
+          tasks: state.tasks.filter((t) => t.clientId !== id),
+          followUps: state.followUps.filter((f) => f.clientId !== id)
+        }));
+      },
+
       addOffer: (offerData) => {
         const newOffer: Offer = {
           ...offerData,
@@ -134,6 +163,12 @@ export const useAppStore = create<AppState>()(
         }));
       },
 
+      deleteOffer: (id) => {
+        set((state) => ({
+          offers: state.offers.filter((o) => o.id !== id)
+        }));
+      },
+
       addClientUpdate: (updateData) => {
         const newUpdate: ClientUpdate = {
           ...updateData,
@@ -143,12 +178,30 @@ export const useAppStore = create<AppState>()(
         set((state) => ({ updates: [newUpdate, ...state.updates] }));
       },
 
+      deleteClientUpdate: (id) => {
+        set((state) => ({
+          updates: state.updates.filter((u) => u.id !== id)
+        }));
+      },
+
       addMeeting: (meetingData) => {
         const newMeeting: Meeting = {
           ...meetingData,
           id: `meet-${Date.now()}`
         };
         set((state) => ({ meetings: [newMeeting, ...state.meetings] }));
+      },
+
+      updateMeeting: (id, meetingPartial) => {
+        set((state) => ({
+          meetings: state.meetings.map((m) => (m.id === id ? { ...m, ...meetingPartial } : m))
+        }));
+      },
+
+      deleteMeeting: (id) => {
+        set((state) => ({
+          meetings: state.meetings.filter((m) => m.id !== id)
+        }));
       },
 
       addMomPoint: (meetingId, point) => {
@@ -190,6 +243,18 @@ export const useAppStore = create<AppState>()(
         }));
       },
 
+      updateTask: (id, taskPartial) => {
+        set((state) => ({
+          tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...taskPartial } : t))
+        }));
+      },
+
+      deleteTask: (id) => {
+        set((state) => ({
+          tasks: state.tasks.filter((t) => t.id !== id)
+        }));
+      },
+
       addFollowUp: (followUpData) => {
         const newFollowUp: FollowUpItem = {
           ...followUpData,
@@ -201,6 +266,18 @@ export const useAppStore = create<AppState>()(
       updateFollowUpStatus: (id, status) => {
         set((state) => ({
           followUps: state.followUps.map((f) => (f.id === id ? { ...f, status } : f))
+        }));
+      },
+
+      updateFollowUp: (id, followUpPartial) => {
+        set((state) => ({
+          followUps: state.followUps.map((f) => (f.id === id ? { ...f, ...followUpPartial } : f))
+        }));
+      },
+
+      deleteFollowUp: (id) => {
+        set((state) => ({
+          followUps: state.followUps.filter((f) => f.id !== id)
         }));
       },
 

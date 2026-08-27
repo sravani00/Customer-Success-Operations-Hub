@@ -20,13 +20,16 @@ import {
   ShieldCheck,
   Tag,
   Check,
-  X
+  X,
+  Edit,
+  Trash2
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
-import { ClientSubModule, ClientSubCategory, ClientStatus } from '../../types';
+import { ClientSubModule, ClientSubCategory, ClientStatus, Client } from '../../types';
 
 export default function ClientsPage() {
-  const { clients, offers, updates, addClient } = useAppStore();
+  const { clients, offers, updates, addClient, updateClient, deleteClient } = useAppStore();
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [selectedSubModule, setSelectedSubModule] = useState<'All' | ClientSubModule>('All');
   const [searchFilter, setSearchFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
@@ -317,7 +320,27 @@ export default function ClientsPage() {
                       </div>
                     </div>
 
-                    {getSubModuleBadge(client.subModule || ('Affiliate Networks' as any))}
+                    <div className="flex items-center space-x-1.5">
+                      {getSubModuleBadge(client.subModule || ('Affiliate Networks' as any))}
+                      <button
+                        onClick={() => setEditingClient(client)}
+                        title="Edit Account"
+                        className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-100 text-slate-600 hover:text-blue-700 transition-colors"
+                      >
+                        <Edit className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (confirm(`Are you sure you want to delete ${client.name}?`)) {
+                            deleteClient(client.id);
+                          }
+                        }}
+                        title="Delete Account"
+                        className="p-1.5 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Contact Info */}
@@ -550,6 +573,216 @@ export default function ClientsPage() {
                   className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs"
                 >
                   Create Account
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Client Modal */}
+      {editingClient && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl max-w-md w-full animate-in zoom-in-95 duration-150 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
+                <Edit className="w-4 h-4 text-blue-600" /> Edit Account — {editingClient.name}
+              </h3>
+              <button
+                onClick={() => setEditingClient(null)}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateClient(editingClient.id, editingClient);
+                setEditingClient(null);
+              }}
+              className="space-y-3 text-xs"
+            >
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Account Name</label>
+                  <input
+                    type="text"
+                    value={editingClient.name}
+                    onChange={(e) => setEditingClient({ ...editingClient, name: e.target.value })}
+                    required
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Company Name</label>
+                  <input
+                    type="text"
+                    value={editingClient.company}
+                    onChange={(e) => setEditingClient({ ...editingClient, company: e.target.value })}
+                    required
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Account Category</label>
+                  <select
+                    value={editingClient.subModule}
+                    onChange={(e) => setEditingClient({ ...editingClient, subModule: e.target.value as ClientSubModule })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Affiliate Networks">Affiliate Networks</option>
+                    <option value="Data Partner">Data Partner</option>
+                    <option value="Consulting">Consulting</option>
+                    <option value="Lead">Lead</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Sub Category</label>
+                  <select
+                    value={editingClient.subModuleCategory || 'General'}
+                    onChange={(e) => setEditingClient({ ...editingClient, subModuleCategory: e.target.value as ClientSubCategory })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Resolute">Resolute</option>
+                    <option value="Partners">Partners</option>
+                    <option value="Agreement">Agreement</option>
+                    <option value="Rev-Share">Rev-Share</option>
+                    <option value="Ongage">Ongage</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Mode of Communication</label>
+                  <select
+                    value={editingClient.communicationMode || 'Email'}
+                    onChange={(e) => setEditingClient({ ...editingClient, communicationMode: e.target.value })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Email">Email</option>
+                    <option value="Telegram">Telegram</option>
+                    <option value="Slack">Slack</option>
+                    <option value="Teams">Teams</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Phone">Phone</option>
+                    <option value="Skype">Skype</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Account Status</label>
+                  <select
+                    value={editingClient.status}
+                    onChange={(e) => setEditingClient({ ...editingClient, status: e.target.value as ClientStatus })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Onboarding">Onboarding</option>
+                    <option value="At Risk">At Risk</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-200">
+                <span className="block font-semibold mb-2 text-slate-500 uppercase tracking-wider text-[10px]">
+                  Primary Contact Person
+                </span>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold mb-1 text-slate-700">Contact Name</label>
+                    <input
+                      type="text"
+                      value={editingClient.primaryContact.name}
+                      onChange={(e) => setEditingClient({
+                        ...editingClient,
+                        primaryContact: { ...editingClient.primaryContact, name: e.target.value }
+                      })}
+                      className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold mb-1 text-slate-700">Email Address</label>
+                    <input
+                      type="email"
+                      value={editingClient.primaryContact.email}
+                      onChange={(e) => setEditingClient({
+                        ...editingClient,
+                        primaryContact: { ...editingClient.primaryContact, email: e.target.value }
+                      })}
+                      className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Phone</label>
+                  <input
+                    type="text"
+                    value={editingClient.primaryContact.phone}
+                    onChange={(e) => setEditingClient({
+                      ...editingClient,
+                      primaryContact: { ...editingClient.primaryContact, phone: e.target.value }
+                    })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Contact Role</label>
+                  <input
+                    type="text"
+                    value={editingClient.primaryContact.role}
+                    onChange={(e) => setEditingClient({
+                      ...editingClient,
+                      primaryContact: { ...editingClient.primaryContact, role: e.target.value }
+                    })}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-700">Metrics Summary / Target</label>
+                <input
+                  type="text"
+                  value={editingClient.metricsSummary || ''}
+                  onChange={(e) => setEditingClient({ ...editingClient, metricsSummary: e.target.value })}
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-700">Client Description</label>
+                <textarea
+                  rows={2}
+                  value={editingClient.description || ''}
+                  onChange={(e) => setEditingClient({ ...editingClient, description: e.target.value })}
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none resize-none"
+                />
+              </div>
+
+              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setEditingClient(null)}
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-xs"
+                >
+                  Save Changes
                 </button>
               </div>
             </form>

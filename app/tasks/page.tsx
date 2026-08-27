@@ -14,12 +14,13 @@ import {
   AlertCircle,
   Building,
   CheckCircle2,
-  Tag
+  Tag,
+  Trash2
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
 export default function TasksAndFollowUpsPage() {
-  const { currentDate, tasks, followUps, updateTaskStatus, updateFollowUpStatus, openQuickAdd } = useAppStore();
+  const { currentDate, tasks, followUps, updateTaskStatus, updateFollowUpStatus, openQuickAdd, deleteTask, deleteFollowUp } = useAppStore();
   const [activeTab, setActiveTab] = useState<'all' | 'tasks' | 'followups'>('all');
   const [filterMode, setFilterMode] = useState<'date' | 'all'>('date');
 
@@ -247,7 +248,8 @@ export default function TasksAndFollowUpsPage() {
                 <th className="py-3 px-4">SOURCE / OFFER</th>
                 <th className="py-3 px-4">OWNER</th>
                 <th className="py-3 px-4">DUE DATE</th>
-                <th className="py-3 px-4 text-right">STATUS</th>
+                <th className="py-3 px-4">STATUS</th>
+                <th className="py-3 px-4 text-right">ACTION</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 font-medium">
@@ -266,7 +268,7 @@ export default function TasksAndFollowUpsPage() {
                   <td className="py-3.5 px-4 font-mono text-slate-600">{t.sourceType || 'Operational'}</td>
                   <td className="py-3.5 px-4 font-mono text-slate-700">{t.assignedTo}</td>
                   <td className="py-3.5 px-4 font-mono text-amber-700 font-semibold">{t.dueDate}</td>
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-4">
                     <select
                       value={t.status}
                       onChange={(e) => updateTaskStatus(t.id, e.target.value as any)}
@@ -283,6 +285,19 @@ export default function TasksAndFollowUpsPage() {
                       <option value="Completed" className="bg-white text-slate-900">Completed</option>
                       <option value="Cancelled" className="bg-white text-slate-900">Cancelled</option>
                     </select>
+                  </td>
+                  <td className="py-3.5 px-4 text-right">
+                    <button
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete task "${t.title}"?`)) {
+                          deleteTask(t.id);
+                        }
+                      }}
+                      className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs transition-colors"
+                      title="Delete Task"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -309,7 +324,7 @@ export default function TasksAndFollowUpsPage() {
                   <td className="py-3.5 px-4 font-mono text-amber-700 font-semibold">{f.offerName || '—'}</td>
                   <td className="py-3.5 px-4 font-mono text-slate-700">{f.assignedTo}</td>
                   <td className="py-3.5 px-4 font-mono text-slate-500">{f.dueDate}</td>
-                  <td className="py-3.5 px-4 text-right">
+                  <td className="py-3.5 px-4">
                     <select
                       value={f.status}
                       onChange={(e) => updateFollowUpStatus(f.id, e.target.value as any)}
@@ -326,6 +341,19 @@ export default function TasksAndFollowUpsPage() {
                       <option value="Completed" className="bg-white text-slate-900">Done / Completed</option>
                     </select>
                   </td>
+                  <td className="py-3.5 px-4 text-right">
+                    <button
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete follow-up "${f.title}"?`)) {
+                          deleteFollowUp(f.id);
+                        }
+                      }}
+                      className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs transition-colors"
+                      title="Delete Follow-up"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </td>
                 </tr>
               ))}
 
@@ -334,7 +362,7 @@ export default function TasksAndFollowUpsPage() {
                 (activeTab === 'followups' && filteredFollowUps.length === 0) ||
                 (activeTab === 'all' && filteredTasks.length === 0 && filteredFollowUps.length === 0)) && (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-xs text-slate-500">
+                  <td colSpan={8} className="py-12 text-center text-xs text-slate-500">
                     <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
                     <p className="font-semibold text-slate-800">No pending items found</p>
                     <p className="text-slate-400 mt-1">Try switching tabs or changing the date filter.</p>
