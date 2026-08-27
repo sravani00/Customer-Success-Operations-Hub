@@ -26,7 +26,8 @@ import {
   X
 } from 'lucide-react';
 import { useAppStore } from '../../../lib/store';
-import { ClientSubModule, ClientSubCategory, ClientStatus, Client } from '../../../types';
+import { ClientSubModule, ClientSubCategory, ClientStatus, Client, Offer } from '../../../types';
+import { OfferModal } from '../../../components/modals/offer-modal';
 
 export default function ClientProfileHub() {
   const params = useParams();
@@ -42,6 +43,7 @@ export default function ClientProfileHub() {
     followUps,
     updateClient,
     deleteClient,
+    updateOffer,
     deleteOffer,
     deleteMeeting,
     deleteTask,
@@ -49,6 +51,7 @@ export default function ClientProfileHub() {
     deleteClientUpdate
   } = useAppStore();
   const [editingClient, setEditingClient] = useState<Client | null>(null);
+  const [editingOffer, setEditingOffer] = useState<Offer | null>(null);
 
   const client = clients.find((c) => c.id === clientId) || clients[0];
   const clientOffers = offers.filter((o) => o.clientId === client.id);
@@ -320,7 +323,7 @@ export default function ClientProfileHub() {
                         </div>
                       </div>
 
-                      <div className="flex justify-end pt-1">
+                      <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
                         <Link
                           href={`/offers/${o.id}`}
                           className="text-xs font-semibold text-blue-700 hover:underline inline-flex items-center gap-1"
@@ -328,6 +331,27 @@ export default function ClientProfileHub() {
                           <span>Open Offer Workspace</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Link>
+
+                        <div className="flex items-center space-x-1">
+                          <button
+                            onClick={() => setEditingOffer(o)}
+                            className="p-1 rounded-lg bg-slate-100 hover:bg-blue-100 text-slate-600 hover:text-blue-700 transition-colors"
+                            title="Edit Offer"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (confirm(`Are you sure you want to delete offer "${o.offerName}"?`)) {
+                                deleteOffer(o.id);
+                              }
+                            }}
+                            className="p-1 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 transition-colors"
+                            title="Delete Offer"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -510,6 +534,18 @@ export default function ClientProfileHub() {
 
         </div>
       </div>
+
+      {/* Edit Offer Modal */}
+      <OfferModal
+        isOpen={!!editingOffer}
+        mode="edit"
+        offerToEdit={editingOffer}
+        defaultClientId={client.id}
+        onClose={() => setEditingOffer(null)}
+        onSave={(data) => {
+          if (editingOffer) updateOffer(editingOffer.id, data);
+        }}
+      />
     </div>
   );
 }

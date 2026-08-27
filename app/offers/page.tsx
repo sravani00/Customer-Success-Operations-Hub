@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Package, 
@@ -12,12 +12,17 @@ import {
   ChevronRight,
   Sparkles,
   BarChart3,
+  Edit,
   Trash2
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
+import { OfferModal } from '../../components/modals/offer-modal';
+import { Offer } from '../../types';
 
 export default function OffersPage() {
-  const { offers, openQuickAdd, deleteOffer } = useAppStore();
+  const { offers, addOffer, updateOffer, deleteOffer } = useAppStore();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingOffer, setEditingOffer] = useState<Offer | null>(null);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
@@ -36,7 +41,7 @@ export default function OffersPage() {
         </div>
 
         <button
-          onClick={() => openQuickAdd('offer')}
+          onClick={() => setIsAddModalOpen(true)}
           className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center space-x-2 shadow-xs"
         >
           <Plus className="w-4 h-4" />
@@ -100,6 +105,13 @@ export default function OffersPage() {
                         <ChevronRight className="w-3.5 h-3.5" />
                       </Link>
                       <button
+                        onClick={() => setEditingOffer(offer)}
+                        className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs transition-colors"
+                        title="Edit Offer"
+                      >
+                        <Edit className="w-3.5 h-3.5" />
+                      </button>
+                      <button
                         onClick={() => {
                           if (confirm(`Are you sure you want to delete offer "${offer.offerName}"?`)) {
                             deleteOffer(offer.id);
@@ -118,6 +130,25 @@ export default function OffersPage() {
           </table>
         </div>
       </div>
+
+      {/* Add Offer Modal */}
+      <OfferModal
+        isOpen={isAddModalOpen}
+        mode="add"
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={(data) => addOffer(data)}
+      />
+
+      {/* Edit Offer Modal */}
+      <OfferModal
+        isOpen={!!editingOffer}
+        mode="edit"
+        offerToEdit={editingOffer}
+        onClose={() => setEditingOffer(null)}
+        onSave={(data) => {
+          if (editingOffer) updateOffer(editingOffer.id, data);
+        }}
+      />
     </div>
   );
 }

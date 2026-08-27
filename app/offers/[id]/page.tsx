@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { 
@@ -14,14 +14,17 @@ import {
   Calendar as CalendarIcon,
   FlaskConical,
   Sparkles,
-  UserCheck
+  UserCheck,
+  Edit
 } from 'lucide-react';
 import { useAppStore } from '../../../lib/store';
+import { OfferModal } from '../../../components/modals/offer-modal';
 
 export default function OfferDetailWorkspace() {
   const params = useParams();
   const offerId = params.id as string;
-  const { offers } = useAppStore();
+  const { offers, updateOffer } = useAppStore();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const offer = offers.find((o) => o.id === offerId) || offers[0];
 
@@ -59,7 +62,15 @@ export default function OfferDetailWorkspace() {
         </div>
 
         <div className="flex items-center space-x-4 text-xs font-mono">
-          <div className="text-right">
+          <button
+            onClick={() => setIsEditModalOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors font-sans"
+          >
+            <Edit className="w-3.5 h-3.5" />
+            <span>Edit Offer Details</span>
+          </button>
+
+          <div className="text-right pl-2 border-l border-slate-200">
             <div className="text-slate-500 text-[10px]">REVENUE</div>
             <div className="text-lg font-bold text-emerald-700">${offer.revenue.toLocaleString()}</div>
           </div>
@@ -217,6 +228,17 @@ export default function OfferDetailWorkspace() {
         </div>
 
       </div>
+
+      {/* Edit Offer Modal */}
+      <OfferModal
+        isOpen={isEditModalOpen}
+        mode="edit"
+        offerToEdit={offer}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={(data) => {
+          updateOffer(offer.id, data);
+        }}
+      />
     </div>
   );
 }
