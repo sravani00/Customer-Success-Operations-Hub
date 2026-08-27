@@ -219,7 +219,7 @@ export const useAppStore = create<AppState>()(
           company: 'Inbound Organization',
           status: 'Active',
           subModule: 'Lead',
-          industry: 'Digital Media',
+          communicationMode: 'Email',
           primaryContact: { name: sender.split('@')[0], email: sender, phone: '', role: 'Contact' },
           createdAt: todayStr
         };
@@ -339,7 +339,7 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Affiliate Networks',
               subModuleCategory: 'Resolute',
-              industry: 'Digital Marketing',
+              communicationMode: 'Email',
               primaryContact: { name: 'John Miller', email: 'john@clienta.com', phone: '+1 555-2345', role: 'VP Marketing' },
               createdAt: todayStr,
               metricsSummary: '$45,000 / mo traffic volume'
@@ -351,7 +351,7 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Affiliate Networks',
               subModuleCategory: 'Partners',
-              industry: 'E-Commerce & Lead Gen',
+              communicationMode: 'Slack',
               primaryContact: { name: 'Sarah Jenkins', email: 'sarah@nexusaffiliate.com', phone: '+1 555-8765', role: 'Head Partnerships' },
               createdAt: todayStr,
               metricsSummary: '12 Active Campaigns'
@@ -363,7 +363,7 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Data Partner',
               subModuleCategory: 'Agreement',
-              industry: 'SaaS Feeds',
+              communicationMode: 'Teams',
               primaryContact: { name: 'Michael Chang', email: 'm.chang@vortexglobal.com', phone: '+1 555-3456', role: 'Ops Director' },
               createdAt: todayStr,
               metricsSummary: '1.2M API Records / day (Agreement)'
@@ -375,7 +375,7 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Data Partner',
               subModuleCategory: 'Rev-Share',
-              industry: 'Consumer Enrichment',
+              communicationMode: 'WhatsApp',
               primaryContact: { name: 'Rachel Vance', email: 'rachel@omnidata.io', phone: '+1 555-4321', role: 'VP Partnerships' },
               createdAt: todayStr,
               metricsSummary: '50/50 Data Rev-Share Split'
@@ -387,7 +387,7 @@ export const useAppStore = create<AppState>()(
               status: 'Active',
               subModule: 'Consulting',
               subModuleCategory: 'Resolute',
-              industry: 'CS Advisory',
+              communicationMode: 'Skype',
               primaryContact: { name: 'Elena Rostova', email: 'elena@apexpartners.com', phone: '+1 555-9012', role: 'Account Lead' },
               createdAt: todayStr,
               metricsSummary: 'Q3 Resolute Strategy Project'
@@ -399,7 +399,7 @@ export const useAppStore = create<AppState>()(
               status: 'Onboarding',
               subModule: 'Consulting',
               subModuleCategory: 'Ongage',
-              industry: 'Email Infrastructure',
+              communicationMode: 'Email',
               primaryContact: { name: 'David Vance', email: 'david@ongage.com', phone: '+1 555-6543', role: 'Solutions Director' },
               createdAt: todayStr,
               metricsSummary: 'Ongage ESP Migration & Delivery'

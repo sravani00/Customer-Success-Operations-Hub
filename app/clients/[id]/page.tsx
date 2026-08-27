@@ -92,7 +92,7 @@ export default function ClientProfileHub() {
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-1 flex items-center gap-2">
-              <Building className="w-3.5 h-3.5 text-slate-400" /> {client.company} • Industry: <strong className="text-slate-800">{client.industry}</strong>
+              <Building className="w-3.5 h-3.5 text-slate-400" /> {client.company} • Comm Mode: <strong className="text-slate-800">{client.communicationMode || 'Email'}</strong>
             </p>
           </div>
         </div>
@@ -166,8 +166,8 @@ export default function ClientProfileHub() {
                 </div>
 
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
-                  <span className="text-slate-500 font-medium">Industry Focus</span>
-                  <div className="text-base font-bold text-slate-900">{client.industry}</div>
+                  <span className="text-slate-500 font-medium">Mode of Communication</span>
+                  <div className="text-base font-bold text-slate-900">{client.communicationMode || 'Email'}</div>
                   <p className="text-[11px] text-slate-500">Company: {client.company}</p>
                 </div>
 

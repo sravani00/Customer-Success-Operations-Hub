@@ -35,7 +35,7 @@ export default function ClientsPage() {
   const [newName, setNewName] = useState('');
   const [newCompany, setNewCompany] = useState('');
   const [newSubModule, setNewSubModule] = useState<ClientSubModule>('Affiliate Networks');
-  const [newIndustry, setNewIndustry] = useState('');
+  const [newCommMode, setNewCommMode] = useState('Email');
   const [newContactName, setNewContactName] = useState('');
   const [newContactEmail, setNewContactEmail] = useState('');
   const [newContactPhone, setNewContactPhone] = useState('');
@@ -54,7 +54,7 @@ export default function ClientsPage() {
     const matchesSearch = 
       client.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       client.company.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      client.industry.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      (client.communicationMode && client.communicationMode.toLowerCase().includes(searchFilter.toLowerCase())) ||
       client.primaryContact.name.toLowerCase().includes(searchFilter.toLowerCase());
     return matchesSubModule && matchesSearch;
   });
@@ -68,7 +68,7 @@ export default function ClientsPage() {
       company: newCompany,
       status: 'Active',
       subModule: newSubModule,
-      industry: newIndustry || 'Digital Operations',
+      communicationMode: newCommMode,
       primaryContact: {
         name: newContactName || 'Primary Contact',
         email: newContactEmail || 'contact@client.com',
@@ -81,7 +81,7 @@ export default function ClientsPage() {
     // Reset form
     setNewName('');
     setNewCompany('');
-    setNewIndustry('');
+    setNewCommMode('Email');
     setNewContactName('');
     setNewContactEmail('');
     setNewContactPhone('');
@@ -331,6 +331,10 @@ export default function ClientsPage() {
                       <span className="font-bold text-blue-700 font-mono">{client.subModule}</span>
                     </div>
                     <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                      <span className="text-slate-500">Comm Mode:</span>
+                      <span className="font-bold text-slate-800 font-mono">{client.communicationMode || 'Email'}</span>
+                    </div>
+                    <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                       <span className="text-slate-500">Focus Summary:</span>
                       <span className="font-semibold text-blue-700 text-[11px]">
                         {client.metricsSummary || client.subModule}
@@ -373,7 +377,7 @@ export default function ClientsPage() {
             <form onSubmit={handleAddClientSubmit} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-700">Account Code / Name</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Account Name</label>
                   <input
                     type="text"
                     placeholder="e.g. Client I"
@@ -411,14 +415,20 @@ export default function ClientsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-700">Industry</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. E-Commerce / SaaS"
-                    value={newIndustry}
-                    onChange={(e) => setNewIndustry(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
-                  />
+                  <label className="block font-semibold mb-1 text-slate-700">Mode of Communication</label>
+                  <select
+                    value={newCommMode}
+                    onChange={(e) => setNewCommMode(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Email">Email</option>
+                    <option value="Slack">Slack</option>
+                    <option value="Teams">Teams</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Phone">Phone</option>
+                    <option value="Skype">Skype</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
               </div>
 

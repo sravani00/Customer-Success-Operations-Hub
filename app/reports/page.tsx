@@ -103,7 +103,7 @@ ${followUps.length > 0
 
 **Active Date**: ${currentDate}
 **Account Category**: ${c.subModule}
-**Industry**: ${c.industry}
+**Mode of Communication**: ${c.communicationMode || 'Email'}
 **Account Status**: ${c.status}
 **Primary Contact**: ${c.primaryContact.name} (${c.primaryContact.role} | ${c.primaryContact.email} | ${c.primaryContact.phone})
 
@@ -176,7 +176,7 @@ ${meetings.map((m) => `* ${m.title} (${m.clientName})`).join('\n')}
 ====================================================================
 ACCOUNT DETAILS:
 - Category: ${c.subModule}
-- Industry: ${c.industry}
+- Mode of Communication: ${c.communicationMode || 'Email'}
 - Primary Contact: ${c.primaryContact.name} (${c.primaryContact.email})
 - Status: ${c.status}
 - Summary Metrics: ${c.metricsSummary || 'N/A'}
@@ -296,7 +296,7 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
                   </span>
                 </h2>
                 <p className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
-                  <span>Industry: {selectedClient.industry}</span>
+                  <span>Comm Mode: {selectedClient.communicationMode || 'Email'}</span>
                   <span>•</span>
                   <span>Status: <strong className="text-emerald-700">{selectedClient.status}</strong></span>
                 </p>

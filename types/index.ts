@@ -16,7 +16,7 @@ export interface Client {
   status: ClientStatus;
   subModule: ClientSubModule;
   subModuleCategory?: ClientSubCategory;
-  industry: string;
+  communicationMode?: string;
   primaryContact: PrimaryContact;
   createdAt: string;
   metricsSummary?: string;

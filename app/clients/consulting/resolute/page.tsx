@@ -84,7 +84,7 @@ export default function ResoluteConsultingPage() {
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[11px] text-slate-500 font-mono">Industry: {client.industry}</span>
+                <span className="text-[11px] text-slate-500 font-mono">Comm: {client.communicationMode || 'Email'}</span>
                 <Link
                   href={`/clients/${client.id}`}
                   className="px-3.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
