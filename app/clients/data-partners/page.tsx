@@ -146,6 +146,23 @@ export default function DataPartnersPage() {
                   <span className="text-slate-500">Integration Feed Status:</span>
                   <span className="font-bold text-purple-700 font-mono">{client.metricsSummary}</span>
                 </div>
+
+                {client.dataType && (
+                  <div className="grid grid-cols-3 gap-2 p-2.5 bg-purple-50/50 rounded-xl border border-purple-200/60 text-xs font-mono">
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Data Type</span>
+                      <span className="font-bold text-slate-800">{client.dataType}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Est. Volume</span>
+                      <span className="font-bold text-slate-800">{client.estimatedVolume}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Rev-Share</span>
+                      <span className="font-bold text-emerald-700">{client.revSharePercentage}%</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">

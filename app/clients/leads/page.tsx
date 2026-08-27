@@ -111,6 +111,23 @@ export default function LeadsPage() {
                   <span className="text-slate-500">Deal Estimate:</span>
                   <span className="font-bold text-amber-700 font-mono">{client.metricsSummary}</span>
                 </div>
+
+                {client.leadSource && (
+                  <div className="grid grid-cols-3 gap-2 p-2.5 bg-amber-50/50 rounded-xl border border-amber-200/60 text-xs font-mono">
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Lead Source</span>
+                      <span className="font-bold text-slate-800">{client.leadSource}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Deal Value</span>
+                      <span className="font-bold text-emerald-700">${client.expectedDealValue?.toLocaleString() || 0}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[9px] uppercase font-sans">Est. Close</span>
+                      <span className="font-bold text-blue-700">{client.expectedConversionDate}</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">

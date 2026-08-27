@@ -22,6 +22,16 @@ export interface Client {
   metricsSummary?: string;
   description?: string;
   leadStage?: 'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won';
+
+  // Data Partner Specific Fields
+  dataType?: string;
+  estimatedVolume?: string;
+  revSharePercentage?: number;
+
+  // Leads Pipeline Specific Fields
+  leadSource?: string;
+  expectedDealValue?: number;
+  expectedConversionDate?: string;
 }
 
 export type OfferStatus = 'Active' | 'Testing' | 'Pending' | 'Paused';

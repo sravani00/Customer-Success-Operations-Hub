@@ -53,6 +53,17 @@ export function ClientModal({
   const [metricsSummary, setMetricsSummary] = useState('');
   const [description, setDescription] = useState('');
 
+  // Data Partner Specific Fields
+  const [dataType, setDataType] = useState('Email Leads');
+  const [estimatedVolume, setEstimatedVolume] = useState('50,000 / month');
+  const [revSharePercentage, setRevSharePercentage] = useState<number>(15);
+
+  // Leads Pipeline Specific Fields
+  const [leadSource, setLeadSource] = useState('Inbound Website');
+  const [leadStage, setLeadStage] = useState<'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won'>('New Lead');
+  const [expectedDealValue, setExpectedDealValue] = useState<number>(25000);
+  const [expectedConversionDate, setExpectedConversionDate] = useState('2026-09-15');
+
   useEffect(() => {
     if (mode === 'edit' && clientToEdit) {
       const initialMod = clientToEdit.subModule || defaultSubModule;
@@ -72,6 +83,15 @@ export function ClientModal({
       setContactRole(clientToEdit.primaryContact?.role || '');
       setMetricsSummary(clientToEdit.metricsSummary || '');
       setDescription(clientToEdit.description || '');
+
+      setDataType(clientToEdit.dataType || 'Email Leads');
+      setEstimatedVolume(clientToEdit.estimatedVolume || '50,000 / month');
+      setRevSharePercentage(clientToEdit.revSharePercentage ?? 15);
+
+      setLeadSource(clientToEdit.leadSource || 'Inbound Website');
+      setLeadStage(clientToEdit.leadStage || 'New Lead');
+      setExpectedDealValue(clientToEdit.expectedDealValue ?? 25000);
+      setExpectedConversionDate(clientToEdit.expectedConversionDate || '2026-09-15');
     } else {
       setName('');
       setCompany('');
@@ -87,6 +107,15 @@ export function ClientModal({
       setContactRole('');
       setMetricsSummary('');
       setDescription('');
+
+      setDataType('Email Leads');
+      setEstimatedVolume('50,000 / month');
+      setRevSharePercentage(15);
+
+      setLeadSource('Inbound Website');
+      setLeadStage('New Lead');
+      setExpectedDealValue(25000);
+      setExpectedConversionDate('2026-09-15');
     }
   }, [mode, clientToEdit, defaultSubModule, defaultSubCategory, isOpen]);
 
@@ -102,6 +131,13 @@ export function ClientModal({
     e.preventDefault();
     if (!name || !company) return;
 
+    let computedMetrics = metricsSummary;
+    if (subModule === 'Data Partner') {
+      computedMetrics = `Vol: ${estimatedVolume} • Rev-Share: ${revSharePercentage}%`;
+    } else if (subModule === 'Lead') {
+      computedMetrics = `Stage: ${leadStage} • Value: $${expectedDealValue.toLocaleString()}`;
+    }
+
     onSave({
       name,
       company,
@@ -115,8 +151,15 @@ export function ClientModal({
         phone: contactPhone || '+1 (555) 000-0000',
         role: contactRole || 'Account Manager',
       },
-      metricsSummary: metricsSummary || 'Active Account',
+      metricsSummary: computedMetrics || 'Active Account',
       description,
+      dataType: subModule === 'Data Partner' ? dataType : undefined,
+      estimatedVolume: subModule === 'Data Partner' ? estimatedVolume : undefined,
+      revSharePercentage: subModule === 'Data Partner' ? revSharePercentage : undefined,
+      leadSource: subModule === 'Lead' ? leadSource : undefined,
+      leadStage: subModule === 'Lead' ? leadStage : undefined,
+      expectedDealValue: subModule === 'Lead' ? expectedDealValue : undefined,
+      expectedConversionDate: subModule === 'Lead' ? expectedConversionDate : undefined,
     });
     onClose();
   };
@@ -125,7 +168,7 @@ export function ClientModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl max-w-md w-full animate-in zoom-in-95 duration-150 space-y-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl max-w-xl w-full animate-in zoom-in-95 duration-150 space-y-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between border-b border-slate-200 pb-3">
           <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
             {mode === 'edit' ? (
@@ -134,7 +177,12 @@ export function ClientModal({
               </>
             ) : (
               <>
-                <Plus className="w-4 h-4 text-blue-600" /> Add New Account ({subModule})
+                <Plus className="w-4 h-4 text-blue-600" />
+                {subModule === 'Data Partner'
+                  ? 'Add New Account — Data Partners'
+                  : subModule === 'Lead'
+                  ? 'Add New Account — Leads Pipeline'
+                  : `Add New Account (${subModule})`}
               </>
             )}
           </h3>
@@ -143,13 +191,16 @@ export function ClientModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3 text-xs">
+        <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
+          {/* Main Account & Company Names */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold mb-1 text-slate-700">Account Name</label>
+              <label className="block font-semibold mb-1 text-slate-700">
+                {subModule === 'Lead' ? 'Lead / Account Name' : 'Account Name'}
+              </label>
               <input
                 type="text"
-                placeholder="e.g. Client I"
+                placeholder={subModule === 'Lead' ? 'e.g. Lead Delta Corp' : 'e.g. Data Partner Alpha'}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -160,7 +211,7 @@ export function ClientModal({
               <label className="block font-semibold mb-1 text-slate-700">Company Name</label>
               <input
                 type="text"
-                placeholder="e.g. Nexus Media Group"
+                placeholder="e.g. Nexus Global Ltd"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 required
@@ -169,6 +220,7 @@ export function ClientModal({
             </div>
           </div>
 
+          {/* Module & Sub-Category Selection */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block font-semibold mb-1 text-slate-700">Account Category</label>
@@ -183,15 +235,17 @@ export function ClientModal({
                 <option value="Affiliate Networks">Affiliate Networks</option>
                 <option value="Data Partner">Data Partner</option>
                 <option value="Consulting">Consulting</option>
-                <option value="Lead">Lead</option>
+                <option value="Lead">Leads Pipeline</option>
               </select>
             </div>
             <div>
-              <label className="block font-semibold mb-1 text-slate-700">Sub Category</label>
+              <label className="block font-semibold mb-1 text-slate-700">
+                {subModule === 'Data Partner' ? 'Partner Type' : 'Sub Category'}
+              </label>
               <select
                 value={subModuleCategory}
                 onChange={(e) => setSubModuleCategory(e.target.value as ClientSubCategory)}
-                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer font-medium"
+                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer font-bold"
               >
                 {availableSubCategories.map((sc) => (
                   <option key={sc} value={sc}>
@@ -202,6 +256,7 @@ export function ClientModal({
             </div>
           </div>
 
+          {/* Mode of Communication & Status */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block font-semibold mb-1 text-slate-700">Mode of Communication</label>
@@ -221,23 +276,129 @@ export function ClientModal({
               </select>
             </div>
             <div>
-              <label className="block font-semibold mb-1 text-slate-700">Account Status</label>
+              <label className="block font-semibold mb-1 text-slate-700">
+                {subModule === 'Data Partner' ? 'Partner Status' : subModule === 'Lead' ? 'Lead Status' : 'Account Status'}
+              </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ClientStatus)}
-                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer font-bold"
               >
                 <option value="Active">Active</option>
                 <option value="Onboarding">Onboarding</option>
-                <option value="At Risk">At Risk</option>
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
           </div>
 
+          {/* SPECIFIC FIELDS: DATA PARTNERS */}
+          {subModule === 'Data Partner' && (
+            <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-200/70 space-y-3">
+              <span className="block font-bold text-emerald-900 uppercase tracking-wider text-[10px]">
+                Data Partner Agreement Specs
+              </span>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Data Type</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Email Leads, B2B"
+                    value={dataType}
+                    onChange={(e) => setDataType(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Estimated Data Volume</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 100,000 / month"
+                    value={estimatedVolume}
+                    onChange={(e) => setEstimatedVolume(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Rev-Share %</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    placeholder="15"
+                    value={revSharePercentage}
+                    onChange={(e) => setRevSharePercentage(parseFloat(e.target.value) || 0)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SPECIFIC FIELDS: LEADS PIPELINE */}
+          {subModule === 'Lead' && (
+            <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-200/70 space-y-3">
+              <span className="block font-bold text-blue-900 uppercase tracking-wider text-[10px]">
+                Leads Pipeline & Prospect Specs
+              </span>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Lead Source</label>
+                  <select
+                    value={leadSource}
+                    onChange={(e) => setLeadSource(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 focus:border-blue-500 focus:outline-none"
+                  >
+                    <option value="Inbound Website">Inbound Website</option>
+                    <option value="Referral">Referral</option>
+                    <option value="Cold Outreach">Cold Outreach</option>
+                    <option value="Trade Show">Trade Show</option>
+                    <option value="Partner Network">Partner Network</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Lead Stage</label>
+                  <select
+                    value={leadStage}
+                    onChange={(e) => setLeadStage(e.target.value as any)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-bold focus:border-blue-500 focus:outline-none"
+                  >
+                    <option value="New Lead">New Lead</option>
+                    <option value="Discovery">Discovery</option>
+                    <option value="Proposal">Proposal</option>
+                    <option value="Negotiation">Negotiation</option>
+                    <option value="Closed Won">Closed Won</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Expected Deal Value ($)</label>
+                  <input
+                    type="number"
+                    step="1000"
+                    placeholder="25000"
+                    value={expectedDealValue}
+                    onChange={(e) => setExpectedDealValue(parseFloat(e.target.value) || 0)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono font-bold focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Expected Conversion Date</label>
+                  <input
+                    type="date"
+                    value={expectedConversionDate}
+                    onChange={(e) => setExpectedConversionDate(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Primary Contact Person */}
           <div className="pt-2 border-t border-slate-200">
             <span className="block font-semibold mb-2 text-slate-500 uppercase tracking-wider text-[10px]">
-              Primary Contact Person
+              Contact Person Details
             </span>
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -287,18 +448,9 @@ export function ClientModal({
           </div>
 
           <div>
-            <label className="block font-semibold mb-1 text-slate-700">Metrics Summary / Target</label>
-            <input
-              type="text"
-              placeholder="e.g. Est. $35k Deal Value"
-              value={metricsSummary}
-              onChange={(e) => setMetricsSummary(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold mb-1 text-slate-700">Client Description</label>
+            <label className="block font-semibold mb-1 text-slate-700">
+              {subModule === 'Data Partner' ? 'Partner Description' : subModule === 'Lead' ? 'Lead Description' : 'Client Description'}
+            </label>
             <textarea
               rows={2}
               placeholder="Key account details, traffic expectations, and partnership goals..."
