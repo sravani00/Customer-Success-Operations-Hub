@@ -33,9 +33,7 @@ export default function DashboardPage() {
     meetings, 
     tasks, 
     followUps,
-    openQuickAdd,
-    populateDemoData,
-    clearAllData
+    openQuickAdd
   } = useAppStore();
 
   // Real-time clock state
@@ -94,24 +92,6 @@ export default function DashboardPage() {
 
           {/* Quick Action Bar */}
           <div className="flex items-center space-x-2 shrink-0 flex-wrap gap-y-2">
-            {clients.length === 0 ? (
-              <button
-                onClick={populateDemoData}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-extrabold flex items-center space-x-2 shadow-md transition-all border border-emerald-400/30"
-              >
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>🌱 Load Demo Data</span>
-              </button>
-            ) : (
-              <button
-                onClick={clearAllData}
-                className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 hover:text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors"
-                title="Clear Workspace"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Clear</span>
-              </button>
-            )}
 
             <button
               onClick={() => openQuickAdd('update')}

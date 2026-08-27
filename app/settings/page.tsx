@@ -41,14 +41,6 @@ export default function SettingsPage() {
             <p className="text-xs text-slate-500">OAuth 2.0 authorized pipeline, Redis background sync engine, and taxonomy config</p>
           </div>
         </div>
-
-        <button
-          onClick={handleReset}
-          className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center space-x-2 border border-slate-200"
-        >
-          {resetDone ? <Check className="w-4 h-4 text-emerald-600" /> : <RotateCcw className="w-4 h-4 text-slate-500" />}
-          <span>{resetDone ? 'Demo Reset Complete!' : 'Reset Demo Data'}</span>
-        </button>
       </div>
 
       {/* Website Password Security & Access Protection Card */}
