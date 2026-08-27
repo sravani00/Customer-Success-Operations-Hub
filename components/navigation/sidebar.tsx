@@ -39,17 +39,14 @@ const NAVIGATION_ITEMS = [
         icon: Share2,
         children: [
           { name: 'Resolute', href: '/clients/affiliates/resolute' },
-          { name: 'Partners', href: '/clients/affiliates/partners' }
+          { name: 'Travis', href: '/clients/affiliates/travis' },
+          { name: 'Janet', href: '/clients/affiliates/janet' }
         ]
       },
       { 
         name: 'Data Partners', 
         href: '/clients/data-partners', 
-        icon: Database,
-        children: [
-          { name: 'Agreement', href: '/clients/data-partners/agreement' },
-          { name: 'Rev-Share', href: '/clients/data-partners/rev-share' }
-        ]
+        icon: Database
       },
       { 
         name: 'Consulting', 

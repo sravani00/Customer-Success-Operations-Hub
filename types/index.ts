@@ -1,6 +1,6 @@
 export type ClientStatus = 'Active' | 'Onboarding' | 'Inactive';
 export type ClientSubModule = 'Affiliate Networks' | 'Data Partner' | 'Consulting' | 'Lead';
-export type ClientSubCategory = 'Resolute' | 'Partners' | 'Ongage' | 'Agreement' | 'Rev-Share' | 'General';
+export type ClientSubCategory = 'Resolute' | 'Travis' | 'Janet' | 'Ongage' | 'General';
 
 export interface PrimaryContact {
   name: string;
@@ -24,6 +24,7 @@ export interface Client {
   leadStage?: 'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won';
 
   // Data Partner Specific Fields
+  paymentType?: 'Rev-Share' | 'Purchased';
   dataType?: string;
   estimatedVolume?: string;
   revSharePercentage?: number;

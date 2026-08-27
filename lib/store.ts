@@ -428,7 +428,7 @@ export const useAppStore = create<AppState>()(
               company: 'Nexus Affiliate Network (Partners)',
               status: 'Active',
               subModule: 'Affiliate Networks',
-              subModuleCategory: 'Partners',
+              subModuleCategory: 'Travis',
               communicationMode: 'Telegram',
               description: 'Strategic publisher network partnership running co-registered affiliate campaigns.',
               primaryContact: { name: 'Sarah Jenkins', email: 'sarah@nexusaffiliate.com', phone: '+1 555-8765', role: 'Head Partnerships' },
@@ -438,28 +438,30 @@ export const useAppStore = create<AppState>()(
             {
               id: 'client-c',
               name: 'Client C',
-              company: 'Vortex Global Tech (Agreement)',
+              company: 'Vortex Global Tech',
               status: 'Active',
               subModule: 'Data Partner',
-              subModuleCategory: 'Agreement',
+              subModuleCategory: 'General',
+              paymentType: 'Rev-Share',
               communicationMode: 'Teams',
-              description: 'Fixed SLA contract data enrichment partner streaming 1.2M API records daily.',
+              description: 'Data enrichment partner streaming 1.2M API records daily with Rev-Share model.',
               primaryContact: { name: 'Michael Chang', email: 'm.chang@vortexglobal.com', phone: '+1 555-3456', role: 'Ops Director' },
               createdAt: todayStr,
-              metricsSummary: '1.2M API Records / day (Agreement)'
+              metricsSummary: 'Payment: Rev-Share • Vol: 100,000 / mo'
             },
             {
               id: 'client-f',
               name: 'Client F',
-              company: 'OmniData Insights (Rev-Share)',
+              company: 'OmniData Insights',
               status: 'Active',
               subModule: 'Data Partner',
-              subModuleCategory: 'Rev-Share',
+              subModuleCategory: 'General',
+              paymentType: 'Purchased',
               communicationMode: 'WhatsApp',
-              description: 'Revenue share data monetization partner splitting API monetization 50/50.',
+              description: 'Purchased consumer data feed partner streaming daily lead logs.',
               primaryContact: { name: 'Rachel Vance', email: 'rachel@omnidata.io', phone: '+1 555-4321', role: 'VP Partnerships' },
               createdAt: todayStr,
-              metricsSummary: '50/50 Data Rev-Share Split'
+              metricsSummary: 'Payment: Purchased • Vol: 50,000 / mo'
             },
             {
               id: 'client-d',

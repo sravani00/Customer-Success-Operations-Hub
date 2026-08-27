@@ -440,7 +440,7 @@ export default function ClientsPage() {
                       const cat = e.target.value as ClientSubModule;
                       setNewSubModule(cat);
                       if (cat === 'Affiliate Networks') setNewSubCategory('Resolute');
-                      else if (cat === 'Data Partner') setNewSubCategory('Agreement');
+                      else if (cat === 'Data Partner') setNewSubCategory('General');
                       else if (cat === 'Consulting') setNewSubCategory('Resolute');
                       else setNewSubCategory('General');
                     }}

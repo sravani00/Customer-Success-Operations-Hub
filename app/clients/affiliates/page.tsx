@@ -9,7 +9,7 @@ import { Client } from '../../../types';
 
 export default function AffiliateNetworksPage() {
   const { clients, offers, updates, addClient, updateClient, deleteClient } = useAppStore();
-  const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Resolute' | 'Partners'>('All');
+  const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Resolute' | 'Travis' | 'Janet'>('All');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
@@ -41,7 +41,7 @@ export default function AffiliateNetworksPage() {
               </span>
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Direct performance advertisers, publisher networks, Resolute feeds, and partner offers
+              Direct performance advertisers, Resolute, Travis, and Janet affiliate networks
             </p>
           </div>
         </div>
@@ -66,12 +66,20 @@ export default function AffiliateNetworksPage() {
               Resolute
             </button>
             <button
-              onClick={() => setSelectedSubCategory('Partners')}
+              onClick={() => setSelectedSubCategory('Travis')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-                selectedSubCategory === 'Partners' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                selectedSubCategory === 'Travis' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Partners
+              Travis
+            </button>
+            <button
+              onClick={() => setSelectedSubCategory('Janet')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'Janet' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Janet
             </button>
           </div>
 

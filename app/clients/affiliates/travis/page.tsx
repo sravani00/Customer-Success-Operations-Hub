@@ -2,65 +2,68 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Database, Building, Mail, Phone, ChevronRight, ArrowLeft, Plus, Edit, Trash2 } from 'lucide-react';
-import { useAppStore } from '../../../lib/store';
-import { ClientModal } from '../../../components/modals/client-modal';
-import { Client } from '../../../types';
+import { Share2, Building, Mail, Phone, ChevronRight, ArrowLeft, Plus, Edit, Trash2 } from 'lucide-react';
+import { useAppStore } from '../../../../lib/store';
+import { ClientModal } from '../../../../components/modals/client-modal';
+import { Client } from '../../../../types';
 
-export default function DataPartnersPage() {
-  const { clients, addClient, updateClient, deleteClient } = useAppStore();
+export default function TravisAffiliateNetworksPage() {
+  const { clients, updates, addClient, updateClient, deleteClient } = useAppStore();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
-  const dataPartners = clients.filter((c) => c.subModule === 'Data Partner');
+  const travisClients = clients.filter((c) => 
+    (c.subModule === 'Affiliate Networks' || (c.subModule as string) === 'Affiliate Client') && 
+    c.subModuleCategory === 'Travis'
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600">
-            <Database className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
+            <Share2 className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center space-x-2 mb-1">
-              <Link href="/clients" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
-                <ArrowLeft className="w-3 h-3" /> Back to All Clients
+              <Link href="/clients/affiliates" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
+                <ArrowLeft className="w-3 h-3" /> Back to Affiliate Networks
               </Link>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              Data Partners
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 font-mono font-bold">
-                {dataPartners.length} Accounts
+              Affiliate Networks — Travis
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono font-bold">
+                {travisClients.length} Accounts
               </span>
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Consumer data providers, Rev-Share feeds, and API data integration feeds
+              Travis affiliate network channels, campaign feeds, and partner accounts
             </p>
           </div>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
+          className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>+ Add Data Partner Account</span>
+          <span>+ Add Account</span>
         </button>
       </div>
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {dataPartners.map((client) => {
+        {travisClients.map((client) => {
           return (
             <div 
               key={client.id}
-              className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4 hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4 hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-xs">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-xs">
                       {client.name.replace('Client ', '')}
                     </div>
                     <div>
@@ -72,15 +75,13 @@ export default function DataPartnersPage() {
                   </div>
 
                   <div className="flex items-center space-x-1.5">
-                    {client.paymentType && (
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
-                        {client.paymentType}
-                      </span>
-                    )}
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      {client.status}
+                    </span>
                     <button
                       onClick={() => setEditingClient(client)}
                       title="Edit Account"
-                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-purple-100 text-slate-600 hover:text-purple-700 transition-colors"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-100 text-slate-600 hover:text-blue-700 transition-colors"
                     >
                       <Edit className="w-3.5 h-3.5" />
                     </button>
@@ -108,28 +109,13 @@ export default function DataPartnersPage() {
                     <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-emerald-600" /> {client.primaryContact.phone}</span>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-3 gap-2 p-2.5 bg-purple-50/50 rounded-xl border border-purple-200/60 text-xs font-mono">
-                  <div>
-                    <span className="text-slate-400 block text-[9px] uppercase font-sans">Payment</span>
-                    <span className="font-bold text-purple-700">{client.paymentType || 'Rev-Share'}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[9px] uppercase font-sans">Data Type</span>
-                    <span className="font-bold text-slate-800">{client.dataType || 'Leads'}</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400 block text-[9px] uppercase font-sans">Est. Volume</span>
-                    <span className="font-bold text-slate-800">{client.estimatedVolume || '50,000 / mo'}</span>
-                  </div>
-                </div>
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-[11px] text-slate-500 font-mono">Comm: {client.communicationMode || 'Email'}</span>
                 <Link
                   href={`/clients/${client.id}`}
-                  className="px-3.5 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+                  className="px-3.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
                 >
                   <span>360° Profile</span>
                   <ChevronRight className="w-4 h-4" />
@@ -145,8 +131,8 @@ export default function DataPartnersPage() {
         isOpen={isAddModalOpen}
         mode="add"
         lockCategory={true}
-        defaultSubModule="Data Partner"
-        defaultSubCategory="General"
+        defaultSubModule="Affiliate Networks"
+        defaultSubCategory="Travis"
         onClose={() => setIsAddModalOpen(false)}
         onSave={(data) => addClient(data)}
       />
