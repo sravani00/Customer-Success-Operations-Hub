@@ -54,6 +54,8 @@ interface AppState {
   
   addClientUpdate: (update: Omit<ClientUpdate, 'id' | 'timestamp'>) => void;
   addMeeting: (meeting: Omit<Meeting, 'id'>) => void;
+  addMomPoint: (meetingId: string, point: string) => void;
+  removeMomPoint: (meetingId: string, index: number) => void;
   
   addTask: (task: Omit<TaskItem, 'id'>) => void;
   updateTaskStatus: (id: string, status: TaskItem['status']) => void;
@@ -147,6 +149,31 @@ export const useAppStore = create<AppState>()(
           id: `meet-${Date.now()}`
         };
         set((state) => ({ meetings: [newMeeting, ...state.meetings] }));
+      },
+
+      addMomPoint: (meetingId, point) => {
+        if (!point.trim()) return;
+        set((state) => ({
+          meetings: state.meetings.map((m) => {
+            if (m.id === meetingId) {
+              const existing = m.momPoints || [];
+              return { ...m, momPoints: [...existing, point.trim()] };
+            }
+            return m;
+          })
+        }));
+      },
+
+      removeMomPoint: (meetingId, index) => {
+        set((state) => ({
+          meetings: state.meetings.map((m) => {
+            if (m.id === meetingId) {
+              const existing = m.momPoints || [];
+              return { ...m, momPoints: existing.filter((_, idx) => idx !== index) };
+            }
+            return m;
+          })
+        }));
       },
 
       addTask: (taskData) => {
@@ -308,9 +335,10 @@ export const useAppStore = create<AppState>()(
             {
               id: 'client-a',
               name: 'Client A',
-              company: 'Acme Growth Media',
+              company: 'Acme Growth Media (Resolute)',
               status: 'Active',
-              subModule: 'Affiliate Client',
+              subModule: 'Affiliate Networks',
+              subModuleCategory: 'Resolute',
               industry: 'Digital Marketing',
               primaryContact: { name: 'John Miller', email: 'john@clienta.com', phone: '+1 555-2345', role: 'VP Marketing' },
               createdAt: todayStr,
@@ -319,9 +347,10 @@ export const useAppStore = create<AppState>()(
             {
               id: 'client-b',
               name: 'Client B',
-              company: 'Nexus Affiliate Network',
+              company: 'Nexus Affiliate Network (Partners)',
               status: 'Active',
-              subModule: 'Affiliate Client',
+              subModule: 'Affiliate Networks',
+              subModuleCategory: 'Partners',
               industry: 'E-Commerce & Lead Gen',
               primaryContact: { name: 'Sarah Jenkins', email: 'sarah@nexusaffiliate.com', phone: '+1 555-8765', role: 'Head Partnerships' },
               createdAt: todayStr,
@@ -330,24 +359,50 @@ export const useAppStore = create<AppState>()(
             {
               id: 'client-c',
               name: 'Client C',
-              company: 'Vortex Global Tech',
+              company: 'Vortex Global Tech (Agreement)',
               status: 'Active',
               subModule: 'Data Partner',
+              subModuleCategory: 'Agreement',
               industry: 'SaaS Feeds',
               primaryContact: { name: 'Michael Chang', email: 'm.chang@vortexglobal.com', phone: '+1 555-3456', role: 'Ops Director' },
               createdAt: todayStr,
-              metricsSummary: '1.2M API Records / day'
+              metricsSummary: '1.2M API Records / day (Agreement)'
+            },
+            {
+              id: 'client-f',
+              name: 'Client F',
+              company: 'OmniData Insights (Rev-Share)',
+              status: 'Active',
+              subModule: 'Data Partner',
+              subModuleCategory: 'Rev-Share',
+              industry: 'Consumer Enrichment',
+              primaryContact: { name: 'Rachel Vance', email: 'rachel@omnidata.io', phone: '+1 555-4321', role: 'VP Partnerships' },
+              createdAt: todayStr,
+              metricsSummary: '50/50 Data Rev-Share Split'
             },
             {
               id: 'client-d',
               name: 'Client D',
-              company: 'Apex Partners Consulting',
-              status: 'Onboarding',
+              company: 'Apex Resolute Consulting',
+              status: 'Active',
               subModule: 'Consulting',
+              subModuleCategory: 'Resolute',
               industry: 'CS Advisory',
               primaryContact: { name: 'Elena Rostova', email: 'elena@apexpartners.com', phone: '+1 555-9012', role: 'Account Lead' },
               createdAt: todayStr,
-              metricsSummary: 'Q3 Strategy Project'
+              metricsSummary: 'Q3 Resolute Strategy Project'
+            },
+            {
+              id: 'client-e',
+              name: 'Client E',
+              company: 'Ongage Enterprise Advisory',
+              status: 'Onboarding',
+              subModule: 'Consulting',
+              subModuleCategory: 'Ongage',
+              industry: 'Email Infrastructure',
+              primaryContact: { name: 'David Vance', email: 'david@ongage.com', phone: '+1 555-6543', role: 'Solutions Director' },
+              createdAt: todayStr,
+              metricsSummary: 'Ongage ESP Migration & Delivery'
             }
           ],
           offers: [
@@ -436,7 +491,12 @@ export const useAppStore = create<AppState>()(
               description: 'Weekly review of Offer A caps, EPC metrics & revenue goals.',
               meetingNotes: 'Early conversion rate +14% above control.',
               keyDecisions: ['Increase test cap on Offer A to 25k'],
-              actionItems: ['Prepare EPC metrics table']
+              actionItems: ['Prepare EPC metrics table'],
+              momPoints: [
+                'Agreed to increase test cap on Offer A to 25,000 leads',
+                'Reviewed early conversion rate performance (+14% above control)',
+                'Assigned EPC metrics table preparation to CS Ops team'
+              ]
             },
             {
               id: 'meet-2',
@@ -453,7 +513,12 @@ export const useAppStore = create<AppState>()(
               description: 'Reviewing daily cap limits and mobile payout flow.',
               meetingNotes: 'Mobile checkout conversion rate holding at 8.2%.',
               keyDecisions: ['Maintain current traffic sources'],
-              actionItems: ['Confirm testing cap for next variant']
+              actionItems: ['Confirm testing cap for next variant'],
+              momPoints: [
+                'Confirmed mobile checkout conversion rate holding steady at 8.2%',
+                'Approved current traffic sources for next test sprint',
+                'Scheduled follow-up for next variant testing cap confirmation'
+              ]
             }
           ],
           tasks: [

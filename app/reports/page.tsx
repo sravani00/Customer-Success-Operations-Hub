@@ -102,7 +102,7 @@ ${followUps.length > 0
     return `### 🏢 Client Performance & Operations Report: ${c.name} (${c.company})
 
 **Active Date**: ${currentDate}
-**Sub-Module Category**: ${c.subModule}
+**Account Category**: ${c.subModule}
 **Industry**: ${c.industry}
 **Account Status**: ${c.status}
 **Primary Contact**: ${c.primaryContact.name} (${c.primaryContact.role} | ${c.primaryContact.email} | ${c.primaryContact.phone})
@@ -206,19 +206,19 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
       {/* Header Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600">
             <FileSpreadsheet className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
               Reports & Client Intelligence
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono font-bold">
                 Interactive Generator
               </span>
             </h1>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Select any client account below to instantly generate a tailored operational report & executive summary
             </p>
           </div>
@@ -226,27 +226,27 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
 
         <button
           onClick={handleCopy}
-          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center space-x-2 shadow-lg shadow-blue-600/30 transition-all self-start md:self-auto"
+          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs flex items-center space-x-2 shadow-xs transition-all self-start md:self-auto"
         >
-          {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
           <span>{copied ? 'Report Copied to Clipboard!' : 'Copy Client Report'}</span>
         </button>
       </div>
 
       {/* Client Selection Bar & Format Switcher */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs">
         
         {/* Client Selector Dropdown */}
         <div className="flex items-center space-x-3 w-full md:w-auto">
-          <div className="flex items-center space-x-2 text-xs font-semibold text-slate-300 uppercase tracking-wider shrink-0">
-            <Users className="w-4 h-4 text-blue-400" />
+          <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700 uppercase tracking-wider shrink-0">
+            <Users className="w-4 h-4 text-blue-600" />
             <span>Select Client Report:</span>
           </div>
 
           <select
             value={selectedClientId}
             onChange={(e) => setSelectedClientId(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs font-semibold text-white focus:outline-none focus:border-blue-500 cursor-pointer min-w-[240px]"
+            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-xs font-semibold text-slate-900 focus:outline-none focus:border-blue-500 cursor-pointer min-w-[240px]"
           >
             <option value="all">🌐 All Clients (Executive Hub Recap)</option>
             <optgroup label="Client Accounts Directory">
@@ -260,11 +260,11 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
         </div>
 
         {/* Format Selector */}
-        <div className="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs shrink-0 self-start md:self-auto">
+        <div className="flex items-center space-x-2 bg-slate-100/80 p-1 rounded-xl border border-slate-200 text-xs shrink-0 self-start md:self-auto">
           <button
             onClick={() => setReportFormat('markdown')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              reportFormat === 'markdown' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+              reportFormat === 'markdown' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Markdown Format
@@ -272,7 +272,7 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
           <button
             onClick={() => setReportFormat('executive')}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              reportFormat === 'executive' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+              reportFormat === 'executive' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Executive Plain Text
@@ -282,31 +282,31 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
 
       {/* Selected Client Overview Card (Shown if specific client selected) */}
       {selectedClient && (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4 animate-in fade-in duration-200">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4 animate-in fade-in duration-200">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-base shadow-md">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-bold flex items-center justify-center text-base shadow-xs">
                 {selectedClient.name.replace('Client ', '')}
               </div>
               <div>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                   {selectedClient.name} — {selectedClient.company}
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-mono">
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono font-bold">
                     {selectedClient.subModule}
                   </span>
                 </h2>
-                <p className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+                <p className="text-xs text-slate-500 flex items-center gap-2 mt-0.5">
                   <span>Industry: {selectedClient.industry}</span>
                   <span>•</span>
-                  <span>Status: <strong className="text-emerald-400">{selectedClient.status}</strong></span>
+                  <span>Status: <strong className="text-emerald-700">{selectedClient.status}</strong></span>
                 </p>
               </div>
             </div>
 
-            <div className="text-xs bg-slate-950 p-3 rounded-xl border border-slate-800/80 space-y-1">
-              <span className="text-slate-400 block font-semibold text-[10px] uppercase tracking-wider">Primary Contact:</span>
-              <div className="text-white font-semibold">{selectedClient.primaryContact.name} ({selectedClient.primaryContact.role})</div>
-              <div className="text-slate-400 text-[11px] flex items-center gap-3">
+            <div className="text-xs bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-500 block font-semibold text-[10px] uppercase tracking-wider">Primary Contact:</span>
+              <div className="text-slate-900 font-semibold">{selectedClient.primaryContact.name} ({selectedClient.primaryContact.role})</div>
+              <div className="text-slate-500 text-[11px] flex items-center gap-3">
                 <span>✉️ {selectedClient.primaryContact.email}</span>
                 <span>📞 {selectedClient.primaryContact.phone}</span>
               </div>
@@ -315,40 +315,40 @@ ${clientFollowUps.length > 0 ? clientFollowUps.map((f) => `* [${f.status}] ${f.t
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-              <span className="text-slate-400">Updates Logged:</span>
-              <span className="font-bold text-blue-400 font-mono text-sm">{clientUpdates.length}</span>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span className="text-slate-500">Updates Logged:</span>
+              <span className="font-bold text-blue-700 font-mono text-sm">{clientUpdates.length}</span>
             </div>
-            <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-              <span className="text-slate-400">Meetings:</span>
-              <span className="font-bold text-emerald-400 font-mono text-sm">{clientMeetings.length}</span>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span className="text-slate-500">Meetings:</span>
+              <span className="font-bold text-emerald-700 font-mono text-sm">{clientMeetings.length}</span>
             </div>
-            <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-              <span className="text-slate-400">Active Offers:</span>
-              <span className="font-bold text-amber-400 font-mono text-sm">{clientOffers.length}</span>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span className="text-slate-500">Active Offers:</span>
+              <span className="font-bold text-amber-700 font-mono text-sm">{clientOffers.length}</span>
             </div>
-            <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 flex items-center justify-between">
-              <span className="text-slate-400">Tasks Completed:</span>
-              <span className="font-bold text-indigo-400 font-mono text-sm">{completedTasksCount} / {clientTasks.length}</span>
+            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span className="text-slate-500">Tasks Completed:</span>
+              <span className="font-bold text-indigo-700 font-mono text-sm">{completedTasksCount} / {clientTasks.length}</span>
             </div>
           </div>
         </div>
       )}
 
       {/* Generated Report Output Box */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
           <div className="flex items-center space-x-2">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <h2 className="font-bold text-sm text-white">
+            <Sparkles className="w-4 h-4 text-amber-600" />
+            <h2 className="font-bold text-sm text-slate-900">
               Generated Operational Report {selectedClient ? `for ${selectedClient.name} (${selectedClient.company})` : `(All Clients)`}
             </h2>
           </div>
-          <span className="text-xs font-mono text-slate-400">Date: {currentDate}</span>
+          <span className="text-xs font-mono text-slate-500">Date: {currentDate}</span>
         </div>
 
         {/* Text Code Container */}
-        <pre className="p-5 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs text-slate-200 whitespace-pre-wrap leading-relaxed overflow-x-auto selection:bg-blue-600">
+        <pre className="p-5 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed overflow-x-auto selection:bg-blue-100">
           {reportContent}
         </pre>
       </div>

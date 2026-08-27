@@ -2,36 +2,38 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { UserPlus, Building, Mail, Phone, ChevronRight, ArrowLeft } from 'lucide-react';
-import { useAppStore } from '../../../lib/store';
+import { Database, Building, Mail, Phone, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useAppStore } from '../../../../lib/store';
 
-export default function LeadsPage() {
+export default function AgreementDataPartnersPage() {
   const { clients } = useAppStore();
 
-  const leadClients = clients.filter((c) => c.subModule === 'Lead');
+  const agreementClients = clients.filter((c) => 
+    c.subModule === 'Data Partner' && (c.subModuleCategory === 'Agreement' || !c.subModuleCategory)
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-            <UserPlus className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600">
+            <Database className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center space-x-2 mb-1">
-              <Link href="/clients" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
-                <ArrowLeft className="w-3 h-3" /> Back to All Clients
+              <Link href="/clients/data-partners" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
+                <ArrowLeft className="w-3 h-3" /> Back to Data Partners
               </Link>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              Leads & Sales Pipeline
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-mono font-bold">
-                {leadClients.length} Open Leads
+              Data Partners — Agreement
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 font-mono font-bold">
+                {agreementClients.length} Accounts
               </span>
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Prospective client accounts, qualification stage tracking, and onboarding pipeline
+              Fixed-contract agreement data partners, SLA feeds, and data licensing streams
             </p>
           </div>
         </div>
@@ -39,16 +41,16 @@ export default function LeadsPage() {
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {leadClients.map((client) => {
+        {agreementClients.map((client) => {
           return (
             <div 
               key={client.id}
-              className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4 hover:border-amber-300 hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-4 hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-600 to-orange-600 text-white font-bold flex items-center justify-center text-sm shadow-xs">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-bold flex items-center justify-center text-sm shadow-xs">
                       {client.name.replace('Client ', '')}
                     </div>
                     <div>
@@ -59,14 +61,14 @@ export default function LeadsPage() {
                     </div>
                   </div>
 
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-                    Stage: {client.leadStage || 'Discovery'}
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+                    Agreement
                   </span>
                 </div>
 
                 <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-700">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-500">Lead Contact:</span>
+                    <span className="text-slate-500">Primary Contact:</span>
                     <span className="font-semibold text-slate-900">{client.primaryContact.name} ({client.primaryContact.role})</span>
                   </div>
                   <div className="flex items-center justify-between text-slate-500 pt-1 border-t border-slate-200/60">
@@ -76,8 +78,8 @@ export default function LeadsPage() {
                 </div>
 
                 <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                  <span className="text-slate-500">Deal Estimate:</span>
-                  <span className="font-bold text-amber-700 font-mono">{client.metricsSummary}</span>
+                  <span className="text-slate-500">Agreement Terms:</span>
+                  <span className="font-bold text-purple-700 font-mono">{client.metricsSummary}</span>
                 </div>
               </div>
 
@@ -85,7 +87,7 @@ export default function LeadsPage() {
                 <span className="text-[11px] text-slate-500 font-mono">Industry: {client.industry}</span>
                 <Link
                   href={`/clients/${client.id}`}
-                  className="px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
+                  className="px-3.5 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-semibold flex items-center space-x-1.5 transition-colors"
                 >
                   <span>360° Profile</span>
                   <ChevronRight className="w-4 h-4" />

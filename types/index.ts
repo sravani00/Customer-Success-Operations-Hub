@@ -1,5 +1,6 @@
 export type ClientStatus = 'Active' | 'Onboarding' | 'Inactive';
-export type ClientSubModule = 'Affiliate Client' | 'Data Partner' | 'Consulting' | 'Lead';
+export type ClientSubModule = 'Affiliate Networks' | 'Data Partner' | 'Consulting' | 'Lead';
+export type ClientSubCategory = 'Resolute' | 'Partners' | 'Ongage' | 'Agreement' | 'Rev-Share' | 'General';
 
 export interface PrimaryContact {
   name: string;
@@ -14,6 +15,7 @@ export interface Client {
   company: string;
   status: ClientStatus;
   subModule: ClientSubModule;
+  subModuleCategory?: ClientSubCategory;
   industry: string;
   primaryContact: PrimaryContact;
   createdAt: string;
@@ -122,6 +124,7 @@ export interface Meeting {
   meetingNotes: string;
   keyDecisions: string[];
   actionItems: string[];
+  momPoints?: string[];
 }
 
 export type TaskStatus = 'Not Started' | 'In Progress' | 'Waiting' | 'Completed' | 'Cancelled';

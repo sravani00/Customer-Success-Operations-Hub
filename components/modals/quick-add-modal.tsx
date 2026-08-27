@@ -176,32 +176,32 @@ export function QuickAddModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200 w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden">
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
           <div className="flex items-center space-x-2">
-            <Sparkles className="w-5 h-5 text-blue-400" />
-            <h2 className="text-base font-bold text-white">Quick Add Record</h2>
+            <Sparkles className="w-5 h-5 text-blue-600" />
+            <h2 className="text-base font-bold text-slate-900">Quick Add Record</h2>
           </div>
           <button 
             onClick={closeQuickAdd}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex border-b border-slate-800 bg-slate-950/30 text-xs font-medium">
+        <div className="flex border-b border-slate-200 bg-slate-50/50 text-xs font-medium">
           {(['update', 'offer', 'meeting', 'task', 'followup'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`flex-1 py-3 border-b-2 text-center transition-all capitalize ${
                 currentTab === tab 
-                  ? 'border-blue-500 text-blue-400 font-bold bg-blue-500/10' 
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
+                  ? 'border-blue-600 text-blue-700 font-bold bg-blue-50/50' 
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
               {tab === 'update' ? 'Update' : tab}
@@ -214,11 +214,11 @@ export function QuickAddModal() {
           {currentTab === 'update' && (
             <div className="space-y-4">
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Target Client</label>
+                <label className="block font-semibold mb-1 text-slate-700">Target Client</label>
                 <select
                   value={updateClientId}
                   onChange={(e) => setUpdateClientId(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                 >
                   {clients.length === 0 ? (
                     <option value="">(No Clients — Enter Manually Below)</option>
@@ -232,11 +232,11 @@ export function QuickAddModal() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Category Type</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Category Type</label>
                   <select
                     value={updateType}
                     onChange={(e) => setUpdateType(e.target.value as UpdateCategory)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   >
                     <option value="Performance">Performance</option>
                     <option value="New Offer">New Offer</option>
@@ -246,11 +246,11 @@ export function QuickAddModal() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Source</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Source</label>
                   <select
                     value={updateSource}
                     onChange={(e) => setUpdateSource(e.target.value as any)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   >
                     <option value="Client">Client</option>
                     <option value="Internal">Internal</option>
@@ -259,13 +259,13 @@ export function QuickAddModal() {
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Update Message / Note</label>
+                <label className="block font-semibold mb-1 text-slate-700">Update Message / Note</label>
                 <textarea
                   value={updateMessage}
                   onChange={(e) => setUpdateMessage(e.target.value)}
                   placeholder="Enter details about this update..."
                   rows={3}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                 />
               </div>
             </div>
@@ -275,21 +275,21 @@ export function QuickAddModal() {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Offer Name</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Offer Name</label>
                   <input
                     type="text"
                     value={offerName}
                     onChange={(e) => setOfferName(e.target.value)}
                     placeholder="e.g. Summer Health Promo"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Client</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Client</label>
                   <select
                     value={offerClientId}
                     onChange={(e) => setOfferClientId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   >
                     {clients.map((c) => (
                       <option key={c.id} value={c.id}>{c.name}</option>
@@ -300,21 +300,21 @@ export function QuickAddModal() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Daily Traffic Volume</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Daily Traffic Volume</label>
                   <input
                     type="number"
                     value={offerVolume}
                     onChange={(e) => setOfferVolume(Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Estimated Revenue ($)</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Estimated Revenue ($)</label>
                   <input
                     type="number"
                     value={offerRevenue}
                     onChange={(e) => setOfferRevenue(Number(e.target.value))}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono focus:border-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -324,23 +324,23 @@ export function QuickAddModal() {
           {currentTab === 'meeting' && (
             <div className="space-y-4">
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Meeting Title</label>
+                <label className="block font-semibold mb-1 text-slate-700">Meeting Title</label>
                 <input
                   type="text"
                   value={meetingTitle}
                   onChange={(e) => setMeetingTitle(e.target.value)}
                   placeholder="e.g. Client Performance Sync"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Client</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Client</label>
                   <select
                     value={meetingClientId}
                     onChange={(e) => setMeetingClientId(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   >
                     {clients.map((c) => (
                       <option key={c.id} value={c.id}>{c.name}</option>
@@ -348,12 +348,12 @@ export function QuickAddModal() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Start Time</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Start Time</label>
                   <input
                     type="time"
                     value={meetingTime}
                     onChange={(e) => setMeetingTime(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono focus:border-blue-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -363,33 +363,33 @@ export function QuickAddModal() {
           {currentTab === 'task' && (
             <div className="space-y-4">
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Task Description / Title</label>
+                <label className="block font-semibold mb-1 text-slate-700">Task Description / Title</label>
                 <input
                   type="text"
                   value={taskTitle}
                   onChange={(e) => setTaskTitle(e.target.value)}
                   placeholder="e.g. Audit Q3 Campaign Caps"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Assigned Owner</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Assigned Owner</label>
                   <input
                     type="text"
                     value={taskAssignedTo}
                     onChange={(e) => setTaskAssignedTo(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Due Date</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Due Date</label>
                   <input
                     type="date"
                     value={taskDueDate}
                     onChange={(e) => setTaskDueDate(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono focus:border-blue-500 focus:outline-none [color-scheme:dark]"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono focus:border-blue-500 focus:outline-none [color-scheme:light]"
                   />
                 </div>
               </div>
@@ -399,33 +399,33 @@ export function QuickAddModal() {
           {currentTab === 'followup' && (
             <div className="space-y-4">
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Follow-up Action Title</label>
+                <label className="block font-semibold mb-1 text-slate-700">Follow-up Action Title</label>
                 <input
                   type="text"
                   value={followUpTitle}
                   onChange={(e) => setFollowUpTitle(e.target.value)}
                   placeholder="e.g. Confirm cap expansion with Michael"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Assignee</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Assignee</label>
                   <input
                     type="text"
                     value={followUpAssignedTo}
                     onChange={(e) => setFollowUpAssignedTo(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1 text-slate-300">Reminder Date</label>
+                  <label className="block font-semibold mb-1 text-slate-700">Reminder Date</label>
                   <input
                     type="date"
                     value={followUpDueDate}
                     onChange={(e) => setFollowUpDueDate(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 font-mono focus:border-blue-500 focus:outline-none [color-scheme:dark]"
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono focus:border-blue-500 focus:outline-none [color-scheme:light]"
                   />
                 </div>
               </div>
@@ -433,17 +433,17 @@ export function QuickAddModal() {
           )}
 
           {/* Modal Actions */}
-          <div className="pt-4 border-t border-slate-800 flex items-center justify-end space-x-3">
+          <div className="pt-4 border-t border-slate-200 flex items-center justify-end space-x-3">
             <button
               type="button"
               onClick={closeQuickAdd}
-              className="px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-400 font-semibold transition-colors"
+              className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg shadow-blue-600/30 transition-all flex items-center space-x-1.5"
+              className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-sm shadow-blue-500/20 transition-all flex items-center space-x-1.5"
             >
               <Plus className="w-4 h-4" />
               <span>Save Record</span>

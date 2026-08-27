@@ -19,7 +19,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // Prevent layout hydration mismatch during SSR
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 antialiased">
+      <div className="min-h-screen bg-slate-50 text-slate-900 antialiased">
         {children}
       </div>
     );
@@ -27,14 +27,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isLoginPage) {
     return (
-      <main className="min-h-screen w-full bg-slate-950 text-slate-100">
+      <main className="min-h-screen w-full bg-slate-50 text-slate-900">
         {children}
       </main>
     );
   }
 
   return (
-    <div className="min-h-screen flex overflow-x-hidden w-full bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex overflow-x-hidden w-full bg-slate-50 text-slate-900">
       {/* Persistent Left Sidebar */}
       <Sidebar />
 
@@ -44,7 +44,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <Header />
 
         {/* Main Workspace View Content */}
-        <main className="flex-1 p-6 overflow-y-auto bg-slate-950">
+        <main className="flex-1 p-6 overflow-y-auto bg-slate-50">
           {children}
         </main>
       </div>

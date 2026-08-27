@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="h-16 bg-slate-900 border-b border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30 shadow-sm text-slate-200">
+    <header className="h-16 bg-white border-b border-slate-200/90 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs text-slate-800">
       {/* Search Input & Workspace Context */}
       <div className="flex items-center space-x-4 flex-1 max-w-xl">
         <div className="relative w-full">
@@ -57,12 +57,12 @@ export const Header: React.FC = () => {
             placeholder="Search clients, meetings, tasks, follow-ups..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-2xs"
           />
           {searchQuery && (
             <button 
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-700"
             >
               Clear
             </button>
@@ -73,9 +73,9 @@ export const Header: React.FC = () => {
       {/* Date Switcher & Actions */}
       <div className="flex items-center space-x-4">
         {/* Date Context Display & Stepper Switcher */}
-        <div className="flex items-center space-x-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-mono">
-          <CalendarIcon className="w-4 h-4 text-blue-400 shrink-0" />
-          <span className="text-slate-400 font-sans font-medium hidden sm:inline">Active Date:</span>
+        <div className="flex items-center space-x-1.5 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-mono">
+          <CalendarIcon className="w-4 h-4 text-blue-600 shrink-0" />
+          <span className="text-slate-500 font-sans font-medium hidden sm:inline">Active Date:</span>
           
           {/* Previous Day Button */}
           <button
@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
               const day = String(dateObj.getDate()).padStart(2, '0');
               setCurrentDate(`${year}-${month}-${day}`);
             }}
-            className="px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold border border-slate-800 transition-colors"
+            className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-200/60 text-slate-700 font-bold border border-slate-200 transition-colors shadow-2xs"
           >
             ‹
           </button>
@@ -98,7 +98,7 @@ export const Header: React.FC = () => {
             type="date"
             value={currentDate}
             onChange={(e) => e.target.value && setCurrentDate(e.target.value)}
-            className="bg-slate-900 border border-slate-700/80 text-blue-300 font-mono font-bold px-2 py-0.5 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer text-xs [color-scheme:dark]"
+            className="bg-white border border-slate-200 text-blue-700 font-mono font-bold px-2 py-0.5 rounded-lg focus:outline-none focus:border-blue-500 cursor-pointer text-xs shadow-2xs [color-scheme:light]"
           />
 
           {/* Next Day Button */}
@@ -112,7 +112,7 @@ export const Header: React.FC = () => {
               const day = String(dateObj.getDate()).padStart(2, '0');
               setCurrentDate(`${year}-${month}-${day}`);
             }}
-            className="px-1.5 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold border border-slate-800 transition-colors"
+            className="px-1.5 py-0.5 rounded bg-white hover:bg-slate-200/60 text-slate-700 font-bold border border-slate-200 transition-colors shadow-2xs"
           >
             ›
           </button>
@@ -122,7 +122,7 @@ export const Header: React.FC = () => {
         <div className="relative">
           <button
             onClick={() => setShowQuickMenu(!showQuickMenu)}
-            className="bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs px-3.5 py-2 rounded-lg flex items-center space-x-1.5 shadow-md shadow-blue-600/20 transition-all"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs px-3.5 py-2 rounded-lg flex items-center space-x-1.5 shadow-sm shadow-blue-500/20 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Quick Add</span>
@@ -131,45 +131,45 @@ export const Header: React.FC = () => {
 
           {showQuickMenu && (
             <div 
-              className="absolute right-0 mt-2 w-52 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+              className="absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
               onMouseLeave={() => setShowQuickMenu(false)}
             >
-              <div className="px-3 py-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              <div className="px-3 py-1 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                 Create Record
               </div>
               <button
                 onClick={() => { openQuickAdd('update'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
-                <FileText className="w-4 h-4 text-blue-400" />
+                <FileText className="w-4 h-4 text-blue-600" />
                 <span>+ Client / Internal Update</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('offer'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
-                <Package className="w-4 h-4 text-amber-400" />
+                <Package className="w-4 h-4 text-amber-600" />
                 <span>+ Promotional Offer</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('meeting'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
-                <Video className="w-4 h-4 text-emerald-400" />
+                <Video className="w-4 h-4 text-emerald-600" />
                 <span>+ Scheduled Meeting</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('task'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
-                <CheckSquare className="w-4 h-4 text-indigo-400" />
+                <CheckSquare className="w-4 h-4 text-indigo-600" />
                 <span>+ Operational Task</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('followup'); setShowQuickMenu(false); }}
-                className="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center space-x-2.5 transition-colors"
+                className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
-                <Clock className="w-4 h-4 text-rose-400" />
+                <Clock className="w-4 h-4 text-rose-600" />
                 <span>+ Action Follow-up</span>
               </button>
             </div>
@@ -180,7 +180,7 @@ export const Header: React.FC = () => {
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 hover:text-white relative transition-colors"
+            className="p-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 relative transition-colors"
             title="Global System Notifications"
           >
             <Bell className="w-4 h-4" />
@@ -192,16 +192,16 @@ export const Header: React.FC = () => {
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-50 text-slate-200">
-              <div className="p-3 border-b border-slate-800 flex items-center justify-between">
+            <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-200 rounded-xl shadow-xl z-50 text-slate-800">
+              <div className="p-3 border-b border-slate-200 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <Bell className="w-4 h-4 text-blue-400" />
-                  <span className="font-semibold text-xs text-white">System Notifications</span>
+                  <Bell className="w-4 h-4 text-blue-600" />
+                  <span className="font-semibold text-xs text-slate-900">System Notifications</span>
                 </div>
                 {notifications.length > 0 && (
                   <button
                     onClick={clearAllNotifications}
-                    className="text-[10px] text-slate-400 hover:text-rose-400 flex items-center space-x-1"
+                    className="text-[10px] text-slate-400 hover:text-rose-600 flex items-center space-x-1"
                   >
                     <Trash2 className="w-3 h-3" />
                     <span>Clear All</span>
@@ -209,9 +209,9 @@ export const Header: React.FC = () => {
                 )}
               </div>
 
-              <div className="max-h-72 overflow-y-auto divide-y divide-slate-800/60 custom-scrollbar">
+              <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 custom-scrollbar">
                 {notifications.length === 0 ? (
-                  <div className="p-4 text-center text-xs text-slate-500">
+                  <div className="p-4 text-center text-xs text-slate-400">
                     No new notifications
                   </div>
                 ) : (
@@ -220,14 +220,14 @@ export const Header: React.FC = () => {
                       key={notif.id}
                       onClick={() => markNotificationRead(notif.id)}
                       className={`p-3 text-xs cursor-pointer transition-colors ${
-                        notif.read ? 'bg-slate-900 opacity-60' : 'bg-slate-950 hover:bg-slate-800/80'
+                        notif.read ? 'bg-white opacity-60' : 'bg-blue-50/40 hover:bg-blue-50/80'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-blue-300">{notif.title}</span>
-                        <span className="text-[10px] text-slate-500">{notif.timestamp}</span>
+                        <span className="font-semibold text-blue-700">{notif.title}</span>
+                        <span className="text-[10px] text-slate-400">{notif.timestamp}</span>
                       </div>
-                      <p className="text-slate-300 line-clamp-2 leading-relaxed">{notif.message}</p>
+                      <p className="text-slate-600 line-clamp-2 leading-relaxed">{notif.message}</p>
                     </div>
                   ))
                 )}
@@ -237,17 +237,17 @@ export const Header: React.FC = () => {
         </div>
 
         {/* User Profile Badge & Lock Action */}
-        <div className="flex items-center space-x-2 pl-2 border-l border-slate-800">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-indigo-500/30">
+        <div className="flex items-center space-x-2 pl-2 border-l border-slate-200">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-white text-xs font-bold ring-2 ring-indigo-500/20 shadow-xs">
             VA
           </div>
           <div className="hidden md:block text-left">
-            <div className="text-xs font-semibold text-slate-200">Vamshi</div>
-            <div className="text-[10px] text-slate-400">CS Ops Lead</div>
+            <div className="text-xs font-semibold text-slate-800">Vamshi</div>
+            <div className="text-[10px] text-slate-500 font-medium">CS Ops Lead</div>
           </div>
           <button
             onClick={handleLogout}
-            className="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-rose-400 hover:border-rose-500/30 transition-colors ml-1"
+            className="p-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-500 hover:text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors ml-1"
             title="Lock Session / Log Out"
           >
             <LogOut className="w-4 h-4" />

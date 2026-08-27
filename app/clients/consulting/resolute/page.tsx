@@ -1,19 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Briefcase, Building, Mail, Phone, ChevronRight, ArrowLeft } from 'lucide-react';
-import { useAppStore } from '../../../lib/store';
+import { useAppStore } from '../../../../lib/store';
 
-export default function ConsultingPage() {
+export default function ResoluteConsultingPage() {
   const { clients } = useAppStore();
-  const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Resolute' | 'Ongage'>('All');
 
-  const consultingClients = clients.filter((c) => {
-    if (c.subModule !== 'Consulting') return false;
-    if (selectedSubCategory === 'All') return true;
-    return c.subModuleCategory === selectedSubCategory;
-  });
+  const resoluteClients = clients.filter((c) => 
+    c.subModule === 'Consulting' && (c.subModuleCategory === 'Resolute' || !c.subModuleCategory)
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
@@ -25,54 +22,26 @@ export default function ConsultingPage() {
           </div>
           <div>
             <div className="flex items-center space-x-2 mb-1">
-              <Link href="/clients" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
-                <ArrowLeft className="w-3 h-3" /> Back to All Clients
+              <Link href="/clients/consulting" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
+                <ArrowLeft className="w-3 h-3" /> Back to Consulting Module
               </Link>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              Consulting
+              Consulting — Resolute
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono font-bold">
-                {consultingClients.length} Accounts
+                {resoluteClients.length} Accounts
               </span>
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Strategic customer success consulting, Resolute advisory projects, and Ongage ESP integrations
+              Strategic customer success advisory, Resolute technical architecture, and operations sprints
             </p>
           </div>
-        </div>
-
-        {/* Sub-module filter pills */}
-        <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
-          <button
-            onClick={() => setSelectedSubCategory('All')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'All' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            All Consulting
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Resolute')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Resolute' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Resolute
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Ongage')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Ongage' ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Ongage
-          </button>
         </div>
       </div>
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {consultingClients.map((client) => {
+        {resoluteClients.map((client) => {
           return (
             <div 
               key={client.id}
@@ -93,7 +62,7 @@ export default function ConsultingPage() {
                   </div>
 
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    {client.subModuleCategory || 'Consulting'}
+                    Resolute
                   </span>
                 </div>
 

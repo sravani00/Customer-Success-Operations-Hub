@@ -1,20 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { Share2, Building, Mail, Phone, Package, ChevronRight, ArrowLeft, TrendingUp, Layers } from 'lucide-react';
-import { useAppStore } from '../../../lib/store';
+import { Share2, Building, Mail, Phone, ChevronRight, ArrowLeft } from 'lucide-react';
+import { useAppStore } from '../../../../lib/store';
 
-export default function AffiliateNetworksPage() {
-  const { clients, offers, updates } = useAppStore();
-  const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Resolute' | 'Partners'>('All');
+export default function PartnersAffiliateNetworksPage() {
+  const { clients, updates } = useAppStore();
 
-  const affiliateClients = clients.filter((c) => {
-    const isAffiliate = c.subModule === 'Affiliate Networks' || (c.subModule as string) === 'Affiliate Client';
-    if (!isAffiliate) return false;
-    if (selectedSubCategory === 'All') return true;
-    return c.subModuleCategory === selectedSubCategory;
-  });
+  const partnerClients = clients.filter((c) => 
+    (c.subModule === 'Affiliate Networks' || (c.subModule as string) === 'Affiliate Client') && 
+    c.subModuleCategory === 'Partners'
+  );
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-300">
@@ -26,55 +23,26 @@ export default function AffiliateNetworksPage() {
           </div>
           <div>
             <div className="flex items-center space-x-2 mb-1">
-              <Link href="/clients" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
-                <ArrowLeft className="w-3 h-3" /> Back to All Clients
+              <Link href="/clients/affiliates" className="text-xs text-blue-600 hover:underline flex items-center gap-1 font-semibold">
+                <ArrowLeft className="w-3 h-3" /> Back to Affiliate Networks
               </Link>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              Affiliate Networks
+              Affiliate Networks — Partners
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-mono font-bold">
-                {affiliateClients.length} Accounts
+                {partnerClients.length} Accounts
               </span>
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
-              Direct performance advertisers, publisher networks, Resolute feeds, and partner offers
+              Strategic publisher partners, co-registered affiliate networks, and joint venture accounts
             </p>
           </div>
-        </div>
-
-        {/* Category filter pills */}
-        <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
-          <button
-            onClick={() => setSelectedSubCategory('All')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'All' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            All Networks
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Resolute')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Resolute' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Resolute
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Partners')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Partners' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Partners
-          </button>
         </div>
       </div>
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {affiliateClients.map((client) => {
-          const clientOffers = offers.filter((o) => o.clientId === client.id);
+        {partnerClients.map((client) => {
           const clientUpdates = updates.filter((u) => u.clientId === client.id);
 
           return (
@@ -114,8 +82,8 @@ export default function AffiliateNetworksPage() {
 
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Category:</span>
-                    <span className="font-bold text-blue-700 font-mono">{client.subModuleCategory || 'Resolute'}</span>
+                    <span className="text-slate-500">Channel Type:</span>
+                    <span className="font-bold text-blue-700 font-mono">Partners</span>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                     <span className="text-slate-500">Total Updates:</span>
