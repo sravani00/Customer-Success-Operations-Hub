@@ -2,12 +2,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Database, Building, Mail, Phone, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Database, Building, Mail, Phone, ChevronRight, ArrowLeft, Plus, Edit, Trash2 } from 'lucide-react';
 import { useAppStore } from '../../../lib/store';
+import { ClientModal } from '../../../components/modals/client-modal';
+import { Client } from '../../../types';
 
 export default function DataPartnersPage() {
-  const { clients, updates } = useAppStore();
+  const { clients, updates, addClient, updateClient, deleteClient } = useAppStore();
   const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Agreement' | 'Rev-Share'>('All');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   const dataPartners = clients.filter((c) => {
     if (c.subModule !== 'Data Partner') return false;
@@ -41,31 +45,41 @@ export default function DataPartnersPage() {
           </div>
         </div>
 
-        {/* Category filter pills */}
-        <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
+        <div className="flex items-center space-x-3 flex-wrap gap-y-2">
+          {/* Category filter pills */}
+          <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
+            <button
+              onClick={() => setSelectedSubCategory('All')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'All' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              All Data Partners
+            </button>
+            <button
+              onClick={() => setSelectedSubCategory('Agreement')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'Agreement' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Agreement
+            </button>
+            <button
+              onClick={() => setSelectedSubCategory('Rev-Share')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'Rev-Share' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Rev-Share
+            </button>
+          </div>
+
           <button
-            onClick={() => setSelectedSubCategory('All')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'All' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
+            onClick={() => setIsAddModalOpen(true)}
+            className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
           >
-            All Data Partners
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Agreement')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Agreement' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Agreement
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Rev-Share')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Rev-Share' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Rev-Share
+            <Plus className="w-4 h-4" />
+            <span>+ Add Account</span>
           </button>
         </div>
       </div>
@@ -92,9 +106,29 @@ export default function DataPartnersPage() {
                     </div>
                   </div>
 
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
-                    {client.subModuleCategory || 'Data Partner'}
-                  </span>
+                  <div className="flex items-center space-x-1.5">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+                      {client.subModuleCategory || 'Data Partner'}
+                    </span>
+                    <button
+                      onClick={() => setEditingClient(client)}
+                      title="Edit Account"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-purple-100 text-slate-600 hover:text-purple-700 transition-colors"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete ${client.name}?`)) {
+                          deleteClient(client.id);
+                        }
+                      }}
+                      title="Delete Account"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-700">
@@ -128,6 +162,27 @@ export default function DataPartnersPage() {
           );
         })}
       </div>
+
+      {/* Add Client Modal */}
+      <ClientModal
+        isOpen={isAddModalOpen}
+        mode="add"
+        defaultSubModule="Data Partner"
+        defaultSubCategory={selectedSubCategory === 'All' ? 'Agreement' : (selectedSubCategory as any)}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={(data) => addClient(data)}
+      />
+
+      {/* Edit Client Modal */}
+      <ClientModal
+        isOpen={!!editingClient}
+        mode="edit"
+        clientToEdit={editingClient}
+        onClose={() => setEditingClient(null)}
+        onSave={(data) => {
+          if (editingClient) updateClient(editingClient.id, data);
+        }}
+      />
     </div>
   );
 }

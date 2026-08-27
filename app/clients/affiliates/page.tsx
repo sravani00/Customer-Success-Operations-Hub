@@ -2,12 +2,16 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Share2, Building, Mail, Phone, Package, ChevronRight, ArrowLeft, TrendingUp, Layers } from 'lucide-react';
+import { Share2, Building, Mail, Phone, Package, ChevronRight, ArrowLeft, TrendingUp, Layers, Plus, Edit, Trash2 } from 'lucide-react';
 import { useAppStore } from '../../../lib/store';
+import { ClientModal } from '../../../components/modals/client-modal';
+import { Client } from '../../../types';
 
 export default function AffiliateNetworksPage() {
-  const { clients, offers, updates } = useAppStore();
+  const { clients, offers, updates, addClient, updateClient, deleteClient } = useAppStore();
   const [selectedSubCategory, setSelectedSubCategory] = useState<'All' | 'Resolute' | 'Partners'>('All');
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   const affiliateClients = clients.filter((c) => {
     const isAffiliate = c.subModule === 'Affiliate Networks' || (c.subModule as string) === 'Affiliate Client';
@@ -42,31 +46,41 @@ export default function AffiliateNetworksPage() {
           </div>
         </div>
 
-        {/* Category filter pills */}
-        <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
+        <div className="flex items-center space-x-3 flex-wrap gap-y-2">
+          {/* Category filter pills */}
+          <div className="flex items-center space-x-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs">
+            <button
+              onClick={() => setSelectedSubCategory('All')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'All' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              All Networks
+            </button>
+            <button
+              onClick={() => setSelectedSubCategory('Resolute')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'Resolute' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Resolute
+            </button>
+            <button
+              onClick={() => setSelectedSubCategory('Partners')}
+              className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
+                selectedSubCategory === 'Partners' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Partners
+            </button>
+          </div>
+
           <button
-            onClick={() => setSelectedSubCategory('All')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'All' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
+            onClick={() => setIsAddModalOpen(true)}
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
           >
-            All Networks
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Resolute')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Resolute' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Resolute
-          </button>
-          <button
-            onClick={() => setSelectedSubCategory('Partners')}
-            className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-              selectedSubCategory === 'Partners' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Partners
+            <Plus className="w-4 h-4" />
+            <span>+ Add Account</span>
           </button>
         </div>
       </div>
@@ -74,7 +88,6 @@ export default function AffiliateNetworksPage() {
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {affiliateClients.map((client) => {
-          const clientOffers = offers.filter((o) => o.clientId === client.id);
           const clientUpdates = updates.filter((u) => u.clientId === client.id);
 
           return (
@@ -96,9 +109,29 @@ export default function AffiliateNetworksPage() {
                     </div>
                   </div>
 
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    {client.status}
-                  </span>
+                  <div className="flex items-center space-x-1.5">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      {client.status}
+                    </span>
+                    <button
+                      onClick={() => setEditingClient(client)}
+                      title="Edit Account"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-100 text-slate-600 hover:text-blue-700 transition-colors"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete ${client.name}?`)) {
+                          deleteClient(client.id);
+                        }
+                      }}
+                      title="Delete Account"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-700">
@@ -118,8 +151,8 @@ export default function AffiliateNetworksPage() {
                     <span className="font-bold text-blue-700 font-mono">{client.subModuleCategory || 'Resolute'}</span>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                    <span className="text-slate-500">Total Updates:</span>
-                    <span className="font-bold text-blue-700 font-mono">{clientUpdates.length}</span>
+                    <span className="text-slate-500">Comm Mode:</span>
+                    <span className="font-bold text-slate-800 font-mono">{client.communicationMode || 'Email'}</span>
                   </div>
                 </div>
               </div>
@@ -138,6 +171,27 @@ export default function AffiliateNetworksPage() {
           );
         })}
       </div>
+
+      {/* Add Client Modal */}
+      <ClientModal
+        isOpen={isAddModalOpen}
+        mode="add"
+        defaultSubModule="Affiliate Networks"
+        defaultSubCategory={selectedSubCategory === 'All' ? 'Resolute' : (selectedSubCategory as any)}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={(data) => addClient(data)}
+      />
+
+      {/* Edit Client Modal */}
+      <ClientModal
+        isOpen={!!editingClient}
+        mode="edit"
+        clientToEdit={editingClient}
+        onClose={() => setEditingClient(null)}
+        onSave={(data) => {
+          if (editingClient) updateClient(editingClient.id, data);
+        }}
+      />
     </div>
   );
 }
