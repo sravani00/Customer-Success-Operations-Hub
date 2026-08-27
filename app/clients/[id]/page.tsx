@@ -28,6 +28,8 @@ import {
 import { useAppStore } from '../../../lib/store';
 import { ClientSubModule, ClientSubCategory, ClientStatus, Client, Offer } from '../../../types';
 import { OfferModal } from '../../../components/modals/offer-modal';
+import { ClientModal } from '../../../components/modals/client-modal';
+import { DataPartnerAccountView } from '../../../components/clients/data-partner-account-view';
 
 export default function ClientProfileHub() {
   const params = useParams();
@@ -190,8 +192,13 @@ export default function ClientProfileHub() {
         {/* Tab Body Container */}
         <div className="p-6 space-y-8 text-xs text-slate-700">
           
-          {/* SECTION: OVERVIEW & CONTACT DETAILS */}
-          {(activeTab === 'all' || activeTab === 'overview') && (
+          {/* SPECIAL 7-SECTION DEDICATED VIEW FOR DATA PARTNERS */}
+          {client.subModule === 'Data Partner' ? (
+            <DataPartnerAccountView client={client} onEditClient={() => setEditingClient(client)} />
+          ) : (
+            <>
+              {/* SECTION: OVERVIEW & CONTACT DETAILS */}
+              {(activeTab === 'all' || activeTab === 'overview') && (
             <div className="space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-200 pb-2">
@@ -531,9 +538,22 @@ export default function ClientProfileHub() {
               </div>
             </div>
           )}
+          </>
+          )}
 
         </div>
       </div>
+
+      {/* Edit Client Modal */}
+      <ClientModal
+        isOpen={!!editingClient}
+        mode="edit"
+        clientToEdit={editingClient}
+        onClose={() => setEditingClient(null)}
+        onSave={(data) => {
+          if (editingClient) updateClient(editingClient.id, data);
+        }}
+      />
 
       {/* Edit Offer Modal */}
       <OfferModal

@@ -443,11 +443,32 @@ export const useAppStore = create<AppState>()(
               subModule: 'Data Partner',
               subModuleCategory: 'General',
               paymentType: 'Rev-Share',
+              revenueFrequency: 'Monthly',
+              dataType: 'Email & Phone Leads',
+              estimatedVolume: '120,000 / month',
+              revSharePercentage: 18.5,
               communicationMode: 'Teams',
               description: 'Data enrichment partner streaming 1.2M API records daily with Rev-Share model.',
               primaryContact: { name: 'Michael Chang', email: 'm.chang@vortexglobal.com', phone: '+1 555-3456', role: 'Ops Director' },
               createdAt: todayStr,
-              metricsSummary: 'Payment: Rev-Share • Vol: 100,000 / mo'
+              metricsSummary: 'Payment: Rev-Share • Vol: 120,000 / mo',
+              activeFeeds: [
+                { id: 'f-1', feedName: 'B2B Tech Opt-In Feed', dataType: 'B2B Leads', frequency: 'Real-time API', volume: '75,000 / mo', status: 'Active' },
+                { id: 'f-2', feedName: 'Consumer Intent Stream', dataType: 'Email & Phone', frequency: 'Daily Batch 02:00 UTC', volume: '45,000 / mo', status: 'Active' }
+              ],
+              revenueHistory: [
+                { id: 'r-1', period: 'August 2026', dailyRevenue: 14200, revShareAmount: 2627, paymentStatus: 'Paid' },
+                { id: 'r-2', period: 'July 2026', dailyRevenue: 18500, revShareAmount: 3422, paymentStatus: 'Paid' },
+                { id: 'r-3', period: 'June 2026', dailyRevenue: 12900, revShareAmount: 2386, paymentStatus: 'Pending Settlement' }
+              ],
+              dataLogs: [
+                { id: 'l-1', sourceName: 'S3 API Ingestion Feed A', driveLocation: 's3://vortex-data-feeds/august-2026/', fileName: 'vortex_optin_20260827.csv', dataVolume: '24,500 records', validationStatus: 'Validated', date: '2026-08-27' },
+                { id: 'l-2', sourceName: 'Google Drive Sync Feed', driveLocation: 'Shared Drive / Vortex / Feeds', fileName: 'vortex_intent_20260826.json', dataVolume: '18,200 records', validationStatus: 'Validated', date: '2026-08-26' }
+              ],
+              dataDocuments: [
+                { id: 'd-1', title: 'Data Processing Agreement (DPA 2026)', type: 'Agreement', date: '2026-01-15' },
+                { id: 'd-2', title: 'Opt-In Consent Audit Certificate', type: 'Compliance', date: '2026-04-10' }
+              ]
             },
             {
               id: 'client-f',
@@ -457,11 +478,28 @@ export const useAppStore = create<AppState>()(
               subModule: 'Data Partner',
               subModuleCategory: 'General',
               paymentType: 'Purchased',
+              revenueFrequency: 'Daily',
+              dataType: 'Purchased Opt-In Feed',
+              estimatedVolume: '50,000 / month',
+              revSharePercentage: 0,
               communicationMode: 'WhatsApp',
               description: 'Purchased consumer data feed partner streaming daily lead logs.',
               primaryContact: { name: 'Rachel Vance', email: 'rachel@omnidata.io', phone: '+1 555-4321', role: 'VP Partnerships' },
               createdAt: todayStr,
-              metricsSummary: 'Payment: Purchased • Vol: 50,000 / mo'
+              metricsSummary: 'Payment: Purchased • Vol: 50,000 / mo',
+              activeFeeds: [
+                { id: 'f-3', feedName: 'Omni Direct Lead Feed', dataType: 'Purchased Leads', frequency: 'Daily FTP 04:00 UTC', volume: '50,000 / mo', status: 'Active' }
+              ],
+              revenueHistory: [
+                { id: 'r-4', period: 'August 2026', dailyRevenue: 8500, revShareAmount: 0, paymentStatus: 'Paid' },
+                { id: 'r-5', period: 'July 2026', dailyRevenue: 9200, revShareAmount: 0, paymentStatus: 'Paid' }
+              ],
+              dataLogs: [
+                { id: 'l-3', sourceName: 'SFTP Batch Upload', driveLocation: 'sftp://omnidata.net/incoming/', fileName: 'omnidata_lead_batch_0827.zip', dataVolume: '12,000 records', validationStatus: 'Validated', date: '2026-08-27' }
+              ],
+              dataDocuments: [
+                { id: 'd-3', title: 'Master Data Purchase Agreement', type: 'Agreement', date: '2026-02-01' }
+              ]
             },
             {
               id: 'client-d',

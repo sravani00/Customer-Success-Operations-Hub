@@ -54,6 +54,7 @@ export function ClientModal({
 
   // Data Partner Specific Fields
   const [paymentType, setPaymentType] = useState<'Rev-Share' | 'Purchased'>('Rev-Share');
+  const [revenueFrequency, setRevenueFrequency] = useState<'Daily' | 'Monthly'>('Monthly');
   const [dataType, setDataType] = useState('Email Leads');
   const [estimatedVolume, setEstimatedVolume] = useState('50,000 / month');
   const [revSharePercentage, setRevSharePercentage] = useState<number>(15);
@@ -87,7 +88,10 @@ export function ClientModal({
       setDescription(clientToEdit.description || '');
 
       setPaymentType(clientToEdit.paymentType || 'Rev-Share');
+      setRevenueFrequency(clientToEdit.revenueFrequency || 'Monthly');
       setDataType(clientToEdit.dataType || 'Email Leads');
+      setEstimatedVolume(clientToEdit.estimatedVolume || '50,000 / month');
+      setRevSharePercentage(clientToEdit.revSharePercentage ?? 15);
       setEstimatedVolume(clientToEdit.estimatedVolume || '50,000 / month');
       setRevSharePercentage(clientToEdit.revSharePercentage ?? 15);
 
@@ -161,6 +165,7 @@ export function ClientModal({
       metricsSummary: computedMetrics || 'Active Account',
       description,
       paymentType: subModule === 'Data Partner' ? paymentType : undefined,
+      revenueFrequency: subModule === 'Data Partner' ? revenueFrequency : undefined,
       dataType: subModule === 'Data Partner' ? dataType : undefined,
       estimatedVolume: subModule === 'Data Partner' ? estimatedVolume : undefined,
       revSharePercentage: (subModule === 'Data Partner' && paymentType === 'Rev-Share') ? revSharePercentage : undefined,
@@ -283,7 +288,7 @@ export function ClientModal({
               <span className="block font-bold text-purple-900 uppercase tracking-wider text-[10px]">
                 Data Partner Configuration Specs
               </span>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block font-semibold mb-1 text-slate-700">Payment Type</label>
                   <select
@@ -293,6 +298,17 @@ export function ClientModal({
                   >
                     <option value="Rev-Share">Rev-Share</option>
                     <option value="Purchased">Purchased</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Revenue Frequency</label>
+                  <select
+                    value={revenueFrequency}
+                    onChange={(e) => setRevenueFrequency(e.target.value as 'Daily' | 'Monthly')}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-bold focus:border-purple-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Daily">Daily</option>
+                    <option value="Monthly">Monthly</option>
                   </select>
                 </div>
                 <div>

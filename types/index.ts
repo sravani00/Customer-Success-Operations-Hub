@@ -9,6 +9,40 @@ export interface PrimaryContact {
   role: string;
 }
 
+export interface DataFeed {
+  id: string;
+  feedName: string;
+  dataType: string;
+  frequency: string;
+  volume: string;
+  status: 'Active' | 'Testing' | 'Paused';
+}
+
+export interface DataRevenueRecord {
+  id: string;
+  period: string;
+  dailyRevenue: number;
+  revShareAmount: number;
+  paymentStatus: 'Paid' | 'Pending Settlement' | 'In Audit';
+}
+
+export interface DataLogSource {
+  id: string;
+  sourceName: string;
+  driveLocation: string;
+  fileName: string;
+  dataVolume: string;
+  validationStatus: 'Validated' | 'Processing' | 'Failed';
+  date: string;
+}
+
+export interface DataDocument {
+  id: string;
+  title: string;
+  type: 'Agreement' | 'SLA' | 'Compliance' | 'Note';
+  date: string;
+}
+
 export interface Client {
   id: string;
   name: string;
@@ -25,9 +59,14 @@ export interface Client {
 
   // Data Partner Specific Fields
   paymentType?: 'Rev-Share' | 'Purchased';
+  revenueFrequency?: 'Daily' | 'Monthly';
   dataType?: string;
   estimatedVolume?: string;
   revSharePercentage?: number;
+  activeFeeds?: DataFeed[];
+  revenueHistory?: DataRevenueRecord[];
+  dataLogs?: DataLogSource[];
+  dataDocuments?: DataDocument[];
 
   // Leads Pipeline Specific Fields
   leadSource?: string;
@@ -152,6 +191,7 @@ export interface TaskItem {
   title: string;
   assignedTo: string;
   dueDate: string;
+  priority?: 'High' | 'Medium' | 'Normal';
   status: TaskStatus;
 }
 
