@@ -143,6 +143,7 @@ export default function PartnersAffiliateNetworksPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Affiliate Networks"
         defaultSubCategory="Partners"
         onClose={() => setIsAddModalOpen(false)}

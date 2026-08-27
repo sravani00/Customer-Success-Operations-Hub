@@ -132,6 +132,7 @@ export default function LeadsPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Lead"
         defaultSubCategory="General"
         onClose={() => setIsAddModalOpen(false)}

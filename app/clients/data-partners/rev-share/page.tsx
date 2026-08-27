@@ -134,6 +134,7 @@ export default function RevShareDataPartnersPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Data Partner"
         defaultSubCategory="Rev-Share"
         onClose={() => setIsAddModalOpen(false)}

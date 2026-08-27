@@ -167,6 +167,7 @@ export default function ConsultingPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Consulting"
         defaultSubCategory={selectedSubCategory === 'All' ? 'Resolute' : (selectedSubCategory as any)}
         onClose={() => setIsAddModalOpen(false)}

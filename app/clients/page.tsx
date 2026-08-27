@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 import { ClientSubModule, ClientSubCategory, ClientStatus, Client } from '../../types';
+import { getAvailableSubCategories } from '../../components/modals/client-modal';
 
 export default function ClientsPage() {
   const { clients, offers, updates, addClient, updateClient, deleteClient } = useAppStore();
@@ -458,12 +459,11 @@ export default function ClientsPage() {
                     onChange={(e) => setNewSubCategory(e.target.value as ClientSubCategory)}
                     className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
                   >
-                    <option value="Resolute">Resolute</option>
-                    <option value="Partners">Partners</option>
-                    <option value="Agreement">Agreement</option>
-                    <option value="Rev-Share">Rev-Share</option>
-                    <option value="Ongage">Ongage</option>
-                    <option value="General">General</option>
+                    {getAvailableSubCategories(newSubModule).map((sc) => (
+                      <option key={sc} value={sc}>
+                        {sc}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -632,7 +632,15 @@ export default function ClientsPage() {
                   <label className="block font-semibold mb-1 text-slate-700">Account Category</label>
                   <select
                     value={editingClient.subModule}
-                    onChange={(e) => setEditingClient({ ...editingClient, subModule: e.target.value as ClientSubModule })}
+                    onChange={(e) => {
+                      const newMod = e.target.value as ClientSubModule;
+                      const validSubCats = getAvailableSubCategories(newMod);
+                      setEditingClient({
+                        ...editingClient,
+                        subModule: newMod,
+                        subModuleCategory: validSubCats[0],
+                      });
+                    }}
                     className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
                   >
                     <option value="Affiliate Networks">Affiliate Networks</option>
@@ -644,16 +652,15 @@ export default function ClientsPage() {
                 <div>
                   <label className="block font-semibold mb-1 text-slate-700">Sub Category</label>
                   <select
-                    value={editingClient.subModuleCategory || 'General'}
+                    value={editingClient.subModuleCategory || getAvailableSubCategories(editingClient.subModule)[0]}
                     onChange={(e) => setEditingClient({ ...editingClient, subModuleCategory: e.target.value as ClientSubCategory })}
                     className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
                   >
-                    <option value="Resolute">Resolute</option>
-                    <option value="Partners">Partners</option>
-                    <option value="Agreement">Agreement</option>
-                    <option value="Rev-Share">Rev-Share</option>
-                    <option value="Ongage">Ongage</option>
-                    <option value="General">General</option>
+                    {getAvailableSubCategories(editingClient.subModule).map((sc) => (
+                      <option key={sc} value={sc}>
+                        {sc}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>

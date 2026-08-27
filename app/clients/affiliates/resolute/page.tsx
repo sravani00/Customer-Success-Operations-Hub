@@ -143,6 +143,7 @@ export default function ResoluteAffiliateNetworksPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Affiliate Networks"
         defaultSubCategory="Resolute"
         onClose={() => setIsAddModalOpen(false)}

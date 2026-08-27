@@ -10,9 +10,25 @@ interface ClientModalProps {
   clientToEdit?: Client | null;
   defaultSubModule?: ClientSubModule;
   defaultSubCategory?: ClientSubCategory;
+  lockCategory?: boolean;
   onClose: () => void;
   onSave: (clientData: any) => void;
 }
+
+export const getAvailableSubCategories = (mod: ClientSubModule): ClientSubCategory[] => {
+  switch (mod) {
+    case 'Affiliate Networks':
+      return ['Resolute', 'Partners'];
+    case 'Data Partner':
+      return ['Agreement', 'Rev-Share'];
+    case 'Consulting':
+      return ['Resolute', 'Ongage'];
+    case 'Lead':
+      return ['General'];
+    default:
+      return ['General'];
+  }
+};
 
 export function ClientModal({
   isOpen,
@@ -20,6 +36,7 @@ export function ClientModal({
   clientToEdit,
   defaultSubModule = 'Affiliate Networks',
   defaultSubCategory = 'Resolute',
+  lockCategory = false,
   onClose,
   onSave,
 }: ClientModalProps) {
@@ -38,10 +55,15 @@ export function ClientModal({
 
   useEffect(() => {
     if (mode === 'edit' && clientToEdit) {
+      const initialMod = clientToEdit.subModule || defaultSubModule;
       setName(clientToEdit.name || '');
       setCompany(clientToEdit.company || '');
-      setSubModule(clientToEdit.subModule || defaultSubModule);
-      setSubModuleCategory(clientToEdit.subModuleCategory || defaultSubCategory);
+      setSubModule(initialMod);
+      const validSubCats = getAvailableSubCategories(initialMod);
+      const initialSubCat = clientToEdit.subModuleCategory && validSubCats.includes(clientToEdit.subModuleCategory)
+        ? clientToEdit.subModuleCategory
+        : validSubCats[0];
+      setSubModuleCategory(initialSubCat);
       setCommunicationMode(clientToEdit.communicationMode || 'Email');
       setStatus(clientToEdit.status || 'Active');
       setContactName(clientToEdit.primaryContact?.name || '');
@@ -54,7 +76,9 @@ export function ClientModal({
       setName('');
       setCompany('');
       setSubModule(defaultSubModule);
-      setSubModuleCategory(defaultSubCategory);
+      const validSubCats = getAvailableSubCategories(defaultSubModule);
+      const initialSubCat = validSubCats.includes(defaultSubCategory) ? defaultSubCategory : validSubCats[0];
+      setSubModuleCategory(initialSubCat);
       setCommunicationMode('Email');
       setStatus('Active');
       setContactName('');
@@ -67,6 +91,12 @@ export function ClientModal({
   }, [mode, clientToEdit, defaultSubModule, defaultSubCategory, isOpen]);
 
   if (!isOpen) return null;
+
+  const handleSubModuleChange = (newMod: ClientSubModule) => {
+    setSubModule(newMod);
+    const validSubCats = getAvailableSubCategories(newMod);
+    setSubModuleCategory(validSubCats[0]);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +121,8 @@ export function ClientModal({
     onClose();
   };
 
+  const availableSubCategories = getAvailableSubCategories(subModule);
+
   return (
     <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-2xl max-w-md w-full animate-in zoom-in-95 duration-150 space-y-4 max-h-[90vh] overflow-y-auto">
@@ -102,7 +134,7 @@ export function ClientModal({
               </>
             ) : (
               <>
-                <Plus className="w-4 h-4 text-blue-600" /> Add New Account
+                <Plus className="w-4 h-4 text-blue-600" /> Add New Account ({subModule})
               </>
             )}
           </h3>
@@ -142,15 +174,11 @@ export function ClientModal({
               <label className="block font-semibold mb-1 text-slate-700">Account Category</label>
               <select
                 value={subModule}
-                onChange={(e) => {
-                  const cat = e.target.value as ClientSubModule;
-                  setSubModule(cat);
-                  if (cat === 'Affiliate Networks') setSubModuleCategory('Resolute');
-                  else if (cat === 'Data Partner') setSubModuleCategory('Agreement');
-                  else if (cat === 'Consulting') setSubModuleCategory('Resolute');
-                  else setSubModuleCategory('General');
-                }}
-                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                disabled={lockCategory}
+                onChange={(e) => handleSubModuleChange(e.target.value as ClientSubModule)}
+                className={`w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer ${
+                  lockCategory ? 'bg-slate-100 cursor-not-allowed text-slate-600 font-medium' : ''
+                }`}
               >
                 <option value="Affiliate Networks">Affiliate Networks</option>
                 <option value="Data Partner">Data Partner</option>
@@ -163,14 +191,13 @@ export function ClientModal({
               <select
                 value={subModuleCategory}
                 onChange={(e) => setSubModuleCategory(e.target.value as ClientSubCategory)}
-                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
+                className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer font-medium"
               >
-                <option value="Resolute">Resolute</option>
-                <option value="Partners">Partners</option>
-                <option value="Agreement">Agreement</option>
-                <option value="Rev-Share">Rev-Share</option>
-                <option value="Ongage">Ongage</option>
-                <option value="General">General</option>
+                {availableSubCategories.map((sc) => (
+                  <option key={sc} value={sc}>
+                    {sc}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

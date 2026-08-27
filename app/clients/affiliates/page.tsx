@@ -176,6 +176,7 @@ export default function AffiliateNetworksPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Affiliate Networks"
         defaultSubCategory={selectedSubCategory === 'All' ? 'Resolute' : (selectedSubCategory as any)}
         onClose={() => setIsAddModalOpen(false)}

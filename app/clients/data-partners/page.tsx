@@ -167,6 +167,7 @@ export default function DataPartnersPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Data Partner"
         defaultSubCategory={selectedSubCategory === 'All' ? 'Agreement' : (selectedSubCategory as any)}
         onClose={() => setIsAddModalOpen(false)}

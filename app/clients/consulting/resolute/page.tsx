@@ -134,6 +134,7 @@ export default function ResoluteConsultingPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Consulting"
         defaultSubCategory="Resolute"
         onClose={() => setIsAddModalOpen(false)}

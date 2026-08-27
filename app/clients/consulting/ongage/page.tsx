@@ -134,6 +134,7 @@ export default function OngageConsultingPage() {
       <ClientModal
         isOpen={isAddModalOpen}
         mode="add"
+        lockCategory={true}
         defaultSubModule="Consulting"
         defaultSubCategory="Ongage"
         onClose={() => setIsAddModalOpen(false)}
