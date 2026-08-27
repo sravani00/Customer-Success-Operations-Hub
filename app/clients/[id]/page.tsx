@@ -164,8 +164,10 @@ export default function ClientProfileHub() {
           {[
             { key: 'all', label: 'All Uncollapsed View', icon: Activity },
             { key: 'overview', label: 'Overview', icon: Building },
-            { key: 'offers', label: `Offers (${clientOffers.length})`, icon: Package },
-            { key: 'meetings', label: `Meetings (${clientMeetings.length})`, icon: Video },
+            ...(client.subModule !== 'Data Partner' ? [
+              { key: 'offers', label: `Offers (${clientOffers.length})`, icon: Package },
+              { key: 'meetings', label: `Meetings (${clientMeetings.length})`, icon: Video },
+            ] : []),
             { key: 'updates', label: `Updates (${clientUpdates.length})`, icon: FileText },
             { key: 'tasks_followups', label: `Tasks & Follow-ups (${clientTasks.length + clientFollowUps.length})`, icon: CheckSquare },
             { key: 'performance', label: 'Performance Metrics', icon: TrendingUp },

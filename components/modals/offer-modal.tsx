@@ -157,7 +157,7 @@ export function OfferModal({
                 required
                 className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:border-blue-500 focus:outline-none cursor-pointer"
               >
-                {clients.map((c) => (
+                {clients.filter((c) => c.subModule !== 'Data Partner').map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name} ({c.company})
                   </option>
