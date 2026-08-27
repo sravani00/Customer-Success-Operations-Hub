@@ -21,7 +21,7 @@ export default function EmailsPage() {
 
   const [testSender, setTestSender] = useState('john@clienta.com');
   const [testSubject, setTestSubject] = useState('Please check the performance of Offer A.');
-  const [testBody, setTestBody] = useState('Hi Pradeep,\nCould you please check conversion rates and EPC for Offer A today? We noticed a volume spike.\n\nThanks,\nJohn');
+  const [testBody, setTestBody] = useState('Hi Vamshi,\nCould you please check conversion rates and EPC for Offer A today? We noticed a volume spike.\n\nThanks,\nJohn');
   const [actionRequired, setActionRequired] = useState(true);
   const [ingestSuccess, setIngestSuccess] = useState(false);
 

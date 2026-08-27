@@ -221,7 +221,7 @@ export default function ClientProfileHub() {
 
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
                   <span className="text-slate-500 font-medium">Dedicated CS Manager</span>
-                  <div className="text-base font-bold text-slate-900">Pradeep</div>
+                  <div className="text-base font-bold text-slate-900">Vamshi</div>
                   <p className="text-[11px] text-slate-500">CS Operations Lead</p>
                 </div>
               </div>
@@ -263,8 +263,8 @@ export default function ClientProfileHub() {
                     Internal Operations Team
                   </span>
                   <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500">Customer Success Lead:</span><span className="font-bold text-slate-900">Pradeep</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Technical Advisor:</span><span className="font-semibold text-slate-800">Vamshi</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500">Customer Success Lead:</span><span className="font-bold text-slate-900">Vamshi</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500">Technical Advisor:</span><span className="font-semibold text-slate-800">CS Technical Team</span></div>
                     <div className="flex justify-between"><span className="text-slate-500">Account Manager:</span><span className="font-semibold text-slate-800">{client.primaryContact.role}</span></div>
                     <div className="flex justify-between"><span className="text-slate-500">Support Routing:</span><span className="font-mono text-slate-700">ops@hub.com</span></div>
                   </div>
