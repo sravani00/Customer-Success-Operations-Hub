@@ -64,7 +64,7 @@ export default function ClientProfileHub() {
   const completedTasksCount = clientTasks.filter((t) => t.status === 'Completed').length;
 
   const [activeTab, setActiveTab] = useState<
-    'all' | 'overview' | 'contacts' | 'offers' | 'emails' | 'meetings' | 'updates' | 'tasks' | 'followups' | 'performance'
+    'all' | 'overview' | 'offers' | 'meetings' | 'updates' | 'tasks_followups' | 'performance'
   >('all');
 
   return (
@@ -133,8 +133,8 @@ export default function ClientProfileHub() {
                 <span>Delete</span>
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1 flex items-center gap-2">
-              <Building className="w-3.5 h-3.5 text-slate-400" /> {client.company} • Comm Mode: <strong className="text-slate-800">{client.communicationMode || 'Email'}</strong>
+            <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+              <Building className="w-3.5 h-3.5 text-slate-400" /> {client.company} • Joined {client.createdAt || '2026-08-01'}
             </p>
           </div>
         </div>
@@ -159,13 +159,10 @@ export default function ClientProfileHub() {
           {[
             { key: 'all', label: 'All Uncollapsed View', icon: Activity },
             { key: 'overview', label: 'Overview', icon: Building },
-            { key: 'contacts', label: 'Contacts', icon: UserCheck },
             { key: 'offers', label: `Offers (${clientOffers.length})`, icon: Package },
-            { key: 'emails', label: `Emails (${clientEmails.length})`, icon: Mail },
             { key: 'meetings', label: `Meetings (${clientMeetings.length})`, icon: Video },
             { key: 'updates', label: `Updates (${clientUpdates.length})`, icon: FileText },
-            { key: 'tasks', label: `Tasks (${clientTasks.length})`, icon: CheckSquare },
-            { key: 'followups', label: `Follow-ups (${clientFollowUps.length})`, icon: Clock },
+            { key: 'tasks_followups', label: `Tasks & Follow-ups (${clientTasks.length + clientFollowUps.length})`, icon: CheckSquare },
             { key: 'performance', label: 'Performance Metrics', icon: TrendingUp },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -190,83 +187,83 @@ export default function ClientProfileHub() {
         {/* Tab Body Container */}
         <div className="p-6 space-y-8 text-xs text-slate-700">
           
-          {/* SECTION: OVERVIEW */}
+          {/* SECTION: OVERVIEW & CONTACT DETAILS */}
           {(activeTab === 'all' || activeTab === 'overview') && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <Building className="w-4 h-4 text-blue-600" /> Account Overview & Summary
-                </h3>
-                <span className="text-xs text-slate-500 font-mono">ID: {client.id}</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
-                  <span className="text-slate-500 font-medium">Account Category</span>
-                  <div className="text-base font-bold text-blue-700 font-mono">{client.subModule}</div>
-                  <p className="text-[11px] text-slate-500">{client.metricsSummary || 'Standard Account'}</p>
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                    <Building className="w-4 h-4 text-blue-600" /> Account Overview & Summary
+                  </h3>
+                  <span className="text-xs text-slate-500 font-mono">ID: {client.id}</span>
                 </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
-                  <span className="text-slate-500 font-medium">Mode of Communication</span>
-                  <div className="text-base font-bold text-slate-900">{client.communicationMode || 'Email'}</div>
-                  <p className="text-[11px] text-slate-500">Company: {client.company}</p>
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <span className="text-slate-500 font-medium">Account Category</span>
+                    <div className="text-base font-bold text-blue-700 font-mono">{client.subModule}</div>
+                    <p className="text-[11px] text-slate-500">{client.metricsSummary || 'Standard Account'}</p>
+                  </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
-                  <span className="text-slate-500 font-medium">Onboarding Date</span>
-                  <div className="text-base font-bold text-slate-900 font-mono">{client.createdAt || '2026-08-01'}</div>
-                  <p className="text-[11px] text-emerald-700 font-semibold">Status: {client.status}</p>
-                </div>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <span className="text-slate-500 font-medium">Mode of Communication</span>
+                    <div className="text-base font-bold text-slate-900">{client.communicationMode || 'Email'}</div>
+                    <p className="text-[11px] text-slate-500">Company: {client.company}</p>
+                  </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
-                  <span className="text-slate-500 font-medium">Dedicated CS Manager</span>
-                  <div className="text-base font-bold text-slate-900">Vamshi</div>
-                  <p className="text-[11px] text-slate-500">CS Operations Lead</p>
-                </div>
-              </div>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <span className="text-slate-500 font-medium">Onboarding Date</span>
+                    <div className="text-base font-bold text-slate-900 font-mono">{client.createdAt || '2026-08-01'}</div>
+                    <p className="text-[11px] text-emerald-700 font-semibold">Status: {client.status}</p>
+                  </div>
 
-              {client.description && (
-                <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200/80 text-xs space-y-1">
-                  <span className="font-bold text-blue-900 block uppercase font-mono text-[10px] tracking-wider">Client Description:</span>
-                  <p className="text-slate-800 leading-relaxed">{client.description}</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* SECTION: CONTACTS */}
-          {(activeTab === 'all' || activeTab === 'contacts') && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <UserCheck className="w-4 h-4 text-emerald-600" /> Account Contacts & Stakeholders
-                </h3>
-                <span className="text-xs text-slate-500 font-mono">Directory</span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-                  <span className="font-bold text-xs uppercase tracking-wider text-blue-700 block border-b border-slate-200 pb-1.5">
-                    ★ Primary Client Contact
-                  </span>
-                  <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500">Full Name:</span><span className="font-bold text-slate-900">{client.primaryContact.name}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Role:</span><span className="font-semibold text-slate-800">{client.primaryContact.role}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Email:</span><span className="font-mono text-blue-700 font-semibold">{client.primaryContact.email}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Phone:</span><span className="font-mono text-emerald-700 font-semibold">{client.primaryContact.phone}</span></div>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
+                    <span className="text-slate-500 font-medium">Dedicated CS Manager</span>
+                    <div className="text-base font-bold text-slate-900">Vamshi</div>
+                    <p className="text-[11px] text-slate-500">CS Operations Lead</p>
                   </div>
                 </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-                  <span className="font-bold text-xs uppercase tracking-wider text-slate-700 block border-b border-slate-200 pb-1.5">
-                    Internal Operations Team
-                  </span>
-                  <div className="space-y-1.5 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500">Customer Success Lead:</span><span className="font-bold text-slate-900">Vamshi</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Technical Advisor:</span><span className="font-semibold text-slate-800">CS Technical Team</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Account Manager:</span><span className="font-semibold text-slate-800">{client.primaryContact.role}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500">Support Routing:</span><span className="font-mono text-slate-700">ops@hub.com</span></div>
+                {client.description && (
+                  <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200/80 text-xs space-y-1">
+                    <span className="font-bold text-blue-900 block uppercase font-mono text-[10px] tracking-wider">Client Description:</span>
+                    <p className="text-slate-800 leading-relaxed">{client.description}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* EMBEDDED CONTACT DETAILS */}
+              <div className="space-y-4 pt-2">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+                    <UserCheck className="w-4 h-4 text-emerald-600" /> Account Contacts & Stakeholders
+                  </h3>
+                  <span className="text-xs text-slate-500 font-mono">Contact Details</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                    <span className="font-bold text-xs uppercase tracking-wider text-blue-700 block border-b border-slate-200 pb-1.5">
+                      ★ Primary Client Contact
+                    </span>
+                    <div className="space-y-1.5 text-xs">
+                      <div className="flex justify-between"><span className="text-slate-500">Full Name:</span><span className="font-bold text-slate-900">{client.primaryContact.name}</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Role:</span><span className="font-semibold text-slate-800">{client.primaryContact.role}</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Email:</span><span className="font-mono text-blue-700 font-semibold">{client.primaryContact.email}</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Phone:</span><span className="font-mono text-emerald-700 font-semibold">{client.primaryContact.phone}</span></div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                    <span className="font-bold text-xs uppercase tracking-wider text-slate-700 block border-b border-slate-200 pb-1.5">
+                      Internal Operations Team
+                    </span>
+                    <div className="space-y-1.5 text-xs">
+                      <div className="flex justify-between"><span className="text-slate-500">Customer Success Lead:</span><span className="font-bold text-slate-900">Vamshi</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Technical Advisor:</span><span className="font-semibold text-slate-800">CS Technical Team</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Account Manager:</span><span className="font-semibold text-slate-800">{client.primaryContact.role}</span></div>
+                      <div className="flex justify-between"><span className="text-slate-500">Support Routing:</span><span className="font-mono text-slate-700">ops@hub.com</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -278,45 +275,48 @@ export default function ClientProfileHub() {
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                 <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <Package className="w-4 h-4 text-amber-600" /> Active Offers & Campaigns ({clientOffers.length})
+                  <Package className="w-4 h-4 text-blue-600" /> Active Promotional Offers ({clientOffers.length})
                 </h3>
               </div>
 
               {clientOffers.length === 0 ? (
                 <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500">
-                  No active offers linked to this account.
+                  No active promotional offers found for this client.
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {clientOffers.map((o) => (
-                    <div key={o.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 hover:border-amber-300 transition-all">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <div key={o.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between border-b border-slate-200/60 pb-2">
+                          <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                             {o.offerName}
-                            <span className="text-xs font-mono text-slate-500">({o.offerCode})</span>
+                            <span className="text-[10px] font-mono text-slate-500 bg-slate-200/60 px-1.5 py-0.5 rounded">
+                              {o.offerCode}
+                            </span>
                           </div>
-                          <p className="text-xs text-slate-500 mt-0.5">Network: {o.network}</p>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                            {o.status}
+                          </span>
                         </div>
-                        <span className={`px-2.5 py-1 rounded text-xs font-bold ${
-                          o.status === 'Testing' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        }`}>
-                          {o.status}
-                        </span>
-                      </div>
 
-                      <div className="grid grid-cols-3 gap-2 font-mono text-xs pt-1">
-                        <div className="p-2 bg-white rounded border border-slate-200">
-                          <span className="text-slate-500 text-[10px] uppercase block">Test Cap</span>
-                          <span className="font-bold text-slate-900">{o.volume.toLocaleString()}</span>
-                        </div>
-                        <div className="p-2 bg-white rounded border border-slate-200">
-                          <span className="text-slate-500 text-[10px] uppercase block">Revenue</span>
-                          <span className="font-bold text-emerald-700">${o.revenue.toLocaleString()}</span>
-                        </div>
-                        <div className="p-2 bg-white rounded border border-slate-200">
-                          <span className="text-slate-500 text-[10px] uppercase block">EPC</span>
-                          <span className="font-bold text-blue-700">${o.epc.toFixed(2)}</span>
+                        <div className="grid grid-cols-2 gap-2 text-xs pt-2 font-mono">
+                          <div>
+                            <span className="text-slate-400 block text-[10px] font-sans">Payout / CPL</span>
+                            <span className="font-bold text-slate-800">${o.cpl.toFixed(2)}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400 block text-[10px] font-sans">Revenue</span>
+                            <span className="font-bold text-emerald-700">${o.revenue.toLocaleString()}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400 block text-[10px] font-sans">Leads</span>
+                            <span className="font-bold text-slate-800">{o.leads}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400 block text-[10px] font-sans">EPC</span>
+                            <span className="font-bold text-blue-700">${o.epc.toFixed(2)}</span>
+                          </div>
                         </div>
                       </div>
 
@@ -328,43 +328,6 @@ export default function ClientProfileHub() {
                           <span>Open Offer Workspace</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* SECTION: EMAILS */}
-          {(activeTab === 'all' || activeTab === 'emails') && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-blue-600" /> Ingested Gmail Communications ({clientEmails.length})
-                </h3>
-              </div>
-
-              {clientEmails.length === 0 ? (
-                <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500">
-                  No ingested emails logged for this client.
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {clientEmails.map((em) => (
-                    <div key={em.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-blue-700">{em.subject}</span>
-                        <span className="px-2 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700 border border-blue-200 font-mono font-semibold">
-                          {em.category}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed bg-white p-2.5 rounded-lg border border-slate-200">
-                        {em.body}
-                      </p>
-                      <div className="flex justify-between text-[11px] text-slate-500 font-mono pt-1">
-                        <span>Sender: {em.sender}</span>
-                        <span>Thread ID: {em.gmailThreadId}</span>
                       </div>
                     </div>
                   ))}
@@ -438,100 +401,74 @@ export default function ClientProfileHub() {
             </div>
           )}
 
-          {/* SECTION: UPDATES */}
-          {(activeTab === 'all' || activeTab === 'updates') && (
+          {/* SECTION: COMBINED TASKS & FOLLOW-UPS */}
+          {(activeTab === 'all' || activeTab === 'tasks_followups') && (
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                 <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-blue-600" /> Operational Updates & Logs ({clientUpdates.length})
+                  <CheckSquare className="w-4 h-4 text-indigo-600" /> Tasks & Follow-ups ({clientTasks.length + clientFollowUps.length})
                 </h3>
               </div>
 
-              {clientUpdates.length === 0 ? (
+              {clientTasks.length === 0 && clientFollowUps.length === 0 ? (
                 <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500">
-                  No updates recorded for this client.
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {clientUpdates.map((u) => (
-                    <div key={u.id} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-slate-900 text-xs">{u.message}</div>
-                        <div className="text-[11px] text-slate-500 mt-0.5">Subject: {u.primarySubject} • {new Date(u.timestamp).toLocaleString()}</div>
-                      </div>
-                      <span className="px-2.5 py-1 rounded text-[11px] bg-blue-50 text-blue-700 border border-blue-200 font-mono font-semibold">
-                        {u.type}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* SECTION: TASKS */}
-          {(activeTab === 'all' || activeTab === 'tasks') && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <CheckSquare className="w-4 h-4 text-indigo-600" /> Operational Tasks ({clientTasks.length})
-                </h3>
-              </div>
-
-              {clientTasks.length === 0 ? (
-                <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500">
-                  No tasks assigned for this client.
+                  No tasks or follow-ups logged for this client.
                 </div>
               ) : (
                 <div className="space-y-2">
                   {clientTasks.map((t) => (
                     <div key={t.id} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                       <div className="space-y-1">
-                        <div className="font-bold text-slate-900 text-xs">{t.title}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-indigo-100 text-indigo-800">Task</span>
+                          <span className="font-bold text-slate-900 text-xs">{t.title}</span>
+                        </div>
                         <div className="text-[11px] text-slate-500 font-mono">
                           Assigned to: <strong className="text-slate-800">{t.assignedTo}</strong> • Due: <strong className="text-amber-700">{t.dueDate}</strong> • Source: {t.sourceType}
                         </div>
                       </div>
-                      <span className="px-2.5 py-1 rounded text-xs font-bold font-mono bg-indigo-50 text-indigo-700 border border-indigo-200">
-                        {t.status}
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <span className="px-2.5 py-1 rounded text-xs font-bold font-mono bg-indigo-50 text-indigo-700 border border-indigo-200">
+                          {t.status}
+                        </span>
+                        <button
+                          onClick={() => deleteTask(t.id)}
+                          title="Delete Task"
+                          className="p-1 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-700 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   ))}
-                </div>
-              )}
-            </div>
-          )}
 
-          {/* SECTION: FOLLOW-UPS */}
-          {(activeTab === 'all' || activeTab === 'followups') && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-                <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-rose-600" /> Action Items & Follow-ups ({clientFollowUps.length})
-                </h3>
-              </div>
-
-              {clientFollowUps.length === 0 ? (
-                <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center text-slate-500">
-                  No follow-up items pending for this client.
-                </div>
-              ) : (
-                <div className="space-y-2">
                   {clientFollowUps.map((fl) => (
                     <div key={fl.id} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
                       <div className="space-y-1">
-                        <div className="font-bold text-slate-900 text-xs">{fl.title}</div>
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-rose-100 text-rose-800">Follow-up</span>
+                          <span className="font-bold text-slate-900 text-xs">{fl.title}</span>
+                        </div>
                         <div className="text-[11px] text-slate-500 font-mono">
                           Owner: {fl.assignedTo} • Due: {fl.dueDate} {fl.offerName ? `• Offer: ${fl.offerName}` : ''}
                         </div>
                       </div>
-                      <span className={`px-2.5 py-1 rounded text-xs font-bold font-mono ${
-                        fl.status === 'Overdue' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
-                        fl.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                        'bg-blue-50 text-blue-700 border border-blue-200'
-                      }`}>
-                        {fl.status}
-                      </span>
+                      <div className="flex items-center space-x-2">
+                        <span className={`px-2.5 py-1 rounded text-xs font-bold font-mono ${
+                          fl.status === 'Overdue' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                          fl.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                          'bg-blue-50 text-blue-700 border border-blue-200'
+                        }`}>
+                          {fl.status}
+                        </span>
+                        <button
+                          onClick={() => deleteFollowUp(fl.id)}
+                          title="Delete Follow-up"
+                          className="p-1 rounded-lg bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-700 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
