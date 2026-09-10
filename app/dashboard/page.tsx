@@ -272,7 +272,7 @@ export default function DashboardPage() {
                   onClick={() => openQuickAdd('update')}
                   className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold transition-colors"
                 >
-                  + Add Client Update
+                  Add Client Update
                 </button>
               </div>
             ) : (
@@ -316,7 +316,7 @@ export default function DashboardPage() {
                   onClick={() => openQuickAdd('followup')}
                   className="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-semibold transition-colors"
                 >
-                  + Add Follow-up
+                  Add Follow-up
                 </button>
               </div>
             ) : (

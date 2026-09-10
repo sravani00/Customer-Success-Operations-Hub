@@ -498,7 +498,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
             className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold flex items-center space-x-1 shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>+ Add Active Feed</span>
+            <span>Add Active Feed</span>
           </button>
         </div>
 
@@ -506,7 +506,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
           <div className="p-8 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center space-y-2">
             <Rss className="w-6 h-6 text-slate-400 mx-auto" />
             <p className="text-xs font-semibold text-slate-700">No active feeds configured yet</p>
-            <p className="text-[11px] text-slate-500">Click "+ Add Active Feed" above to create and manage data streams.</p>
+            <p className="text-[11px] text-slate-500">Click "Add Active Feed" above to create and manage data streams.</p>
           </div>
         ) : (
           <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
@@ -583,7 +583,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
               className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center space-x-1 shadow-xs"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Revenue Record</span>
+              <span>Add Revenue Record</span>
             </button>
           </div>
         </div>
@@ -592,7 +592,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
           <div className="p-8 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center space-y-2">
             <DollarSign className="w-6 h-6 text-slate-400 mx-auto" />
             <p className="text-xs font-semibold text-slate-700">No revenue history logged yet</p>
-            <p className="text-[11px] text-slate-500">Click "+ Add Revenue Record" above to record payout statements and settlements.</p>
+            <p className="text-[11px] text-slate-500">Click "Add Revenue Record" above to record payout statements and settlements.</p>
           </div>
         ) : (
           <div className="overflow-x-auto border border-slate-200/80 rounded-xl">
@@ -660,7 +660,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
             className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center space-x-1 shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>+ Add Log Source</span>
+            <span>Add Log Source</span>
           </button>
         </div>
 
@@ -668,7 +668,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
           <div className="p-8 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center space-y-2">
             <FolderGit2 className="w-6 h-6 text-slate-400 mx-auto" />
             <p className="text-xs font-semibold text-slate-700">No data source logs recorded yet</p>
-            <p className="text-[11px] text-slate-500">Click "+ Add Log Source" to register S3 buckets, FTP paths, or file locations.</p>
+            <p className="text-[11px] text-slate-500">Click "Add Log Source" to register S3 buckets, FTP paths, or file locations.</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -740,7 +740,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
             className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center space-x-1 shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>+ Add Pending Task</span>
+            <span>Add Pending Task</span>
           </button>
         </div>
 
@@ -748,7 +748,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
           <div className="p-8 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center space-y-2">
             <CheckSquare className="w-6 h-6 text-slate-400 mx-auto" />
             <p className="text-xs font-semibold text-slate-700">No open pending items or SLA tasks</p>
-            <p className="text-[11px] text-slate-500">Click "+ Add Pending Task" to create action items for this Data Partner.</p>
+            <p className="text-[11px] text-slate-500">Click "Add Pending Task" to create action items for this Data Partner.</p>
           </div>
         ) : (
           <div className="space-y-2 text-xs">
@@ -805,7 +805,7 @@ export const DataPartnerAccountView: React.FC<DataPartnerAccountViewProps> = ({ 
             className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center space-x-1 shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>+ Attach Document</span>
+            <span>Attach Document</span>
           </button>
         </div>
 

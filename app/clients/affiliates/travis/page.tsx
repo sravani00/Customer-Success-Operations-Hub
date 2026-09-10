@@ -48,7 +48,7 @@ export default function TravisAffiliateNetworksPage() {
           className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>+ Add Account</span>
+          <span>Add Account</span>
         </button>
       </div>
 

@@ -45,7 +45,7 @@ export default function DataPartnersPage() {
           className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>+ Add Data Partner Account</span>
+          <span>Add Data Partner Account</span>
         </button>
       </div>
 

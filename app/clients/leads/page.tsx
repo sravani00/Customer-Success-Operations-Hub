@@ -45,7 +45,7 @@ export default function LeadsPage() {
           className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center space-x-1.5 shadow-xs"
         >
           <Plus className="w-4 h-4" />
-          <span>+ Add Lead Account</span>
+          <span>Add Lead Account</span>
         </button>
       </div>
 

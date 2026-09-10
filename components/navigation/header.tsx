@@ -142,35 +142,35 @@ export const Header: React.FC = () => {
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
                 <FileText className="w-4 h-4 text-blue-600" />
-                <span>+ Client / Internal Update</span>
+                <span>Client / Internal Update</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('offer'); setShowQuickMenu(false); }}
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
                 <Package className="w-4 h-4 text-amber-600" />
-                <span>+ Promotional Offer</span>
+                <span>Promotional Offer</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('meeting'); setShowQuickMenu(false); }}
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
                 <Video className="w-4 h-4 text-emerald-600" />
-                <span>+ Scheduled Meeting</span>
+                <span>Scheduled Meeting</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('task'); setShowQuickMenu(false); }}
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
                 <CheckSquare className="w-4 h-4 text-indigo-600" />
-                <span>+ Operational Task</span>
+                <span>Operational Task</span>
               </button>
               <button
                 onClick={() => { openQuickAdd('followup'); setShowQuickMenu(false); }}
                 className="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center space-x-2.5 transition-colors"
               >
                 <Clock className="w-4 h-4 text-rose-600" />
-                <span>+ Action Follow-up</span>
+                <span>Action Follow-up</span>
               </button>
             </div>
           )}

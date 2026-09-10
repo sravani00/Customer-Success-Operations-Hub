@@ -99,28 +99,28 @@ function DailyDetailsContent() {
               className="px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-semibold flex items-center space-x-1"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Update</span>
+              <span>Add Update</span>
             </button>
             <button
               onClick={() => openQuickAdd('meeting')}
               className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-semibold flex items-center space-x-1"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Meeting</span>
+              <span>Add Meeting</span>
             </button>
             <button
               onClick={() => openQuickAdd('task')}
               className="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-semibold flex items-center space-x-1"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Task</span>
+              <span>Add Task</span>
             </button>
             <button
               onClick={() => openQuickAdd('followup')}
               className="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold flex items-center space-x-1"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Follow-up</span>
+              <span>Add Follow-up</span>
             </button>
           </div>
         </div>
@@ -162,7 +162,7 @@ function DailyDetailsContent() {
             
             {dateUpdates.length === 0 ? (
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-500 text-center">
-                No updates logged on this date. Click "+ Add Update" above to log a record for {activeDate}.
+                No updates logged on this date. Click "Add Update" above to log a record for {activeDate}.
               </div>
             ) : (
               <div className="space-y-2 font-mono text-xs">
