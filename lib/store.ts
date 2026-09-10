@@ -776,12 +776,12 @@ export const useAppStore = create<AppState>()(
           const updates = updatesRes && updatesRes.ok ? await updatesRes.json() : null;
 
           set((state) => ({
-            clients: clients && clients.length ? clients : state.clients,
-            offers: offers && offers.length ? offers : state.offers,
-            meetings: meetings && meetings.length ? meetings : state.meetings,
-            tasks: tasks && tasks.length ? tasks : state.tasks,
-            followUps: followUps && followUps.length ? followUps : state.followUps,
-            updates: updates && updates.length ? updates : state.updates,
+            clients: Array.isArray(clients) ? clients : state.clients,
+            offers: Array.isArray(offers) ? offers : state.offers,
+            meetings: Array.isArray(meetings) ? meetings : state.meetings,
+            tasks: Array.isArray(tasks) ? tasks : state.tasks,
+            followUps: Array.isArray(followUps) ? followUps : state.followUps,
+            updates: Array.isArray(updates) ? updates : state.updates,
           }));
         } catch (e) {
           console.warn('Fallback to local store state:', e);
