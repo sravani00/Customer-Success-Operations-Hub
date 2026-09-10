@@ -124,22 +124,45 @@ export const useAppStore = create<AppState>()(
       openQuickAdd: (type = 'update') => set({ isQuickAddOpen: true, quickAddType: type }),
       closeQuickAdd: () => set({ isQuickAddOpen: false, quickAddType: null }),
 
-      addClient: (clientData) => {
-        const newClient: Client = {
+      addClient: async (clientData) => {
+        const payload = {
           ...clientData,
-          id: `client-${Date.now()}`,
           createdAt: get().currentDate
         };
-        set((state) => ({ clients: [newClient, ...state.clients] }));
+        try {
+          const res = await fetch('/api/clients', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ clients: [saved, ...state.clients] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create client in Supabase:', e);
+        }
+        const fallbackClient: Client = { ...payload, id: `client-${Date.now()}` };
+        set((state) => ({ clients: [fallbackClient, ...state.clients] }));
       },
 
-      updateClient: (id, clientPartial) => {
+      updateClient: async (id, clientPartial) => {
         set((state) => ({
           clients: state.clients.map((c) => (c.id === id ? { ...c, ...clientPartial } : c))
         }));
+        try {
+          await fetch(`/api/clients/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(clientPartial),
+          });
+        } catch (e) {
+          console.error('Failed to update client in Supabase:', e);
+        }
       },
 
-      deleteClient: (id) => {
+      deleteClient: async (id) => {
         set((state) => ({
           clients: state.clients.filter((c) => c.id !== id),
           offers: state.offers.filter((o) => o.clientId !== id),
@@ -148,61 +171,135 @@ export const useAppStore = create<AppState>()(
           tasks: state.tasks.filter((t) => t.clientId !== id),
           followUps: state.followUps.filter((f) => f.clientId !== id)
         }));
+        try {
+          await fetch(`/api/clients/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete client from Supabase:', e);
+        }
       },
 
-      addOffer: (offerData) => {
-        const newOffer: Offer = {
-          ...offerData,
-          id: `offer-${Date.now()}`
-        };
-        set((state) => ({ offers: [newOffer, ...state.offers] }));
+      addOffer: async (offerData) => {
+        try {
+          const res = await fetch('/api/offers', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(offerData),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ offers: [saved, ...state.offers] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create offer in Supabase:', e);
+        }
+        const fallbackOffer: Offer = { ...offerData, id: `offer-${Date.now()}` };
+        set((state) => ({ offers: [fallbackOffer, ...state.offers] }));
       },
 
-      updateOffer: (id, offerPartial) => {
+      updateOffer: async (id, offerPartial) => {
         set((state) => ({
           offers: state.offers.map((o) => (o.id === id ? { ...o, ...offerPartial } : o))
         }));
+        try {
+          await fetch(`/api/offers/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(offerPartial),
+          });
+        } catch (e) {
+          console.error('Failed to update offer in Supabase:', e);
+        }
       },
 
-      deleteOffer: (id) => {
+      deleteOffer: async (id) => {
         set((state) => ({
           offers: state.offers.filter((o) => o.id !== id)
         }));
+        try {
+          await fetch(`/api/offers/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete offer from Supabase:', e);
+        }
       },
 
-      addClientUpdate: (updateData) => {
-        const newUpdate: ClientUpdate = {
+      addClientUpdate: async (updateData) => {
+        const payload = {
           ...updateData,
-          id: `up-${Date.now()}`,
           timestamp: new Date().toISOString()
         };
-        set((state) => ({ updates: [newUpdate, ...state.updates] }));
+        try {
+          const res = await fetch('/api/updates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ updates: [saved, ...state.updates] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create update in Supabase:', e);
+        }
+        const fallbackUpdate: ClientUpdate = { ...payload, id: `up-${Date.now()}` };
+        set((state) => ({ updates: [fallbackUpdate, ...state.updates] }));
       },
 
-      deleteClientUpdate: (id) => {
+      deleteClientUpdate: async (id) => {
         set((state) => ({
           updates: state.updates.filter((u) => u.id !== id)
         }));
+        try {
+          await fetch(`/api/updates/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete update from Supabase:', e);
+        }
       },
 
-      addMeeting: (meetingData) => {
-        const newMeeting: Meeting = {
-          ...meetingData,
-          id: `meet-${Date.now()}`
-        };
-        set((state) => ({ meetings: [newMeeting, ...state.meetings] }));
+      addMeeting: async (meetingData) => {
+        try {
+          const res = await fetch('/api/meetings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(meetingData),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ meetings: [saved, ...state.meetings] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create meeting in Supabase:', e);
+        }
+        const fallbackMeeting: Meeting = { ...meetingData, id: `meet-${Date.now()}` };
+        set((state) => ({ meetings: [fallbackMeeting, ...state.meetings] }));
       },
 
-      updateMeeting: (id, meetingPartial) => {
+      updateMeeting: async (id, meetingPartial) => {
         set((state) => ({
           meetings: state.meetings.map((m) => (m.id === id ? { ...m, ...meetingPartial } : m))
         }));
+        try {
+          await fetch(`/api/meetings/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(meetingPartial),
+          });
+        } catch (e) {
+          console.error('Failed to update meeting in Supabase:', e);
+        }
       },
 
-      deleteMeeting: (id) => {
+      deleteMeeting: async (id) => {
         set((state) => ({
           meetings: state.meetings.filter((m) => m.id !== id)
         }));
+        try {
+          await fetch(`/api/meetings/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete meeting from Supabase:', e);
+        }
       },
 
       addMomPoint: (meetingId, point) => {
@@ -230,56 +327,124 @@ export const useAppStore = create<AppState>()(
         }));
       },
 
-      addTask: (taskData) => {
-        const newTask: TaskItem = {
-          ...taskData,
-          id: `task-${Date.now()}`
-        };
-        set((state) => ({ tasks: [newTask, ...state.tasks] }));
+      addTask: async (taskData) => {
+        try {
+          const res = await fetch('/api/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(taskData),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ tasks: [saved, ...state.tasks] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create task in Supabase:', e);
+        }
+        const fallbackTask: TaskItem = { ...taskData, id: `task-${Date.now()}` };
+        set((state) => ({ tasks: [fallbackTask, ...state.tasks] }));
       },
 
-      updateTaskStatus: (id, status) => {
+      updateTaskStatus: async (id, status) => {
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === id ? { ...t, status } : t))
         }));
+        try {
+          await fetch(`/api/tasks/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }),
+          });
+        } catch (e) {
+          console.error('Failed to update task status in Supabase:', e);
+        }
       },
 
-      updateTask: (id, taskPartial) => {
+      updateTask: async (id, taskPartial) => {
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === id ? { ...t, ...taskPartial } : t))
         }));
+        try {
+          await fetch(`/api/tasks/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(taskPartial),
+          });
+        } catch (e) {
+          console.error('Failed to update task in Supabase:', e);
+        }
       },
 
-      deleteTask: (id) => {
+      deleteTask: async (id) => {
         set((state) => ({
           tasks: state.tasks.filter((t) => t.id !== id)
         }));
+        try {
+          await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete task from Supabase:', e);
+        }
       },
 
-      addFollowUp: (followUpData) => {
-        const newFollowUp: FollowUpItem = {
-          ...followUpData,
-          id: `fl-${Date.now()}`
-        };
-        set((state) => ({ followUps: [newFollowUp, ...state.followUps] }));
+      addFollowUp: async (followUpData) => {
+        try {
+          const res = await fetch('/api/follow-ups', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(followUpData),
+          });
+          if (res.ok) {
+            const saved = await res.json();
+            set((state) => ({ followUps: [saved, ...state.followUps] }));
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to create follow-up in Supabase:', e);
+        }
+        const fallbackFollowUp: FollowUpItem = { ...followUpData, id: `fl-${Date.now()}` };
+        set((state) => ({ followUps: [fallbackFollowUp, ...state.followUps] }));
       },
 
-      updateFollowUpStatus: (id, status) => {
+      updateFollowUpStatus: async (id, status) => {
         set((state) => ({
           followUps: state.followUps.map((f) => (f.id === id ? { ...f, status } : f))
         }));
+        try {
+          await fetch(`/api/follow-ups/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status }),
+          });
+        } catch (e) {
+          console.error('Failed to update follow-up status in Supabase:', e);
+        }
       },
 
-      updateFollowUp: (id, followUpPartial) => {
+      updateFollowUp: async (id, followUpPartial) => {
         set((state) => ({
           followUps: state.followUps.map((f) => (f.id === id ? { ...f, ...followUpPartial } : f))
         }));
+        try {
+          await fetch(`/api/follow-ups/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(followUpPartial),
+          });
+        } catch (e) {
+          console.error('Failed to update follow-up in Supabase:', e);
+        }
       },
 
-      deleteFollowUp: (id) => {
+      deleteFollowUp: async (id) => {
         set((state) => ({
           followUps: state.followUps.filter((f) => f.id !== id)
         }));
+        try {
+          await fetch(`/api/follow-ups/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Failed to delete follow-up from Supabase:', e);
+        }
       },
 
       ingestEmail: ({ sender, subject, body, actionRequired = true }) => {
