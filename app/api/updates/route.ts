@@ -16,8 +16,10 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { id: bodyId, createdAt, ...updateData } = body;
+
     const newUpdate = await prisma.clientUpdate.create({
-      data: body,
+      data: updateData,
     });
     return NextResponse.json(newUpdate, { status: 201 });
   } catch (error) {

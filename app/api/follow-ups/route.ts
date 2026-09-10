@@ -16,8 +16,10 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const { id: bodyId, createdAt, ...followUpData } = body;
+
     const newFollowUp = await prisma.followUpItem.create({
-      data: body,
+      data: followUpData,
     });
     return NextResponse.json(newFollowUp, { status: 201 });
   } catch (error) {

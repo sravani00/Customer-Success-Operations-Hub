@@ -26,7 +26,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { participants, keyDecisions, actionItems, momPoints, ...meetingData } = body;
+    const { id: bodyId, createdAt, updatedAt, participants, keyDecisions, actionItems, momPoints, ...meetingData } = body;
 
     const newMeeting = await prisma.meeting.create({
       data: {

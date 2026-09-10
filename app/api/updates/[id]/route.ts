@@ -8,9 +8,11 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
+    const { id: bodyId, createdAt, ...updateData } = body;
+
     const updatedUpdate = await prisma.clientUpdate.update({
       where: { id },
-      data: body,
+      data: updateData,
     });
     return NextResponse.json(updatedUpdate);
   } catch (error) {

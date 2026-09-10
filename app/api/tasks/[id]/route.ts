@@ -8,9 +8,11 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
+    const { id: bodyId, createdAt, ...taskData } = body;
+
     const updatedTask = await prisma.taskItem.update({
       where: { id },
-      data: body,
+      data: taskData,
     });
     return NextResponse.json(updatedTask);
   } catch (error) {

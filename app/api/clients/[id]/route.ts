@@ -34,7 +34,26 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { primaryContact, activeFeeds, revenueHistory, dataLogs, dataDocuments, ...clientPartial } = body;
+    const { 
+      primaryContact, 
+      activeFeeds, 
+      revenueHistory, 
+      dataLogs, 
+      dataDocuments, 
+      id: bodyId, 
+      dbCreatedAt, 
+      dbUpdatedAt, 
+      createdAt, 
+      ...clientPartial 
+    } = body;
+
+    // Parse numeric fields safely
+    if (clientPartial.revSharePercentage !== undefined && clientPartial.revSharePercentage !== null) {
+      clientPartial.revSharePercentage = parseFloat(clientPartial.revSharePercentage) || 0;
+    }
+    if (clientPartial.expectedDealValue !== undefined && clientPartial.expectedDealValue !== null) {
+      clientPartial.expectedDealValue = parseFloat(clientPartial.expectedDealValue) || 0;
+    }
 
     const updatedClient = await prisma.client.update({
       where: { id },
@@ -50,10 +69,10 @@ export async function PUT(
                   role: primaryContact.role || '',
                 },
                 update: {
-                  name: primaryContact.name,
-                  email: primaryContact.email,
-                  phone: primaryContact.phone,
-                  role: primaryContact.role,
+                  name: primaryContact.name || '',
+                  email: primaryContact.email || '',
+                  phone: primaryContact.phone || '',
+                  role: primaryContact.role || '',
                 },
               },
             }

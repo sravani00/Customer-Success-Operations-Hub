@@ -6,12 +6,16 @@ import { Sidebar } from '../navigation/sidebar';
 import { Header } from '../navigation/header';
 import { QuickAddModal } from '../modals/quick-add-modal';
 
+import { useAppStore } from '../../lib/store';
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const { fetchFromDatabase } = useAppStore();
 
   useEffect(() => {
     setMounted(true);
+    fetchFromDatabase();
   }, []);
 
   const isLoginPage = pathname === '/login';

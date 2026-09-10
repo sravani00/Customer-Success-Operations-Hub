@@ -23,7 +23,25 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { primaryContact, activeFeeds, revenueHistory, dataLogs, dataDocuments, ...clientData } = body;
+    const { 
+      primaryContact, 
+      activeFeeds, 
+      revenueHistory, 
+      dataLogs, 
+      dataDocuments, 
+      id: bodyId, 
+      dbCreatedAt, 
+      dbUpdatedAt, 
+      ...clientData 
+    } = body;
+
+    // Parse numeric fields safely
+    if (clientData.revSharePercentage !== undefined && clientData.revSharePercentage !== null) {
+      clientData.revSharePercentage = parseFloat(clientData.revSharePercentage) || 0;
+    }
+    if (clientData.expectedDealValue !== undefined && clientData.expectedDealValue !== null) {
+      clientData.expectedDealValue = parseFloat(clientData.expectedDealValue) || 0;
+    }
 
     const newClient = await prisma.client.create({
       data: {

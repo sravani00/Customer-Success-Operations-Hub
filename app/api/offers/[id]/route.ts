@@ -8,9 +8,21 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
+    const { id: bodyId, createdAt, updatedAt, ...offerData } = body;
+
+    // Convert numeric fields safely
+    if (offerData.volume !== undefined) offerData.volume = parseInt(offerData.volume, 10) || 0;
+    if (offerData.leads !== undefined) offerData.leads = parseInt(offerData.leads, 10) || 0;
+    if (offerData.successfulLeads !== undefined) offerData.successfulLeads = parseInt(offerData.successfulLeads, 10) || 0;
+    if (offerData.cancelledLeads !== undefined) offerData.cancelledLeads = parseInt(offerData.cancelledLeads, 10) || 0;
+    if (offerData.testVolume !== undefined) offerData.testVolume = parseInt(offerData.testVolume, 10) || 0;
+    if (offerData.revenue !== undefined) offerData.revenue = parseFloat(offerData.revenue) || 0;
+    if (offerData.cpl !== undefined) offerData.cpl = parseFloat(offerData.cpl) || 0;
+    if (offerData.epc !== undefined) offerData.epc = parseFloat(offerData.epc) || 0;
+
     const updatedOffer = await prisma.offer.update({
       where: { id },
-      data: body,
+      data: offerData,
     });
     return NextResponse.json(updatedOffer);
   } catch (error) {

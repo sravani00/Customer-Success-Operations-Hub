@@ -8,7 +8,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { participants, keyDecisions, actionItems, momPoints, ...meetingData } = body;
+    const { id: bodyId, createdAt, updatedAt, participants, keyDecisions, actionItems, momPoints, ...meetingData } = body;
 
     const updateData: Record<string, unknown> = { ...meetingData };
     if (participants !== undefined) updateData.participants = JSON.stringify(participants);
