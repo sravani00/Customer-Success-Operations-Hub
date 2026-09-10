@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
   // Paths that do not require authentication
   const isPublicPath = 
     pathname === '/login' || 
-    pathname.startsWith('/api/auth');
+    pathname.startsWith('/api');
 
   const authCookie = request.cookies.get('site_auth')?.value;
   const isAuthenticated = authCookie === 'authenticated';
