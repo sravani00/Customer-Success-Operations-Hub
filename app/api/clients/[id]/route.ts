@@ -77,6 +77,52 @@ export async function PUT(
               },
             }
           : undefined,
+        activeFeeds: activeFeeds && Array.isArray(activeFeeds)
+          ? {
+              deleteMany: {},
+              create: activeFeeds.map((f: any) => ({
+                feedName: f.feedName || '',
+                dataType: f.dataType || '',
+                frequency: f.frequency || '',
+                volume: f.volume || '',
+                status: f.status || 'Active',
+              })),
+            }
+          : undefined,
+        revenueHistory: revenueHistory && Array.isArray(revenueHistory)
+          ? {
+              deleteMany: {},
+              create: revenueHistory.map((r: any) => ({
+                period: r.period || '',
+                dailyRevenue: parseFloat(r.dailyRevenue) || 0,
+                revShareAmount: parseFloat(r.revShareAmount) || 0,
+                paymentStatus: r.paymentStatus || 'Paid',
+              })),
+            }
+          : undefined,
+        dataLogs: dataLogs && Array.isArray(dataLogs)
+          ? {
+              deleteMany: {},
+              create: dataLogs.map((l: any) => ({
+                sourceName: l.sourceName || '',
+                driveLocation: l.driveLocation || '',
+                fileName: l.fileName || '',
+                dataVolume: l.dataVolume || '',
+                validationStatus: l.validationStatus || 'Validated',
+                date: l.date || '',
+              })),
+            }
+          : undefined,
+        dataDocuments: dataDocuments && Array.isArray(dataDocuments)
+          ? {
+              deleteMany: {},
+              create: dataDocuments.map((d: any) => ({
+                title: d.title || '',
+                type: d.type || 'Agreement',
+                date: d.date || '',
+              })),
+            }
+          : undefined,
       },
       include: {
         primaryContact: true,
