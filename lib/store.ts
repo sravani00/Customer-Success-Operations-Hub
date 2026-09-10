@@ -9,7 +9,11 @@ import {
   TaskItem, 
   FollowUpItem, 
   AppNotification, 
-  SyncSettings 
+  SyncSettings,
+  DataFeed,
+  DataRevenueRecord,
+  DataLogSource,
+  DataDocument
 } from '../types';
 import { 
   INITIAL_CLIENTS, 
@@ -51,6 +55,11 @@ interface AppState {
   addClient: (client: Omit<Client, 'id' | 'createdAt'>) => void;
   updateClient: (id: string, clientData: Partial<Client>) => void;
   deleteClient: (id: string) => void;
+
+  addDataFeed: (clientId: string, feed: Omit<DataFeed, 'id'>) => Promise<void>;
+  addDataRevenueRecord: (clientId: string, record: Omit<DataRevenueRecord, 'id'>) => Promise<void>;
+  addDataLogSource: (clientId: string, log: Omit<DataLogSource, 'id'>) => Promise<void>;
+  addDataDocument: (clientId: string, doc: Omit<DataDocument, 'id'>) => Promise<void>;
 
   addOffer: (offer: Omit<Offer, 'id'>) => void;
   updateOffer: (id: string, offer: Partial<Offer>) => void;
@@ -176,6 +185,106 @@ export const useAppStore = create<AppState>()(
         } catch (e) {
           console.error('Failed to delete client from Supabase:', e);
         }
+      },
+
+      addDataFeed: async (clientId, feedData) => {
+        let savedFeed: DataFeed = { ...feedData, id: `f-${Date.now()}` };
+        try {
+          const res = await fetch(`/api/clients/${clientId}/feeds`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(feedData),
+          });
+          if (res.ok) {
+            savedFeed = await res.json();
+          }
+        } catch (e) {
+          console.error('Failed to add DataFeed:', e);
+        }
+        set((state) => ({
+          clients: state.clients.map((c) => {
+            if (c.id === clientId) {
+              const activeFeeds = c.activeFeeds || [];
+              return { ...c, activeFeeds: [savedFeed, ...activeFeeds] };
+            }
+            return c;
+          }),
+        }));
+      },
+
+      addDataRevenueRecord: async (clientId, recordData) => {
+        let savedRecord: DataRevenueRecord = { ...recordData, id: `r-${Date.now()}` };
+        try {
+          const res = await fetch(`/api/clients/${clientId}/revenue`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(recordData),
+          });
+          if (res.ok) {
+            savedRecord = await res.json();
+          }
+        } catch (e) {
+          console.error('Failed to add DataRevenueRecord:', e);
+        }
+        set((state) => ({
+          clients: state.clients.map((c) => {
+            if (c.id === clientId) {
+              const revenueHistory = c.revenueHistory || [];
+              return { ...c, revenueHistory: [savedRecord, ...revenueHistory] };
+            }
+            return c;
+          }),
+        }));
+      },
+
+      addDataLogSource: async (clientId, logData) => {
+        let savedLog: DataLogSource = { ...logData, id: `l-${Date.now()}` };
+        try {
+          const res = await fetch(`/api/clients/${clientId}/logs`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(logData),
+          });
+          if (res.ok) {
+            savedLog = await res.json();
+          }
+        } catch (e) {
+          console.error('Failed to add DataLogSource:', e);
+        }
+        set((state) => ({
+          clients: state.clients.map((c) => {
+            if (c.id === clientId) {
+              const dataLogs = c.dataLogs || [];
+              return { ...c, dataLogs: [savedLog, ...dataLogs] };
+            }
+            return c;
+          }),
+        }));
+      },
+
+      addDataDocument: async (clientId, docData) => {
+        let savedDoc: DataDocument = { ...docData, id: `d-${Date.now()}` };
+        try {
+          const res = await fetch(`/api/clients/${clientId}/documents`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(docData),
+          });
+          if (res.ok) {
+            savedDoc = await res.json();
+          }
+        } catch (e) {
+          console.error('Failed to add DataDocument:', e);
+        }
+        set((state) => ({
+          clients: state.clients.map((c) => {
+            if (c.id === clientId) {
+              const dataDocuments = c.dataDocuments || [];
+              return { ...c, dataDocuments: [savedDoc, ...dataDocuments] };
+            }
+            return c;
+          }),
+        }));
       },
 
       addOffer: async (offerData) => {
