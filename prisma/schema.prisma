@@ -1,0 +1,291 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      String   @default("CS Ops Manager")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  id                  String               @id @default(cuid())
+  name                String
+  company             String
+  status              String               // 'Active' | 'Onboarding' | 'Inactive'
+  subModule           String               // 'Affiliate Networks' | 'Data Partner' | 'Consulting' | 'Lead'
+  subModuleCategory   String?              // 'Resolute' | 'Travis' | 'Janet' | 'Ongage' | 'General'
+  communicationMode   String?
+  description         String?
+  metricsSummary      String?
+  leadStage           String?              // 'New Lead' | 'Discovery' | 'Proposal' | 'Negotiation' | 'Closed Won'
+  createdAt           String               @default("")
+  
+  // Data Partner Specific Fields
+  paymentType         String?              // 'Rev-Share' | 'Purchased'
+  revenueFrequency    String?              // 'Daily' | 'Monthly'
+  dataType            String?
+  estimatedVolume     String?
+  revSharePercentage  Float?
+
+  // Leads Pipeline Specific Fields
+  leadSource          String?
+  expectedDealValue   Float?
+  expectedConversionDate String?
+
+  primaryContact      PrimaryContact?
+  activeFeeds         DataFeed[]
+  revenueHistory      DataRevenueRecord[]
+  dataLogs            DataLogSource[]
+  dataDocuments       DataDocument[]
+
+  offers              Offer[]
+  updates             ClientUpdate[]
+  emails              EmailMessage[]
+  meetings            Meeting[]
+  tasks               TaskItem[]
+  followUps           FollowUpItem[]
+
+  dbCreatedAt         DateTime             @default(now())
+  dbUpdatedAt         DateTime             @updatedAt
+}
+
+model PrimaryContact {
+  id        String @id @default(cuid())
+  clientId  String @unique
+  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  name      String
+  email     String
+  phone     String @default("")
+  role      String @default("")
+}
+
+model DataFeed {
+  id        String @id @default(cuid())
+  clientId  String
+  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  feedName  String
+  dataType  String
+  frequency String
+  volume    String
+  status    String // 'Active' | 'Testing' | 'Paused'
+  createdAt DateTime @default(now())
+}
+
+model DataRevenueRecord {
+  id             String @id @default(cuid())
+  clientId       String
+  client         Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  period         String
+  dailyRevenue   Float
+  revShareAmount Float
+  paymentStatus  String // 'Paid' | 'Pending Settlement' | 'In Audit'
+  createdAt      DateTime @default(now())
+}
+
+model DataLogSource {
+  id               String @id @default(cuid())
+  clientId         String
+  client           Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  sourceName       String
+  driveLocation    String
+  fileName         String
+  dataVolume       String
+  validationStatus String // 'Validated' | 'Processing' | 'Failed'
+  date             String
+  createdAt        DateTime @default(now())
+}
+
+model DataDocument {
+  id        String @id @default(cuid())
+  clientId  String
+  client    Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  title     String
+  type      String // 'Agreement' | 'SLA' | 'Compliance' | 'Note'
+  date      String
+  createdAt DateTime @default(now())
+}
+
+model Offer {
+  id              String   @id @default(cuid())
+  clientId        String
+  client          Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName      String
+  offerName       String
+  offerCode       String
+  network         String
+  category        String
+  status          String   // 'Active' | 'Testing' | 'Pending' | 'Paused'
+  description     String
+  landingPageUrl  String
+  emailCreative   String
+  fromName        String
+  subjectLine     String
+  targetAudience  String
+  geo             String
+  device          String
+  trafficSource   String
+  volume          Int      @default(0)
+  leads           Int      @default(0)
+  successfulLeads Int      @default(0)
+  cancelledLeads  Int      @default(0)
+  revenue         Float    @default(0.0)
+  cpl             Float    @default(0.0)
+  epc             Float    @default(0.0)
+  testingStatus   String   @default("Pending")
+  testStartDate   String   @default("")
+  testVolume      Int      @default(0)
+  testResult      String   @default("")
+  winnerVariant   String   @default("")
+  nextTestPlan    String   @default("")
+  followUpDate    String   @default("")
+  owner           String   @default("Vamshi")
+
+  updates         ClientUpdate[]
+  emails          EmailMessage[]
+  meetings        Meeting[]
+  tasks           TaskItem[]
+  followUps       FollowUpItem[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ClientUpdate {
+  id             String   @id @default(cuid())
+  clientId       String
+  client         Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName     String
+  offerId        String?
+  offer          Offer?   @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offerName      String?
+  type           String
+  source         String   // 'Client' | 'Internal'
+  message        String
+  priority       String   // 'High' | 'Medium' | 'Low'
+  status         String   // 'New' | 'In Review' | 'Resolved'
+  timestamp      String
+  primarySubject String
+  createdAt      DateTime @default(now())
+}
+
+model EmailMessage {
+  id             String   @id @default(cuid())
+  gmailMessageId String   @default("")
+  gmailThreadId  String   @default("")
+  clientId       String
+  client         Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName     String
+  offerId        String?
+  offer          Offer?   @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offerName      String?
+  sender         String
+  category       String
+  subject        String
+  body           String
+  receivedAt     String
+  actionRequired Boolean  @default(true)
+  processed      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+}
+
+model Meeting {
+  id            String     @id @default(cuid())
+  googleEventId String?
+  clientId      String
+  client        Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName    String
+  offerId       String?
+  offer         Offer?     @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offerName     String?
+  title         String
+  startTime     String
+  endTime       String
+  meetLink      String     @default("")
+  status        String     // 'Scheduled' | 'Completed' | 'Cancelled'
+  organizer     String
+  participants  String     // Serialized JSON string
+  description   String
+  meetingNotes  String
+  keyDecisions  String     // Serialized JSON string
+  actionItems   String     // Serialized JSON string
+  momPoints     MomPoint[]
+  createdAt     DateTime   @default(now())
+}
+
+model MomPoint {
+  id        String   @id @default(cuid())
+  meetingId String
+  meeting   Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  point     String
+  createdAt DateTime @default(now())
+}
+
+model TaskItem {
+  id         String         @id @default(cuid())
+  clientId   String
+  client     Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName String
+  offerId    String?
+  offer      Offer?         @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offerName  String?
+  sourceType String         // 'Email' | 'Meeting' | 'Update' | 'Manual'
+  sourceId   String?
+  title      String
+  assignedTo String
+  dueDate    String
+  priority   String?
+  status     String         // 'Not Started' | 'In Progress' | 'Waiting' | 'Completed' | 'Cancelled'
+  followUps  FollowUpItem[]
+  createdAt  DateTime       @default(now())
+}
+
+model FollowUpItem {
+  id         String   @id @default(cuid())
+  clientId   String
+  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientName String
+  offerId    String?
+  offer      Offer?   @relation(fields: [offerId], references: [id], onDelete: SetNull)
+  offerName  String?
+  taskId     String?
+  task       TaskItem? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  title      String
+  reminderAt String
+  assignedTo String
+  status     String   // 'Pending' | 'Due Today' | 'Overdue' | 'Completed'
+  dueDate    String
+  createdAt  DateTime @default(now())
+}
+
+model AppNotification {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  type      String   // 'email' | 'meeting' | 'task' | 'followup' | 'offer'
+  timestamp String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SyncSettings {
+  id               String   @id @default(cuid())
+  syncMeetings     Boolean  @default(true)
+  syncUpdates      Boolean  @default(true)
+  syncCancellations Boolean @default(true)
+  syncAttendees    Boolean  @default(true)
+  importMeetLinks  Boolean  @default(true)
+  frequency        String   @default("5-minute Polling")
+  oauthConnected   Boolean  @default(false)
+  userEmail        String   @default("")
+  updatedAt        DateTime @updatedAt
+}

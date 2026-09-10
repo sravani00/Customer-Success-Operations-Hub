@@ -89,6 +89,7 @@ interface AppState {
   populateDemoData: () => void;
   clearAllData: () => void;
   resetToDefaults: () => void;
+  fetchFromDatabase: () => Promise<void>;
 }
 
 const getTodayDateString = () => {
@@ -754,6 +755,37 @@ export const useAppStore = create<AppState>()(
           currentDate: getTodayDateString(),
           searchQuery: ''
         });
+      },
+
+      fetchFromDatabase: async () => {
+        try {
+          const [clientsRes, offersRes, meetingsRes, tasksRes, followUpsRes, updatesRes] = await Promise.all([
+            fetch('/api/clients').catch(() => null),
+            fetch('/api/offers').catch(() => null),
+            fetch('/api/meetings').catch(() => null),
+            fetch('/api/tasks').catch(() => null),
+            fetch('/api/follow-ups').catch(() => null),
+            fetch('/api/updates').catch(() => null),
+          ]);
+
+          const clients = clientsRes && clientsRes.ok ? await clientsRes.json() : null;
+          const offers = offersRes && offersRes.ok ? await offersRes.json() : null;
+          const meetings = meetingsRes && meetingsRes.ok ? await meetingsRes.json() : null;
+          const tasks = tasksRes && tasksRes.ok ? await tasksRes.json() : null;
+          const followUps = followUpsRes && followUpsRes.ok ? await followUpsRes.json() : null;
+          const updates = updatesRes && updatesRes.ok ? await updatesRes.json() : null;
+
+          set((state) => ({
+            clients: clients && clients.length ? clients : state.clients,
+            offers: offers && offers.length ? offers : state.offers,
+            meetings: meetings && meetings.length ? meetings : state.meetings,
+            tasks: tasks && tasks.length ? tasks : state.tasks,
+            followUps: followUps && followUps.length ? followUps : state.followUps,
+            updates: updates && updates.length ? updates : state.updates,
+          }));
+        } catch (e) {
+          console.warn('Fallback to local store state:', e);
+        }
       }
     }),
     {
