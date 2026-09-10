@@ -22,7 +22,8 @@ import {
   Check,
   X,
   Edit,
-  Trash2
+  Trash2,
+  Flame
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 import { ClientSubModule, ClientSubCategory, ClientStatus, Client } from '../../types';
@@ -53,6 +54,7 @@ export default function ClientsPage() {
   const dataPartnerCount = clients.filter((c) => c.subModule === 'Data Partner').length;
   const consultingCount = clients.filter((c) => c.subModule === 'Consulting').length;
   const leadCount = clients.filter((c) => c.subModule === 'Lead').length;
+  const warmupCount = clients.filter((c) => c.subModule === 'Warmup').length;
 
   // Filtered clients list
   const filteredClients = clients.filter((client) => {
@@ -125,7 +127,13 @@ export default function ClientsPage() {
       case 'Lead':
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
-            <UserPlus className="w-3 h-3 text-amber-600" /> Lead Pipeline
+            <UserPlus className="w-3.5 h-3.5 text-amber-600" /> Lead Pipeline
+          </span>
+        );
+      case 'Warmup':
+        return (
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50 text-orange-700 border border-orange-200">
+            <Flame className="w-3.5 h-3.5 text-orange-600" /> Warmup
           </span>
         );
     }
@@ -250,6 +258,7 @@ export default function ClientsPage() {
             { key: 'Data Partner', label: 'Data Partners', count: dataPartnerCount, icon: Database },
             { key: 'Consulting', label: 'Consulting', count: consultingCount, icon: Briefcase },
             { key: 'Lead', label: 'Leads', count: leadCount, icon: UserPlus },
+            { key: 'Warmup', label: 'Warmup', count: warmupCount, icon: Flame },
           ].map((tab) => {
             const Icon = tab.icon;
             const isSelected = selectedSubModule === tab.key;

@@ -65,6 +65,13 @@ export function ClientModal({
   const [expectedDealValue, setExpectedDealValue] = useState<number>(25000);
   const [expectedConversionDate, setExpectedConversionDate] = useState('2026-09-15');
 
+  // Warmup Specific Fields
+  const [warmupPlan, setWarmupPlan] = useState('Basic');
+  const [warmupPrice, setWarmupPrice] = useState('₹15,000');
+  const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
+  const [endDate, setEndDate] = useState('');
+  const [notes, setNotes] = useState('');
+
   useEffect(() => {
     if (mode === 'edit' && clientToEdit) {
       const initialMod = clientToEdit.subModule || defaultSubModule;
@@ -92,13 +99,17 @@ export function ClientModal({
       setDataType(clientToEdit.dataType || 'Email Leads');
       setEstimatedVolume(clientToEdit.estimatedVolume || '50,000 / month');
       setRevSharePercentage(clientToEdit.revSharePercentage ?? 15);
-      setEstimatedVolume(clientToEdit.estimatedVolume || '50,000 / month');
-      setRevSharePercentage(clientToEdit.revSharePercentage ?? 15);
 
       setLeadSource(clientToEdit.leadSource || 'Inbound Website');
       setLeadStage(clientToEdit.leadStage || 'New Lead');
       setExpectedDealValue(clientToEdit.expectedDealValue ?? 25000);
       setExpectedConversionDate(clientToEdit.expectedConversionDate || '2026-09-15');
+
+      setWarmupPlan(clientToEdit.warmupPlan || 'Basic');
+      setWarmupPrice(clientToEdit.warmupPrice ? String(clientToEdit.warmupPrice) : '₹15,000');
+      setStartDate(clientToEdit.startDate || new Date().toISOString().split('T')[0]);
+      setEndDate(clientToEdit.endDate || '');
+      setNotes(clientToEdit.notes || '');
     } else {
       setSingleAccountName('');
       setName('');
@@ -125,6 +136,12 @@ export function ClientModal({
       setLeadStage('New Lead');
       setExpectedDealValue(25000);
       setExpectedConversionDate('2026-09-15');
+
+      setWarmupPlan('Basic');
+      setWarmupPrice('₹15,000');
+      setStartDate(new Date().toISOString().split('T')[0]);
+      setEndDate('');
+      setNotes('');
     }
   }, [mode, clientToEdit, defaultSubModule, defaultSubCategory, isOpen]);
 
@@ -147,6 +164,8 @@ export function ClientModal({
       computedMetrics = `Payment: ${paymentType} • Vol: ${estimatedVolume}`;
     } else if (subModule === 'Lead') {
       computedMetrics = `Stage: ${leadStage} • Value: $${expectedDealValue.toLocaleString()}`;
+    } else if (subModule === 'Warmup') {
+      computedMetrics = `Plan: ${warmupPlan} • Price: ${warmupPrice}`;
     }
 
     onSave({
@@ -173,6 +192,11 @@ export function ClientModal({
       leadStage: subModule === 'Lead' ? leadStage : undefined,
       expectedDealValue: subModule === 'Lead' ? expectedDealValue : undefined,
       expectedConversionDate: subModule === 'Lead' ? expectedConversionDate : undefined,
+      warmupPlan: subModule === 'Warmup' ? warmupPlan : undefined,
+      warmupPrice: subModule === 'Warmup' ? warmupPrice : undefined,
+      startDate: subModule === 'Warmup' ? startDate : undefined,
+      endDate: subModule === 'Warmup' ? endDate : undefined,
+      notes: subModule === 'Warmup' ? (notes || description) : undefined,
     });
     onClose();
   };
@@ -195,6 +219,8 @@ export function ClientModal({
                   ? 'Add New Account — Data Partners'
                   : subModule === 'Lead'
                   ? 'Add New Account — Leads Pipeline'
+                  : subModule === 'Warmup'
+                  ? 'Add New Account — Warmup'
                   : `Add New Account (${subModule})`}
               </>
             )}
@@ -208,7 +234,7 @@ export function ClientModal({
           {/* Company / Account Name */}
           <div>
             <label className="block font-semibold mb-1 text-slate-700">
-              {subModule === 'Data Partner' ? 'Company / Account Name' : subModule === 'Lead' ? 'Lead / Account Name' : 'Company Name'}
+              {subModule === 'Data Partner' ? 'Company / Account Name' : subModule === 'Lead' ? 'Lead / Account Name' : subModule === 'Warmup' ? 'Client / Account Name' : 'Company Name'}
             </label>
             <input
               type="text"
@@ -217,6 +243,8 @@ export function ClientModal({
                   ? 'e.g. Vortex Data Systems'
                   : subModule === 'Lead'
                   ? 'e.g. Lead Delta Corp'
+                  : subModule === 'Warmup'
+                  ? 'e.g. Acme Corp Email Warmup'
                   : 'e.g. Nexus Media Group'
               }
               value={singleAccountName}
@@ -244,6 +272,7 @@ export function ClientModal({
                   <option value="Data Partner">Data Partner</option>
                   <option value="Consulting">Consulting</option>
                   <option value="Lead">Leads Pipeline</option>
+                  <option value="Warmup">Warmup</option>
                 </select>
               </div>
               {availableSubCategories.length > 1 && (
@@ -458,6 +487,73 @@ export function ClientModal({
                     className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono focus:border-blue-500 focus:outline-none"
                   />
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* SPECIFIC FIELDS: WARMUP */}
+          {subModule === 'Warmup' && (
+            <div className="p-3.5 bg-orange-50/60 rounded-xl border border-orange-200/80 space-y-3">
+              <span className="block font-bold text-orange-900 uppercase tracking-wider text-[10px]">
+                Warmup Configuration Specs
+              </span>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Warmup Plan</label>
+                  <select
+                    value={warmupPlan}
+                    onChange={(e) => setWarmupPlan(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-bold focus:border-orange-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Basic">Basic</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Premium">Premium</option>
+                    <option value="Enterprise">Enterprise</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Price (₹ or $)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. ₹25,000"
+                    value={warmupPrice}
+                    onChange={(e) => setWarmupPrice(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2.5 text-slate-900 font-mono font-bold focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">Start Date</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1 text-slate-700">End Date</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 font-mono focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1 text-slate-700">Notes / Instructions</label>
+                <textarea
+                  rows={2}
+                  placeholder="Daily sending volume limits, domain setup instructions..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 placeholder-slate-400 focus:border-orange-500 focus:outline-none resize-none"
+                />
               </div>
             </div>
           )}

@@ -1,5 +1,5 @@
 export type ClientStatus = 'Active' | 'Onboarding' | 'Inactive';
-export type ClientSubModule = 'Affiliate Networks' | 'Data Partner' | 'Consulting' | 'Lead';
+export type ClientSubModule = 'Affiliate Networks' | 'Data Partner' | 'Consulting' | 'Lead' | 'Warmup';
 export type ClientSubCategory = 'Resolute' | 'Travis' | 'Janet' | 'Ongage' | 'General';
 
 export interface PrimaryContact {
@@ -72,6 +72,13 @@ export interface Client {
   leadSource?: string;
   expectedDealValue?: number;
   expectedConversionDate?: string;
+
+  // Warmup Specific Fields
+  warmupPlan?: string;
+  warmupPrice?: string | number;
+  startDate?: string;
+  endDate?: string;
+  notes?: string;
 }
 
 export type OfferStatus = 'Active' | 'Testing' | 'Pending' | 'Paused';

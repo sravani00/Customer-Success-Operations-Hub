@@ -236,6 +236,22 @@ export default function ClientProfileHub() {
                   </div>
                 </div>
 
+                {client.subModule === 'Warmup' && (
+                  <div className="p-4 bg-orange-50/60 rounded-xl border border-orange-200/80 space-y-2">
+                    <div className="flex items-center justify-between font-bold text-orange-900 text-xs">
+                      <span>Warmup Plan Specs</span>
+                      <span className="font-mono text-orange-700">{client.warmupPlan || 'Basic'} Plan</span>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1 font-mono">
+                      <div><span className="text-slate-500 block font-sans text-[10px]">Price</span><span className="font-bold text-slate-900">{client.warmupPrice || '₹15,000'}</span></div>
+                      <div><span className="text-slate-500 block font-sans text-[10px]">Start Date</span><span className="font-bold text-slate-800">{client.startDate || 'N/A'}</span></div>
+                      <div><span className="text-slate-500 block font-sans text-[10px]">End Date</span><span className="font-bold text-slate-800">{client.endDate || 'N/A'}</span></div>
+                      <div><span className="text-slate-500 block font-sans text-[10px]">Status</span><span className="font-bold text-emerald-700">{client.status}</span></div>
+                    </div>
+                    {client.notes && <p className="text-xs text-slate-600 pt-1 font-sans">{client.notes}</p>}
+                  </div>
+                )}
+
                 {client.description && (
                   <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200/80 text-xs space-y-1">
                     <span className="font-bold text-blue-900 block uppercase font-mono text-[10px] tracking-wider">Client Description:</span>

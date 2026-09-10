@@ -21,7 +21,8 @@ import {
   Share2,
   Database,
   Briefcase,
-  UserPlus
+  UserPlus,
+  Flame
 } from 'lucide-react';
 import { useAppStore } from '../../lib/store';
 
@@ -58,6 +59,7 @@ const NAVIGATION_ITEMS = [
         ]
       },
       { name: 'Leads Pipeline', href: '/clients/leads', icon: UserPlus },
+      { name: 'Warmup', href: '/clients/warmup', icon: Flame },
     ]
   },
   { name: 'Offers', href: '/offers', icon: Package },
